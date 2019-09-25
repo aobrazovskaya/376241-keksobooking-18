@@ -1,39 +1,78 @@
 var adsNumbers = 8;
+var mapElement = document.querySelector('.map');
+var mapWidth = mapElement.offsetWidth;
+var MAP_BEGIN_HEIGHT = 130;
+var MAP_END_HEIGHT = 630;
+var titleArray = ['Милая квартирка недалеко от метро', 'Квартира недорого', 'Квартира в Токио'];
+var flatTypes = ['palace','flat','house','bungalo'];
+var checkins = ['12:00','13:00','14:00'];
+var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var maxNumbderOfRooms = 10;
+var maxNumberOfGuests = 20;
 
-var createads = function () {
+var createAds = function () {
   var ads = [];
-  for (var i = 0; i < adsNumbers; i++) 
   
-  var ad = {
-    author: {
-      avatar: 'img/avatars/user' + imageNumber+ '.png',
-    },
-    
-    // offer: {
-    //   title: строка, заголовок предложения
-    //   address: строка, адрес предложения. Для простоты пусть пока представляет собой запись вида "{{location.x}}, {{location.y}}", например, "600, 350"
-    //   price: число, стоимость
-    //   type: строка с одним из четырёх фиксированных значений: palace, flat, house или bungalo
-    //   rooms: число, количество комнат
-    //   guests: число, количество гостей, которое можно разместить
-    //   checkin: строка с одним из трёх фиксированных значений: 12:00, 13:00 или 14:00,
-    //   checkout: строка с одним из трёх фиксированных значений: 12:00, 13:00 или 14:00
-    //   features: массив строк случайной длины из ниже предложенных: "wifi", "dishwasher", "parking", "washer", "elevator", "conditioner",
-    //   description: строка с описанием,
-    //   photos: массив строк случайной длины, содержащий адреса фотографий "http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"
-    // },
-    
-    // location: {
-    //   x: случайное число, координата x метки на карте. Значение ограничено размерами блока, в котором перетаскивается метка.
-    //   y: случайное число, координата y метки на карте от 130 до 630.
-    // }
+  for (var i = 0; i < adsNumbers; i++) {
+    var title = titleArray[getRandomNumberInTheRange(0, titleArray.length)];
+    var avatar = 'img/avatars/user0' + getRandomNumberInTheRange(1, 8) + '.png';
+    var location = {
+      x: getRandomNumberInTheRange(0, mapWidth),
+      y: getRandomNumberInTheRange(MAP_BEGIN_HEIGHT, MAP_END_HEIGHT)
+    };
+    var address = location.x + ', ' + location.y;
+
+    var ad = {
+      author: {
+        avatar: avatar,
+      },
+      
+      offer: {
+        title: title,
+        address: address,
+        price: getRandomNumberInTheRange(50, 1000),
+        type: flatTypes[getRandomNumberInTheRange(0, flatTypes.length)],
+        rooms: getRandomNumberInTheRange(1, maxNumbderOfRooms),
+        guests: getRandomNumberInTheRange(1, maxNumberOfGuests),
+        checkin: checkins[getRandomNumberInTheRange(0, checkins.length)],
+        checkout: checkins[getRandomNumberInTheRange(0, checkins.length)],
+        features: getRandomQuantity(featuresArr),
+        description: title + ' по адресу: ' + address,
+        photos: getRandomQuantity(photos),
+      },
+      
+      location: {
+        x: location.x,
+        y: location.y,
+      }
+    }
+  ads.push(ad);
   }
+  return ads;
 };
 
-var setAvatar = function () {
-  for (var i = o; i < adsNumbers; i++) {
-    var imageNumber = '0' + i;
-    avatar = document.querySelector('.popup__avatar');
-    avatar.src = 'img/avatars/user' + imageNumber+ '.png';
-  }
+/**
+ * @param {number} min min value
+ * @param {number} max max value
+ * @return {number}
+ */
+function getRandomNumberInTheRange(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
 };
+
+function getRandomQuantity(array) {
+  var arr = [];
+  for (var i = 0; i < array.length; i++) {
+    var isRandomNumber = getRandomNumberInTheRange(0, 2);
+    if (isRandomNumber) {
+      arr.push(array[i]);
+    }
+  }
+  return arr;
+};
+
+var mapStatus = document.querySelector('.map');
+mapStatus.classList.remove('map--faded');
