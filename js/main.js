@@ -10,13 +10,13 @@ var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'condi
 var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var maxNumbderOfRooms = 10;
 var maxNumberOfGuests = 20;
+var avatar = 'img/avatars/user0' + getRandomNumberInTheRange(1, 8) + '.png';
 
 var createAds = function () {
   var ads = [];
   
   for (var i = 0; i < adsNumbers; i++) {
     var title = titleArray[getRandomNumberInTheRange(0, titleArray.length)];
-    var avatar = 'img/avatars/user0' + getRandomNumberInTheRange(1, 8) + '.png';
     var location = {
       x: getRandomNumberInTheRange(0, mapWidth),
       y: getRandomNumberInTheRange(MAP_BEGIN_HEIGHT, MAP_END_HEIGHT)
@@ -76,3 +76,14 @@ function getRandomQuantity(array) {
 
 var mapStatus = document.querySelector('.map');
 mapStatus.classList.remove('map--faded');
+
+var pinTemplate = document.querySelector('#pin').contains.querySelector('button');
+var fragment = document.createDocumentFragment();
+
+for (var i = o; i < ads.length; i++) {
+  var element = pinTemplate.cloneNode(true);
+  element.children[0].style = 'left: ' + location.x + 'px; top: ' + location.y + 'px;';
+  element.children[0].src = avatar;
+  element.children[0].alt = title;
+  fragment.push(element);
+}
