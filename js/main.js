@@ -1,8 +1,10 @@
 var adsNumbers = 8;
 var mapElement = document.querySelector('.map');
-var mapWidth = mapElement.offsetWidth;
-var MAP_BEGIN_HEIGHT = 130;
-var MAP_END_HEIGHT = 630;
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
+var mapWidth = mapElement.offsetWidth - PIN_WIDTH;
+var MAP_BEGIN_HEIGHT = 130 - PIN_HEIGHT;
+var MAP_END_HEIGHT = 630 - PIN_HEIGHT;
 var titleArray = ['Милая квартирка недалеко от метро', 'Квартира недорого', 'Квартира в Токио'];
 var flatTypes = ['palace','flat','house','bungalo'];
 var checkins = ['12:00','13:00','14:00'];
@@ -10,12 +12,16 @@ var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'condi
 var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var maxNumbderOfRooms = 10;
 var maxNumberOfGuests = 20;
-var avatar = 'img/avatars/user0' + getRandomNumberInTheRange(1, 8) + '.png';
 
+/**
+ * Create array of js objects of ads.
+ * @return {array} array of ads objects
+ */
 var createAds = function () {
   var ads = [];
   
   for (var i = 0; i < adsNumbers; i++) {
+    var avatar = 'img/avatars/user0' + (i + 1) + '.png';
     var title = titleArray[getRandomNumberInTheRange(0, titleArray.length)];
     var location = {
       x: getRandomNumberInTheRange(0, mapWidth),
@@ -63,6 +69,11 @@ function getRandomNumberInTheRange(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
+/**
+ * Get random quantity of array elements.
+ * @param {array} array array
+ * @return {array} array with random elements
+ */
 function getRandomQuantity(array) {
   var arr = [];
   for (var i = 0; i < array.length; i++) {
@@ -74,16 +85,40 @@ function getRandomQuantity(array) {
   return arr;
 };
 
+/**
+ * Add DOM elements to HTML doc. 
+ * @param {array} arr array of js elements
+ * @return {object} fragment of DOM elements
+ */
+function createDOMElements(arr) {
+  var fragment = document.createDocumentFragment();
+  
+  for (var i = 0; i < arr.length; i++) {
+    fragment.appendChild(createPinElement(arr[i]));
+  }
+  return fragment;
+}
+
+/**
+ * Set different values for some properties of users' objects.
+ * @param {object} user user object
+ * @return {object} user object with new values
+ */
+function createPinElement(user) {
+  var element = pinTemplate.cloneNode(true);
+
+  element.style = 'left: ' + (user.location.x + PIN_WIDTH / 2) + 'px; top: ' + (user.location.y + PIN_HEIGHT) + 'px;';
+  element.children[0].src = user.author.avatar;
+  element.children[0].alt = user.offer.title;
+  
+  return element;
+}
+
 var mapStatus = document.querySelector('.map');
 mapStatus.classList.remove('map--faded');
 
-var pinTemplate = document.querySelector('#pin').contains.querySelector('button');
-var fragment = document.createDocumentFragment();
-
-for (var i = o; i < ads.length; i++) {
-  var element = pinTemplate.cloneNode(true);
-  element.children[0].style = 'left: ' + location.x + 'px; top: ' + location.y + 'px;';
-  element.children[0].src = avatar;
-  element.children[0].alt = title;
-  fragment.push(element);
-}
+var ads = createAds();
+var pinTemplate = document.querySelector('#pin').content.querySelector('button');
+var mapPins = document.querySelector('.map__pins');
+var pinElements = createDOMElements(ads);
+mapPins.appendChild(pinElements);
