@@ -1,19 +1,44 @@
 'use strict';
 
-var adsNumbers = 8;
+var ADS_COUNT = 8;
 var mapElement = document.querySelector('.map');
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var mapWidth = mapElement.offsetWidth - PIN_WIDTH;
 var MAP_BEGIN_HEIGHT = 130 - PIN_HEIGHT;
 var MAP_END_HEIGHT = 630 - PIN_HEIGHT;
-var titleArray = ['Милая квартирка недалеко от метро', 'Квартира недорого', 'Квартира в Токио'];
-var flatTypes = ['palace', 'flat', 'house', 'bungalo'];
-var checkins = ['12:00', '13:00', '14:00'];
-var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var maxNumbderOfRooms = 10;
-var maxNumberOfGuests = 20;
+var TITLES = ['Милая квартирка недалеко от метро', 'Квартира недорого', 'Квартира в Токио'];
+var FLAT_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var CHECKINS = ['12:00', '13:00', '14:00'];
+var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var MAX_ROOM_COUNT = 10;
+var MAX_GUESTS_COUNT = 20;
+
+/**
+ * @typedef {{ author: {
+                avatar: String,
+                },
+
+                offer: {
+                  title: string,
+                  address: address,
+                  price: getRandomNumberInTheRange(50, 1000),
+                  type: FLAT_TYPES[getRandomNumberInTheRange(0, FLAT_TYPES.length)],
+                  rooms: getRandomNumberInTheRange(1, MAX_ROOM_COUNT),
+                  guests: getRandomNumberInTheRange(1, MAX_GUESTS_COUNT),
+                  checkin: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
+                  checkout: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
+                  FEATURES: getRandomQuantity(FEATURES),
+                  description: title + ' по адресу: ' + address,
+                  PHOTOS: getRandomQuantity(PHOTOS),
+                },
+
+                location: {
+                  x: location.x,
+                  y: location.y,
+                }}}
+ */
 
 /**
  * Create array of js objects of ads.
@@ -22,9 +47,9 @@ var maxNumberOfGuests = 20;
 var createAds = function () {
   var ads = [];
 
-  for (var i = 0; i < adsNumbers; i++) {
+  for (var i = 0; i < ADS_COUNT; i++) {
     var avatar = 'img/avatars/user0' + (i + 1) + '.png';
-    var title = titleArray[getRandomNumberInTheRange(0, titleArray.length)];
+    var title = TITLES[getRandomNumberInTheRange(0, TITLES.length)];
     var location = {
       x: getRandomNumberInTheRange(0, mapWidth),
       y: getRandomNumberInTheRange(MAP_BEGIN_HEIGHT, MAP_END_HEIGHT)
@@ -40,14 +65,14 @@ var createAds = function () {
         title: title,
         address: address,
         price: getRandomNumberInTheRange(50, 1000),
-        type: flatTypes[getRandomNumberInTheRange(0, flatTypes.length)],
-        rooms: getRandomNumberInTheRange(1, maxNumbderOfRooms),
-        guests: getRandomNumberInTheRange(1, maxNumberOfGuests),
-        checkin: checkins[getRandomNumberInTheRange(0, checkins.length)],
-        checkout: checkins[getRandomNumberInTheRange(0, checkins.length)],
-        features: getRandomQuantity(featuresArr),
+        type: FLAT_TYPES[getRandomNumberInTheRange(0, FLAT_TYPES.length)],
+        rooms: getRandomNumberInTheRange(1, MAX_ROOM_COUNT),
+        guests: getRandomNumberInTheRange(1, MAX_GUESTS_COUNT),
+        checkin: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
+        checkout: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
+        FEATURES: getRandomQuantity(FEATURES),
         description: title + ' по адресу: ' + address,
-        photos: getRandomQuantity(photos),
+        PHOTOS: getRandomQuantity(PHOTOS),
       },
 
       location: {
