@@ -16,33 +16,33 @@ var MAX_ROOM_COUNT = 10;
 var MAX_GUESTS_COUNT = 20;
 
 /**
- * @typedef {{ author: {
-                avatar: String,
-                },
-
+ * @typedef {{author: {
+                avatar: String
+              },
                 offer: {
-                  title: string,
-                  address: address,
-                  price: getRandomNumberInTheRange(50, 1000),
-                  type: FLAT_TYPES[getRandomNumberInTheRange(0, FLAT_TYPES.length)],
-                  rooms: getRandomNumberInTheRange(1, MAX_ROOM_COUNT),
-                  guests: getRandomNumberInTheRange(1, MAX_GUESTS_COUNT),
-                  checkin: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
-                  checkout: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
-                  FEATURES: getRandomQuantity(FEATURES),
-                  description: title + ' по адресу: ' + address,
-                  PHOTOS: getRandomQuantity(PHOTOS),
+                  title: Array,
+                  address: String,
+                  price: Number,
+                  type: Array,
+                  rooms: Number,
+                  guests: Number,
+                  checkin: String,
+                  checkout: String,
+                  FEATURES: Array,
+                  description: String,
+                  PHOTOS: Array
                 },
 
                 location: {
-                  x: location.x,
-                  y: location.y,
-                }}}
- */
+                  x: Number,
+                  y: Number
+                }
+              }} ad
+*/
 
 /**
  * Create array of js objects of ads.
- * @return {array} array of ads objects
+ * @return {ad[]}
  */
 var createAds = function () {
   var ads = [];
@@ -70,9 +70,9 @@ var createAds = function () {
         guests: getRandomNumberInTheRange(1, MAX_GUESTS_COUNT),
         checkin: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
         checkout: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
-        FEATURES: getRandomQuantity(FEATURES),
+        FEATURES: shortenArrayRandomly(FEATURES),
         description: title + ' по адресу: ' + address,
-        PHOTOS: getRandomQuantity(PHOTOS),
+        PHOTOS: shortenArrayRandomly(PHOTOS),
       },
 
       location: {
@@ -86,8 +86,8 @@ var createAds = function () {
 };
 
 /**
- * @param {number} min min value
- * @param {number} max max value
+ * @param {number} min
+ * @param {number} max
  * @return {number}
  */
 function getRandomNumberInTheRange(min, max) {
@@ -97,19 +97,19 @@ function getRandomNumberInTheRange(min, max) {
 }
 
 /**
- * Get random quantity of array elements.
- * @param {array} array array
- * @return {array} array with random elements
+ * @param {array} array
+ * @return {array} with random elements
  */
-function getRandomQuantity(array) {
+function shortenArrayRandomly(array) {
   var arr = [];
   for (var i = 0; i < array.length; i++) {
     var isRandomNumber = getRandomNumberInTheRange(0, 2);
     if (isRandomNumber) {
       arr.push(array[i]);
     }
-  }
+  
   return arr;
+  }
 }
 
 /**
@@ -117,7 +117,7 @@ function getRandomQuantity(array) {
  * @param {array} arr array of js elements
  * @return {object} fragment of DOM elements
  */
-function createDOMElements(arr) {
+function createDomElements(arr) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < arr.length; i++) {
     fragment.appendChild(createPinElement(arr[i]));
@@ -145,5 +145,5 @@ mapStatus.classList.remove('map--faded');
 var ads = createAds();
 var pinTemplate = document.querySelector('#pin').content.querySelector('button');
 var mapPins = document.querySelector('.map__pins');
-var pinElements = createDOMElements(ads);
+var pinElements = createDomElements(ads);
 mapPins.appendChild(pinElements);
