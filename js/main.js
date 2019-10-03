@@ -107,9 +107,8 @@ function shortenArrayRandomly(array) {
     if (isRandomNumber) {
       arr.push(array[i]);
     }
-  
-  return arr;
   }
+  return arr;
 }
 
 /**
