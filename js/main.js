@@ -14,6 +14,7 @@ var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var MAX_ROOM_COUNT = 10;
 var MAX_GUESTS_COUNT = 20;
+var ads = [];
 
 /**
  * @typedef {{author: {
@@ -45,7 +46,6 @@ var MAX_GUESTS_COUNT = 20;
  * @return {ad[]}
  */
 var createAds = function () {
-  var ads = [];
 
   for (var i = 0; i < ADS_COUNT; i++) {
     var avatar = 'img/avatars/user0' + (i + 1) + '.png';
@@ -138,6 +138,41 @@ function createPinElement(user) {
   return element;
 }
 
+/**
+ * 
+ * @param {*} user 
+ */
+function createCardElement(user) {
+  var element = cardTemplate.cloneNode(true);
+
+  var cardTitle = element.querySelector('.popup__title');
+  cardTitle.textContent = user.offer.title;
+  var cardAddress = element.querySelector('.popup__text--address');
+  cardAddress.textContent = user.offer.address;
+  var cardPrice = element.querySelector('.popup__text--price');
+  cardPrice.textContent = user.offer.price + '₽/ночь';
+  var cardType = element.querySelector('.popup__type');
+  cardType.textContent = determineType(user.offer.type);
+  var cardCapacity = element.querySelector('.popup__text--capacity');
+  cardCapacity.textContent = user.offer.rooms + ' комнаты для ' + user.offer.guests + ' гостей';
+
+  return element;
+}
+
+/**
+ * 
+ * @param {*} type 
+ */
+function determineType(type) {
+  switch (type) {
+    case 'flat': return 'Квартира';
+    case 'bungalo': return 'Бунгало';
+    case 'house': return 'Дом';
+    case 'palace': return 'Дворец';
+    default: '';
+  } 
+}
+
 var mapStatus = document.querySelector('.map');
 mapStatus.classList.remove('map--faded');
 
@@ -146,3 +181,6 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('button')
 var mapPins = document.querySelector('.map__pins');
 var pinElements = createDomElements(ads);
 mapPins.appendChild(pinElements);
+
+var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+var cardElement = createCardElement(ads[0]);
