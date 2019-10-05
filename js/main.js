@@ -29,7 +29,7 @@ var ads = [];
                   guests: Number,
                   checkin: String,
                   checkout: String,
-                  FEATURES: Array,
+                  features: Array,
                   description: String,
                   PHOTOS: Array
                 },
@@ -70,7 +70,7 @@ var createAds = function () {
         guests: getRandomNumberInTheRange(1, MAX_GUESTS_COUNT),
         checkin: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
         checkout: CHECKINS[getRandomNumberInTheRange(0, CHECKINS.length)],
-        FEATURES: shortenArrayRandomly(FEATURES),
+        features: shortenArrayRandomly(FEATURES),
         description: title + ' по адресу: ' + address,
         PHOTOS: shortenArrayRandomly(PHOTOS),
       },
@@ -157,6 +157,10 @@ function createCardElement(user) {
   cardCapacity.textContent = user.offer.rooms + ' комнаты для ' + user.offer.guests + ' гостей';
   var cardTime = element.querySelector('.popup__text--time');
   cardTime.textContent = 'Заезд после ' + user.offer.checkin + ', выезд до ' + user.offer.checkout;
+  // var cardFeatures = element.querySelector('.popup__features');
+  // if (user.offer.features = ) {}
+  var cardDescription = element.querySelector('.popup__description');
+  cardDescription.textContent = user.offer.description;
 
   return element;
 }
@@ -171,7 +175,7 @@ function determineType(type) {
     case 'bungalo': return 'Бунгало';
     case 'house': return 'Дом';
     case 'palace': return 'Дворец';
-    default: '';
+    default: return '';
   } 
 }
 
