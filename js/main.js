@@ -155,6 +155,8 @@ function createCardElement(user) {
   cardType.textContent = determineType(user.offer.type);
   var cardCapacity = element.querySelector('.popup__text--capacity');
   cardCapacity.textContent = user.offer.rooms + ' комнаты для ' + user.offer.guests + ' гостей';
+  var cardTime = element.querySelector('.popup__text--time');
+  cardTime.textContent = 'Заезд после ' + user.offer.checkin + ', выезд до ' + user.offer.checkout;
 
   return element;
 }
