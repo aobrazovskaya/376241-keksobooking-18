@@ -157,14 +157,25 @@ function createCardElement(user) {
   cardCapacity.textContent = user.offer.rooms + ' комнаты для ' + user.offer.guests + ' гостей';
   var cardTime = element.querySelector('.popup__text--time');
   cardTime.textContent = 'Заезд после ' + user.offer.checkin + ', выезд до ' + user.offer.checkout;
-  // var cardFeatures = element.querySelector('.popup__features');
-  // if (user.offer.features = ) {}
+  var cardFeatures = element.querySelector('.popup__features');
+  cardFeatures.replaceWith(selectFeatures(user.offer.features, cardFeatures));
+
   var cardDescription = element.querySelector('.popup__description');
   cardDescription.textContent = user.offer.description;
   var cardAvatar = element.querySelector('.popup__avatar');
   cardAvatar.src = user.author.avatar;
   
   return element;
+}
+
+function selectFeatures(featuresList, listElement) {
+  var currentFeaturesList = listElement.cloneNode(true);
+  var featuresListNew = listElement.cloneNode(false);
+  for (var i = 0; i < featuresList.length; i++) {
+    var currentElement = currentFeaturesList.querySelector('.popup__feature--' + featuresList[i]);
+    featuresListNew.appendChild(currentElement); 
+  }
+  return featuresListNew;
 }
 
 /**
