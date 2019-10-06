@@ -159,13 +159,38 @@ function createCardElement(user) {
   cardTime.textContent = 'Заезд после ' + user.offer.checkin + ', выезд до ' + user.offer.checkout;
   var cardFeatures = element.querySelector('.popup__features');
   cardFeatures.replaceWith(selectFeatures(user.offer.features, cardFeatures));
-
   var cardDescription = element.querySelector('.popup__description');
   cardDescription.textContent = user.offer.description;
+  var cardPhotos = element.querySelector('.popup__photos');
+  cardPhotos.replaceWith(getPhotoesOfAd(user.offer.PHOTOS, cardPhotos));
   var cardAvatar = element.querySelector('.popup__avatar');
   cardAvatar.src = user.author.avatar;
   
   return element;
+}
+
+function getPhotoesOfAd(photos, photoListElement) {
+  var photoListElementNew = photoListElement.cloneNode(false);
+  for (var i = 0; i < photos.length; i++) {
+    var photoElement = photoListElement.children[0].cloneNode(false);
+    photoElement.src = photos[i];
+    photoListElementNew.appendChild(photoElement);
+  }
+  return photoListElementNew;
+}
+
+/**
+ * 
+ * @param {*} type 
+ */
+function determineType(type) {
+  switch (type) {
+    case 'flat': return 'Квартира';
+    case 'bungalo': return 'Бунгало';
+    case 'house': return 'Дом';
+    case 'palace': return 'Дворец';
+    default: return '';
+  } 
 }
 
 /**
@@ -184,20 +209,6 @@ function selectFeatures(featuresList, listElement) {
   return featuresListNew;
 }
 
-/**
- * 
- * @param {*} type 
- */
-function determineType(type) {
-  switch (type) {
-    case 'flat': return 'Квартира';
-    case 'bungalo': return 'Бунгало';
-    case 'house': return 'Дом';
-    case 'palace': return 'Дворец';
-    default: return '';
-  } 
-}
-
 var mapStatus = document.querySelector('.map');
 mapStatus.classList.remove('map--faded');
 
@@ -209,3 +220,5 @@ mapPins.appendChild(pinElements);
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var cardElement = createCardElement(ads[0]);
+var mapFilteres = mapStatus.querySelector('.map__filters-container');
+mapFilteres.insertAdjacentElement('beforebegin', cardElement);
