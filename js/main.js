@@ -168,6 +168,12 @@ function createCardElement(user) {
   return element;
 }
 
+/**
+ * Create a new ul list of available features.
+ * @param {array} featuresList of current ad 
+ * @param {Element} listElement html element of features list
+ * @return {Element} new list
+ */
 function selectFeatures(featuresList, listElement) {
   var currentFeaturesList = listElement.cloneNode(true);
   var featuresListNew = listElement.cloneNode(false);
