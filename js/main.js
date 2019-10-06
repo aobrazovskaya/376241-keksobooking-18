@@ -139,8 +139,9 @@ function createPinElement(user) {
 }
 
 /**
- * 
- * @param {*} user 
+ * Create card of ad's property.
+ * @param {ad[]} user
+ * @return {object} ad with new properties
  */
 function createCardElement(user) {
   var element = cardTemplate.cloneNode(true);
@@ -169,6 +170,12 @@ function createCardElement(user) {
   return element;
 }
 
+/**
+ * Create elements of user's photoes.
+ * @param {array} photos of user
+ * @param {element} photoListElement HTML element with template of photoes
+ * @return {element} HTML element with new photoes
+ */
 function getPhotoesOfAd(photos, photoListElement) {
   var photoListElementNew = photoListElement.cloneNode(false);
   for (var i = 0; i < photos.length; i++) {
@@ -180,8 +187,9 @@ function getPhotoesOfAd(photos, photoListElement) {
 }
 
 /**
- * 
- * @param {*} type 
+ * Chooes correct translation of property of house type.
+ * @param {String} type of house
+ * @return {String} translation 
  */
 function determineType(type) {
   switch (type) {
@@ -196,8 +204,8 @@ function determineType(type) {
 /**
  * Create a new ul list of available features.
  * @param {array} featuresList of current ad 
- * @param {Element} listElement html element of features list
- * @return {Element} new list
+ * @param {element} listElement html element of features list
+ * @return {element} new list
  */
 function selectFeatures(featuresList, listElement) {
   var currentFeaturesList = listElement.cloneNode(true);
