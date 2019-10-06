@@ -58,7 +58,7 @@ var createAds = function () {
 
     var ad = {
       author: {
-        avatar: avatar,
+        avatar: avatar
       },
 
       offer: {
@@ -161,7 +161,9 @@ function createCardElement(user) {
   // if (user.offer.features = ) {}
   var cardDescription = element.querySelector('.popup__description');
   cardDescription.textContent = user.offer.description;
-
+  var cardAvatar = element.querySelector('.popup__avatar');
+  cardAvatar.src = user.author.avatar;
+  
   return element;
 }
 
