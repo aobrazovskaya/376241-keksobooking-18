@@ -166,7 +166,6 @@ function createCardElement(user) {
   cardPhotos.replaceWith(getPhotoesOfAd(user.offer.PHOTOS, cardPhotos));
   var cardAvatar = element.querySelector('.popup__avatar');
   cardAvatar.src = user.author.avatar;
-  
   return element;
 }
 
@@ -189,7 +188,7 @@ function getPhotoesOfAd(photos, photoListElement) {
 /**
  * Chooes correct translation of property of house type.
  * @param {String} type of house
- * @return {String} translation 
+ * @return {String} translation
  */
 function determineType(type) {
   switch (type) {
@@ -198,12 +197,12 @@ function determineType(type) {
     case 'house': return 'Дом';
     case 'palace': return 'Дворец';
     default: return '';
-  } 
+  }
 }
 
 /**
  * Create a new ul list of available features.
- * @param {array} featuresList of current ad 
+ * @param {array} featuresList of current ad
  * @param {element} listElement html element of features list
  * @return {element} new list
  */
@@ -212,7 +211,7 @@ function selectFeatures(featuresList, listElement) {
   var featuresListNew = listElement.cloneNode(false);
   for (var i = 0; i < featuresList.length; i++) {
     var currentElement = currentFeaturesList.querySelector('.popup__feature--' + featuresList[i]);
-    featuresListNew.appendChild(currentElement); 
+    featuresListNew.appendChild(currentElement);
   }
   return featuresListNew;
 }
@@ -220,13 +219,13 @@ function selectFeatures(featuresList, listElement) {
 var mapStatus = document.querySelector('.map');
 mapStatus.classList.remove('map--faded');
 
-var ads = createAds();
+var adsList = createAds();
 var pinTemplate = document.querySelector('#pin').content.querySelector('button');
 var mapPins = document.querySelector('.map__pins');
-var pinElements = createDomElements(ads);
+var pinElements = createDomElements(adsList);
 mapPins.appendChild(pinElements);
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-var cardElement = createCardElement(ads[0]);
+var cardElement = createCardElement(adsList[0]);
 var mapFilteres = mapStatus.querySelector('.map__filters-container');
 mapFilteres.insertAdjacentElement('beforebegin', cardElement);
