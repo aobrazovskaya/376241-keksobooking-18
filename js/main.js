@@ -141,7 +141,7 @@ function createPinElement(adCard) {
 /**
  * Create card of ad's property.
  * @param {ad} currentCard
- * @return {Element} ad with new properties
+ * @return {HTMLElement} ad with new properties
  */
 function createCardElement(currentCard) {
   var newCard = cardTemplate.cloneNode(true);
@@ -172,8 +172,8 @@ function createCardElement(currentCard) {
 /**
  * Create img elements of user's photos.
  * @param {array} photos user's photos
- * @param {Element} photoListElement HTML element with template of photos
- * @return {Element} HTML element with new photos
+ * @param {HTMLElement} photoListElement HTML element with template of photos
+ * @return {HTMLElement} HTML element with new photos
  */
 function getPhotosOfAd(photos, photoListElement) {
   var photoListElementNew = photoListElement.cloneNode(false);
@@ -205,7 +205,7 @@ function determineType(type) {
 /**
  * Create a new ul list of available features.
  * @param {array} features of current ad
- * @param {Element} listElement html element of features list
+ * @param {HTMLElement} listElement html element of features list
  * @return {HTMLElement} new list
  */
 function selectFeatures(features, listElement) {
