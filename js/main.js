@@ -14,13 +14,12 @@ var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var MAX_ROOM_COUNT = 10;
 var MAX_GUESTS_COUNT = 20;
-var ads = [];
 
 /**
  * @typedef {{author: {
-                avatar: String
+  avatar: String
               },
-                offer: {
+              offer: {
                   title: Array,
                   address: String,
                   price: Number,
@@ -39,13 +38,14 @@ var ads = [];
                   y: Number
                 }
               }} ad
-*/
+              */
 
 /**
  * Create array of js objects of ads.
  * @return {ad[]}
  */
 var createAds = function () {
+  var ads = [];
 
   for (var i = 0; i < ADS_COUNT; i++) {
     var avatar = 'img/avatars/user0' + (i + 1) + '.png';
@@ -125,70 +125,72 @@ function createDomElements(arr) {
 }
 
 /**
- * Set different values for some properties of users' objects.
- * @param {object} user user object
+ * Set different values for some properties of pin.
+ * @param {object} adCard object
  * @return {object} user object with new values
  */
-function createPinElement(user) {
-  var element = pinTemplate.cloneNode(true);
+function createPinElement(adCard) {
+  var newAdCard = pinTemplate.cloneNode(true);
 
-  element.style = 'left: ' + (user.location.x + PIN_WIDTH / 2) + 'px; top: ' + (user.location.y + PIN_HEIGHT) + 'px;';
-  element.children[0].src = user.author.avatar;
-  element.children[0].alt = user.offer.title;
-  return element;
+  newAdCard.style = 'left: ' + (adCard.location.x + PIN_WIDTH / 2) + 'px; top: ' + (adCard.location.y + PIN_HEIGHT) + 'px;';
+  newAdCard.children[0].src = adCard.author.avatar;
+  newAdCard.children[0].alt = adCard.offer.title;
+  return newAdCard;
 }
 
 /**
  * Create card of ad's property.
- * @param {ad[]} user
- * @return {object} ad with new properties
+ * @param {ad} currentCard
+ * @return {Element} ad with new properties
  */
-function createCardElement(user) {
-  var element = cardTemplate.cloneNode(true);
+function createCardElement(currentCard) {
+  var newCard = cardTemplate.cloneNode(true);
 
-  var cardTitle = element.querySelector('.popup__title');
-  cardTitle.textContent = user.offer.title;
-  var cardAddress = element.querySelector('.popup__text--address');
-  cardAddress.textContent = user.offer.address;
-  var cardPrice = element.querySelector('.popup__text--price');
-  cardPrice.textContent = user.offer.price + '₽/ночь';
-  var cardType = element.querySelector('.popup__type');
-  cardType.textContent = determineType(user.offer.type);
-  var cardCapacity = element.querySelector('.popup__text--capacity');
-  cardCapacity.textContent = user.offer.rooms + ' комнаты для ' + user.offer.guests + ' гостей';
-  var cardTime = element.querySelector('.popup__text--time');
-  cardTime.textContent = 'Заезд после ' + user.offer.checkin + ', выезд до ' + user.offer.checkout;
-  var cardFeatures = element.querySelector('.popup__features');
-  cardFeatures.replaceWith(selectFeatures(user.offer.features, cardFeatures));
-  var cardDescription = element.querySelector('.popup__description');
-  cardDescription.textContent = user.offer.description;
-  var cardPhotos = element.querySelector('.popup__photos');
-  cardPhotos.replaceWith(getPhotoesOfAd(user.offer.PHOTOS, cardPhotos));
-  var cardAvatar = element.querySelector('.popup__avatar');
-  cardAvatar.src = user.author.avatar;
-  return element;
+  var cardTitle = newCard.querySelector('.popup__title');
+  cardTitle.textContent = currentCard.offer.title;
+  var cardAddress = newCard.querySelector('.popup__text--address');
+  cardAddress.textContent = currentCard.offer.address;
+  var cardPrice = newCard.querySelector('.popup__text--price');
+  cardPrice.textContent = currentCard.offer.price + '₽/ночь';
+  var cardType = newCard.querySelector('.popup__type');
+  cardType.textContent = determineType(currentCard.offer.type);
+  var cardCapacity = newCard.querySelector('.popup__text--capacity');
+  cardCapacity.textContent = currentCard.offer.rooms + ' комнаты для ' + currentCard.offer.guests + ' гостей';
+  var cardTime = newCard.querySelector('.popup__text--time');
+  cardTime.textContent = 'Заезд после ' + currentCard.offer.checkin + ', выезд до ' + currentCard.offer.checkout;
+  var cardFeatures = newCard.querySelector('.popup__features');
+  cardFeatures.replaceWith(selectFeatures(currentCard.offer.features, cardFeatures));
+  var cardDescription = newCard.querySelector('.popup__description');
+  cardDescription.textContent = currentCard.offer.description;
+  var cardPhotos = newCard.querySelector('.popup__photos');
+  cardPhotos.replaceWith(getPhotosOfAd(currentCard.offer.PHOTOS, cardPhotos));
+  var cardAvatar = newCard.querySelector('.popup__avatar');
+  cardAvatar.src = currentCard.author.avatar;
+  return newCard;
 }
 
 /**
- * Create elements of user's photoes.
- * @param {array} photos of user
- * @param {element} photoListElement HTML element with template of photoes
- * @return {element} HTML element with new photoes
+ * Create img elements of user's photos.
+ * @param {array} photos user's photos
+ * @param {Element} photoListElement HTML element with template of photos
+ * @return {Element} HTML element with new photos
  */
-function getPhotoesOfAd(photos, photoListElement) {
+function getPhotosOfAd(photos, photoListElement) {
   var photoListElementNew = photoListElement.cloneNode(false);
+  var fragment = document.createDocumentFragment();
   for (var i = 0; i < photos.length; i++) {
     var photoElement = photoListElement.children[0].cloneNode(false);
     photoElement.src = photos[i];
-    photoListElementNew.appendChild(photoElement);
+    fragment.appendChild(photoElement);
   }
+  photoListElementNew.appendChild(fragment);
   return photoListElementNew;
 }
 
 /**
  * Chooes correct translation of property of house type.
- * @param {String} type of house
- * @return {String} translation
+ * @param {string} type of house
+ * @return {string} translation
  */
 function determineType(type) {
   switch (type) {
@@ -202,30 +204,32 @@ function determineType(type) {
 
 /**
  * Create a new ul list of available features.
- * @param {array} featuresList of current ad
- * @param {element} listElement html element of features list
- * @return {element} new list
+ * @param {array} features of current ad
+ * @param {Element} listElement html element of features list
+ * @return {HTMLElement} new list
  */
-function selectFeatures(featuresList, listElement) {
+function selectFeatures(features, listElement) {
   var currentFeaturesList = listElement.cloneNode(true);
   var featuresListNew = listElement.cloneNode(false);
-  for (var i = 0; i < featuresList.length; i++) {
-    var currentElement = currentFeaturesList.querySelector('.popup__feature--' + featuresList[i]);
-    featuresListNew.appendChild(currentElement);
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < features.length; i++) {
+    var currentElement = currentFeaturesList.querySelector('.popup__feature--' + features[i]);
+    fragment.appendChild(currentElement);
   }
+  featuresListNew.appendChild(fragment);
   return featuresListNew;
 }
 
 var mapStatus = document.querySelector('.map');
 mapStatus.classList.remove('map--faded');
 
-var adsList = createAds();
+var ads = createAds();
 var pinTemplate = document.querySelector('#pin').content.querySelector('button');
 var mapPins = document.querySelector('.map__pins');
-var pinElements = createDomElements(adsList);
+var pinElements = createDomElements(ads);
 mapPins.appendChild(pinElements);
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-var cardElement = createCardElement(adsList[0]);
+var cardElement = createCardElement(ads[0]);
 var mapFilteres = mapStatus.querySelector('.map__filters-container');
 mapFilteres.insertAdjacentElement('beforebegin', cardElement);
