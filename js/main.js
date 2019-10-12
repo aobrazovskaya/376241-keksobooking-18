@@ -14,6 +14,7 @@ var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var MAX_ROOM_COUNT = 10;
 var MAX_GUESTS_COUNT = 20;
+var ENTER_KEYCODE = 13;
 
 /**
  * @typedef {{author: {
@@ -221,7 +222,7 @@ function selectFeatures(features, listElement) {
 }
 
 var mapStatus = document.querySelector('.map');
-mapStatus.classList.remove('map--faded');
+mapStatusFaded(mapStatus);
 
 var ads = createAds();
 var pinTemplate = document.querySelector('#pin').content.querySelector('button');
@@ -231,5 +232,68 @@ mapPins.appendChild(pinElements);
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var cardElement = createCardElement(ads[0]);
-var mapFilteres = mapStatus.querySelector('.map__filters-container');
-mapFilteres.insertAdjacentElement('beforebegin', cardElement);
+var mapFilteresContainer = mapStatus.querySelector('.map__filters-container');
+mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
+
+var mapFaded = 'map--faded';
+mapStatus.classList.add(mapFaded);
+
+var mapFilteres = mapStatus.querySelector('.map__filters');
+makeClassDisabled(mapFilteres, 'map__filters');
+
+var formElement = document.querySelector('.ad-form');
+var formFieldsets = formElement.querySelectorAll('fieldset');
+var pinMain = document.querySelector('.map__pin--main');
+
+makeFormElDisabled(formFieldsets);
+
+/**
+ * Turn status of the map in active.
+ * @param {HTMLElement} element map
+ */
+function mapStatusFaded(element) {
+  element.classList.remove('map--faded');
+}
+
+/**
+ * @param {HTMLElement} element
+ * @param {String} classOfElement
+ */
+function makeClassDisabled(element, classOfElement) {
+  var disabledClass = classOfElement + '--disabled';
+  element.classList.add(disabledClass);
+}
+
+/**
+ * @param {array} elements
+ */
+function makeFormElDisabled(elements) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].disabled = true;
+  }
+}
+
+/**
+ * @param {HTMLElement} pin template clone of pin
+ * @param {*} x coordinate of pin
+ * @param {*} y coordinate of pin
+ */
+function setPinLocation(pin, x, y) {
+  var pinNew = createPinElement(pin);
+  pinNew.style = 'left: ' + (x + PIN_WIDTH / 2) + 'px; top: ' + (y + PIN_HEIGHT) + 'px;';
+}
+
+pinMain.addEventListener('mousedown', function () {
+  mapStatusFaded(mapStatus);
+  setPinLocation();
+});
+
+pinMain.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    mapStatusFaded(mapStatus);
+  }
+});
+
+pinMain.addEventListener('mousemove', function (evt) {
+  setPinLocation(createPinElement(pinMain), evt.clientX, evt.clientY);
+});
