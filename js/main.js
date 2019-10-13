@@ -279,13 +279,18 @@ function makeFormElDisabled(elements) {
  * @param {*} y coordinate of pin
  */
 function setPinLocation(pin, x, y) {
-  var pinNew = createPinElement(pin);
-  pinNew.style = 'left: ' + (x + PIN_WIDTH / 2) + 'px; top: ' + (y + PIN_HEIGHT) + 'px;';
+  pin.style = 'left: ' + (x + PIN_WIDTH / 2) + 'px; top: ' + (y + PIN_HEIGHT) + 'px;';
 }
+
+// var isDraggableMainPin = false;
 
 pinMain.addEventListener('mousedown', function () {
   mapStatusFaded(mapStatus);
-  setPinLocation();
+  // isDraggableMainPin = true;
+});
+
+mapStatus.addEventListener('mouseup', function () {
+  // isDraggableMainPin = false;
 });
 
 pinMain.addEventListener('keydown', function (evt) {
@@ -294,6 +299,8 @@ pinMain.addEventListener('keydown', function (evt) {
   }
 });
 
-pinMain.addEventListener('mousemove', function (evt) {
-  setPinLocation(createPinElement(pinMain), evt.clientX, evt.clientY);
-});
+// pinMain.addEventListener('mousemove', function (evt) {
+// if (isDraggableMainPin) {
+//   setPinLocation(pinMain, evt.currentTarget.offsetLeft, evt.currentTarget.offsetTop);
+// }
+// });
