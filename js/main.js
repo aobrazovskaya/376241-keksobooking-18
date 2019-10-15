@@ -222,7 +222,7 @@ function selectFeatures(features, listElement) {
 }
 
 var mapStatus = document.querySelector('.map');
-mapStatusFaded(mapStatus);
+setMapStatusNotFaded(mapStatus);
 
 var ads = createAds();
 var pinTemplate = document.querySelector('#pin').content.querySelector('button');
@@ -239,19 +239,21 @@ var mapFaded = 'map--faded';
 mapStatus.classList.add(mapFaded);
 
 var mapFilteres = mapStatus.querySelector('.map__filters');
-makeClassDisabled(mapFilteres, 'map__filters');
+makeFormElDisabled(mapFilteres, 'map__filters');
 
 var formElement = document.querySelector('.ad-form');
 var formFieldsets = formElement.querySelectorAll('fieldset');
 var pinMain = document.querySelector('.map__pin--main');
+var formAddress = formElement.querySelector('#address');
 
-makeFormElDisabled(formFieldsets);
+makeFormElementsDisabled(formFieldsets);
+setPinAddress(pinMain);
 
 /**
  * Turn status of the map in active.
  * @param {HTMLElement} element map
  */
-function mapStatusFaded(element) {
+function setMapStatusNotFaded(element) {
   element.classList.remove('map--faded');
 }
 
@@ -259,17 +261,33 @@ function mapStatusFaded(element) {
  * @param {HTMLElement} element
  * @param {String} classOfElement
  */
-function makeClassDisabled(element, classOfElement) {
-  var disabledClass = classOfElement + '--disabled';
-  element.classList.add(disabledClass);
+function makeFormElDisabled(element, classOfElement) {
+  element.classList.add(classOfElement + '--disabled');
+}
+
+/**
+ * @param {HTMLElement} element
+ * @param {String} classOfElement
+ */
+function makeFormElAvailable(element, classOfElement) {
+  element.classList.remove(classOfElement + '--disabled');
 }
 
 /**
  * @param {array} elements
  */
-function makeFormElDisabled(elements) {
+function makeFormElementsDisabled(elements) {
   for (var i = 0; i < elements.length; i++) {
     elements[i].disabled = true;
+  }
+}
+
+/**
+ * @param {array} elements
+ */
+function makeFormElementsAvailable(elements) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].disabled = false;
   }
 }
 
@@ -278,29 +296,34 @@ function makeFormElDisabled(elements) {
  * @param {*} x coordinate of pin
  * @param {*} y coordinate of pin
  */
-function setPinLocation(pin, x, y) {
-  pin.style = 'left: ' + (x + PIN_WIDTH / 2) + 'px; top: ' + (y + PIN_HEIGHT) + 'px;';
+function setPinAddress(pin) {
+  var address = 'left: ' + (pin.offsetLeft + PIN_WIDTH / 2) + 'px; top: ' + (pin.offsetTop + PIN_HEIGHT) + 'px;';
+  formAddress.value = address;
 }
 
-// var isDraggableMainPin = false;
-
-pinMain.addEventListener('mousedown', function () {
-  mapStatusFaded(mapStatus);
-  // isDraggableMainPin = true;
-});
-
-mapStatus.addEventListener('mouseup', function () {
-  // isDraggableMainPin = false;
-});
+/**
+ * Remove attributes and modifiers that are disabled in the form.
+ */
+var makeFormAvailable = function () {
+  makeFormElAvailable(mapFilteres, 'map__filters');
+  makeFormElementsAvailable(formFieldsets);
+};
 
 pinMain.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    mapStatusFaded(mapStatus);
+    setMapStatusNotFaded(mapStatus);
   }
 });
 
-// pinMain.addEventListener('mousemove', function (evt) {
-// if (isDraggableMainPin) {
-//   setPinLocation(pinMain, evt.currentTarget.offsetLeft, evt.currentTarget.offsetTop);
-// }
-// });
+pinMain.addEventListener('click', function () {
+  setMapStatusNotFaded(mapStatus);
+});
+
+pinMain.addEventListener('mousedown', function () {
+  makeFormAvailable();
+  setPinAddress(pinMain);
+});
+
+var formRoomsNumber = formElement.querySelector('#room_number');
+var formCapacity = formElement.querySelector('#capacity');
+
