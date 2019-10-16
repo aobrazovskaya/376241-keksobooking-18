@@ -326,4 +326,42 @@ pinMain.addEventListener('mousedown', function () {
 
 var formRoomsNumber = formElement.querySelector('#room_number');
 var formCapacity = formElement.querySelector('#capacity');
+var capacityItems = formCapacity.querySelectorAll('option');
 
+var showCapaityList = function (elements) {
+  for (var i = 0; i < elements.length; i++) {
+    changeElementDisplay(elements[i], 'block');
+  }
+};
+
+var capacityOneGuest = formCapacity.querySelector('option[value = "1"]');
+var capacityTwoGuests = formCapacity.querySelector('option[value = "2"]');
+var capacityThreeGuests = formCapacity.querySelector('option[value = "3"]');
+var capacityNoGuests = formCapacity.querySelector('option[value = "0"]');
+
+function validationCapacity() {
+  var roomsValueSelected = formRoomsNumber.querySelector('option:checked').value;
+  showCapaityList(capacityItems);
+  if (roomsValueSelected === '1') {
+    changeElementDisplay(capacityThreeGuests, 'none');
+    changeElementDisplay(capacityTwoGuests, 'none');
+    changeElementDisplay(capacityNoGuests, 'none');
+  } else if (roomsValueSelected === '2') {
+    changeElementDisplay(capacityThreeGuests, 'none');
+    changeElementDisplay(capacityNoGuests, 'none');
+  } else if (roomsValueSelected === '3') {
+    changeElementDisplay(capacityNoGuests, 'none');
+  } else if (roomsValueSelected === '100') {
+    changeElementDisplay(capacityThreeGuests, 'none');
+    changeElementDisplay(capacityTwoGuests, 'none');
+    changeElementDisplay(capacityOneGuest, 'none');
+  }
+}
+
+validationCapacity();
+
+formRoomsNumber.addEventListener('change', validationCapacity);
+
+function changeElementDisplay(element, displayValue) {
+  element.style.display = displayValue;
+}
