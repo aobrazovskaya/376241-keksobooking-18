@@ -16,19 +16,43 @@ var MAX_ROOM_COUNT = 10;
 var MAX_GUESTS_COUNT = 20;
 var ENTER_KEYCODE = 13;
 
+var mapStatus = document.querySelector('.map');
+var pinTemplate = document.querySelector('#pin').content.querySelector('button');
+var mapPins = document.querySelector('.map__pins');
+var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+var mapFilteresContainer = mapStatus.querySelector('.map__filters-container');
+var mapFilteres = mapStatus.querySelector('.map__filters');
+var formElement = document.querySelector('.ad-form');
+var formFieldsets = formElement.querySelectorAll('fieldset');
+var pinMain = document.querySelector('.map__pin--main');
+var formAddress = formElement.querySelector('#address');
+var formRoomsNumber = formElement.querySelector('#room_number');
+var formCapacity = formElement.querySelector('#capacity');
+
+var capacityItems = formCapacity.querySelectorAll('option');
+var capacityOneGuest = formCapacity.querySelector('option[value = "1"]');
+var capacityTwoGuests = formCapacity.querySelector('option[value = "2"]');
+var capacityThreeGuests = formCapacity.querySelector('option[value = "3"]');
+var capacityNoGuests = formCapacity.querySelector('option[value = "0"]');
+
+var ads = createAds();
+var pinElements = createDomElements(ads);
+var cardElement = createCardElement(ads[0]);
+var mapFaded = 'map--faded';
+
 /**
  * @typedef {{author: {
   avatar: String
-              },
-              offer: {
-                  title: Array,
-                  address: String,
-                  price: Number,
-                  type: Array,
-                  rooms: Number,
-                  guests: Number,
-                  checkin: String,
-                  checkout: String,
+},
+offer: {
+  title: Array,
+  address: String,
+  price: Number,
+  type: Array,
+  rooms: Number,
+  guests: Number,
+  checkin: String,
+  checkout: String,
                   features: Array,
                   description: String,
                   PHOTOS: Array
@@ -45,8 +69,8 @@ var ENTER_KEYCODE = 13;
  * Create array of js objects of ads.
  * @return {ad[]}
  */
-var createAds = function () {
-  var ads = [];
+function createAds() {
+  var newAds = [];
 
   for (var i = 0; i < ADS_COUNT; i++) {
     var avatar = 'img/avatars/user0' + (i + 1) + '.png';
@@ -81,10 +105,10 @@ var createAds = function () {
         y: location.y,
       }
     };
-    ads.push(ad);
+    newAds.push(ad);
   }
-  return ads;
-};
+  return newAds;
+}
 
 /**
  * @param {number} min
@@ -221,34 +245,6 @@ function selectFeatures(features, listElement) {
   return featuresListNew;
 }
 
-var mapStatus = document.querySelector('.map');
-setMapStatusNotFaded(mapStatus);
-
-var ads = createAds();
-var pinTemplate = document.querySelector('#pin').content.querySelector('button');
-var mapPins = document.querySelector('.map__pins');
-var pinElements = createDomElements(ads);
-mapPins.appendChild(pinElements);
-
-var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-var cardElement = createCardElement(ads[0]);
-var mapFilteresContainer = mapStatus.querySelector('.map__filters-container');
-mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
-
-var mapFaded = 'map--faded';
-mapStatus.classList.add(mapFaded);
-
-var mapFilteres = mapStatus.querySelector('.map__filters');
-makeFormElDisabled(mapFilteres, 'map__filters');
-
-var formElement = document.querySelector('.ad-form');
-var formFieldsets = formElement.querySelectorAll('fieldset');
-var pinMain = document.querySelector('.map__pin--main');
-var formAddress = formElement.querySelector('#address');
-
-makeFormElementsDisabled(formFieldsets);
-setPinAddress(pinMain);
-
 /**
  * Turn status of the map in active.
  * @param {HTMLElement} element map
@@ -293,8 +289,6 @@ function makeFormElementsAvailable(elements) {
 
 /**
  * @param {HTMLElement} pin template clone of pin
- * @param {*} x coordinate of pin
- * @param {*} y coordinate of pin
  */
 function setPinAddress(pin) {
   var address = 'left: ' + (pin.offsetLeft + PIN_WIDTH / 2) + 'px; top: ' + (pin.offsetTop + PIN_HEIGHT) + 'px;';
@@ -304,41 +298,33 @@ function setPinAddress(pin) {
 /**
  * Remove attributes and modifiers that are disabled in the form.
  */
-var makeFormAvailable = function () {
+function makeFormAvailable() {
   makeFormElAvailable(mapFilteres, 'map__filters');
   makeFormElementsAvailable(formFieldsets);
-};
+}
 
-pinMain.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    setMapStatusNotFaded(mapStatus);
-  }
-});
+/**
+ * Change value of display property of HTML Element.
+ * @param {HTMLElement} element
+ * @param {String} displayValue value of display property
+ */
+function changeElementDisplay(element, displayValue) {
+  element.style.display = displayValue;
+}
 
-pinMain.addEventListener('click', function () {
-  setMapStatusNotFaded(mapStatus);
-});
-
-pinMain.addEventListener('mousedown', function () {
-  makeFormAvailable();
-  setPinAddress(pinMain);
-});
-
-var formRoomsNumber = formElement.querySelector('#room_number');
-var formCapacity = formElement.querySelector('#capacity');
-var capacityItems = formCapacity.querySelectorAll('option');
-
-var showCapaityList = function (elements) {
+/**
+ * Show all elements of capacity list
+ * @param {array} elements
+ */
+function showCapaityList(elements) {
   for (var i = 0; i < elements.length; i++) {
     changeElementDisplay(elements[i], 'block');
   }
-};
+}
 
-var capacityOneGuest = formCapacity.querySelector('option[value = "1"]');
-var capacityTwoGuests = formCapacity.querySelector('option[value = "2"]');
-var capacityThreeGuests = formCapacity.querySelector('option[value = "3"]');
-var capacityNoGuests = formCapacity.querySelector('option[value = "0"]');
-
+/**
+ * The Number of rooms field is synchronized with the capacity field.
+ */
 function validationCapacity() {
   var roomsValueSelected = formRoomsNumber.querySelector('option:checked').value;
   showCapaityList(capacityItems);
@@ -358,10 +344,27 @@ function validationCapacity() {
   }
 }
 
+mapPins.appendChild(pinElements);
+mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
+mapStatus.classList.add(mapFaded);
+makeFormElDisabled(mapFilteres, 'map__filters');
+makeFormElementsDisabled(formFieldsets);
+setPinAddress(pinMain);
+
+pinMain.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    setMapStatusNotFaded(mapStatus);
+  }
+});
+
+pinMain.addEventListener('click', function () {
+  setMapStatusNotFaded(mapStatus);
+});
+
+pinMain.addEventListener('mousedown', function () {
+  makeFormAvailable();
+  setPinAddress(pinMain);
+});
+
 validationCapacity();
-
 formRoomsNumber.addEventListener('change', validationCapacity);
-
-function changeElementDisplay(element, displayValue) {
-  element.style.display = displayValue;
-}
