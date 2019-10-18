@@ -301,6 +301,7 @@ function setPinAddress(pin) {
 function makeFormAvailable() {
   makeFormElAvailable(mapFilteres, 'map__filters');
   makeFormElementsAvailable(formFieldsets);
+  makeFormElAvailable(formElement, 'ad-form');
 }
 
 /**
