@@ -334,32 +334,28 @@ function hideAllElements(elements) {
 }
 
 /**
- * The Number of rooms field is synchronized with the capacity field.
- */
-function validateCapacity() {
-  var roomsValueSelected = formRoomsNumber.querySelector('option:checked').value;
-  showAllElements(capacityItems);
-  if (roomsValueSelected === '1') {
-    changeElementDisplay(capacityThreeGuests, 'none');
-    changeElementDisplay(capacityTwoGuests, 'none');
-    changeElementDisplay(capacityNoGuests, 'none');
-  } else if (roomsValueSelected === '2') {
-    changeElementDisplay(capacityThreeGuests, 'none');
-    changeElementDisplay(capacityNoGuests, 'none');
-  } else if (roomsValueSelected === '3') {
-    changeElementDisplay(capacityNoGuests, 'none');
-  } else if (roomsValueSelected === '100') {
-    changeElementDisplay(capacityThreeGuests, 'none');
-    changeElementDisplay(capacityTwoGuests, 'none');
-    changeElementDisplay(capacityOneGuest, 'none');
-  }
-}
-
-/**
  * Show Card of ad.
  */
 function showCard() {
   mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
+}
+
+/**
+ * The Number of rooms field is synchronized with the capacity field.
+ */
+function validateCapacity() {
+  var roomsValue = document.querySelector('#room_number').value;
+  var guestsValue = document.querySelector('#capacity').value;
+  var isCorrectForOneRoom = roomsValue === '1' && guestsValue === '1';
+  var isCorrectForTwoRooms = roomsValue === '2' && (guestsValue === '1' || guestsValue === '2');
+  var isCorrectForThreeRooms = roomsValue === '3' && (guestsValue === '1' || guestsValue === '2' || guestsValue === '3');
+  var isCorrectForManyRooms = roomsValue === '100' && guestsValue === '0';
+
+  if (!isCorrectForOneRoom && !isCorrectForTwoRooms && !isCorrectForThreeRooms && !isCorrectForManyRooms) {
+    formCapacity.setCustomValidity('Неправильно выбрано кол-во гостей');
+  } else {
+    formCapacity.setCustomValidity('');
+  }
 }
 
 mapPinsBlock.appendChild(pinElements);
@@ -387,5 +383,4 @@ pinMain.addEventListener('mousedown', function () {
   showCard();
 });
 
-validateCapacity();
-formRoomsNumber.addEventListener('change', validateCapacity);
+document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
