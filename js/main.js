@@ -16,12 +16,12 @@ var MAX_ROOM_COUNT = 10;
 var MAX_GUESTS_COUNT = 20;
 var ENTER_KEYCODE = 13;
 
-var mapStatus = document.querySelector('.map');
+var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('button');
-var mapPins = document.querySelector('.map__pins');
+var mapPinsBlock = document.querySelector('.map__pins');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-var mapFilteresContainer = mapStatus.querySelector('.map__filters-container');
-var mapFilteres = mapStatus.querySelector('.map__filters');
+var mapFilteresContainer = map.querySelector('.map__filters-container');
+var mapFilteres = map.querySelector('.map__filters');
 var formElement = document.querySelector('.ad-form');
 var formFieldsets = formElement.querySelectorAll('fieldset');
 var pinMain = document.querySelector('.map__pin--main');
@@ -249,7 +249,7 @@ function selectFeatures(features, listElement) {
  * Turn status of the map in active.
  * @param {HTMLElement} element map
  */
-function setMapStatusNotFaded(element) {
+function setMapNotFaded(element) {
   element.classList.remove('map--faded');
 }
 
@@ -302,6 +302,8 @@ function makeFormAvailable() {
   makeFormElAvailable(mapFilteres, 'map__filters');
   makeFormElementsAvailable(formFieldsets);
   makeFormElAvailable(formElement, 'ad-form');
+  showCard();
+  showAllElements(mapPins);
 }
 
 /**
@@ -317,9 +319,19 @@ function changeElementDisplay(element, displayValue) {
  * Show all elements of capacity list
  * @param {array} elements
  */
-function showCapaityList(elements) {
+function showAllElements(elements) {
   for (var i = 0; i < elements.length; i++) {
     changeElementDisplay(elements[i], 'block');
+  }
+}
+
+/**
+ * Make all pins invisible, excepting main pin.
+ * @param {array} elements
+ */
+function hideAllElements(elements) {
+  for (var i = 0; i < elements.length; i++) {
+    changeElementDisplay(elements[i], 'none');
   }
 }
 
@@ -328,7 +340,7 @@ function showCapaityList(elements) {
  */
 function validationCapacity() {
   var roomsValueSelected = formRoomsNumber.querySelector('option:checked').value;
-  showCapaityList(capacityItems);
+  showAllElements(capacityItems);
   if (roomsValueSelected === '1') {
     changeElementDisplay(capacityThreeGuests, 'none');
     changeElementDisplay(capacityTwoGuests, 'none');
@@ -345,21 +357,29 @@ function validationCapacity() {
   }
 }
 
-mapPins.appendChild(pinElements);
-mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
-mapStatus.classList.add(mapFaded);
+/**
+ * Show Card of ad.
+ */
+function showCard() {
+  mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
+}
+
+mapPinsBlock.appendChild(pinElements);
+map.classList.add(mapFaded);
 makeFormElDisabled(mapFilteres, 'map__filters');
 makeFormElementsDisabled(formFieldsets);
 setPinAddress(pinMain);
+var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+hideAllElements(mapPins);
 
 pinMain.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    setMapStatusNotFaded(mapStatus);
+    setMapNotFaded(map);
   }
 });
 
 pinMain.addEventListener('click', function () {
-  setMapStatusNotFaded(mapStatus);
+  setMapNotFaded(map);
 });
 
 pinMain.addEventListener('mousedown', function () {
