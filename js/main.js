@@ -249,8 +249,8 @@ function selectFeatures(features, listElement) {
  * Turn status of the map in active.
  * @param {HTMLElement} element map
  */
-function setMapNotFaded(element) {
-  element.classList.remove('map--faded');
+function setMapNotFaded() {
+  map.classList.remove('map--faded');
 }
 
 /**
@@ -302,8 +302,6 @@ function makeFormAvailable() {
   makeFormElAvailable(mapFilteres, 'map__filters');
   makeFormElementsAvailable(formFieldsets);
   makeFormElAvailable(formElement, 'ad-form');
-  showCard();
-  showAllElements(mapPins);
 }
 
 /**
@@ -338,7 +336,7 @@ function hideAllElements(elements) {
 /**
  * The Number of rooms field is synchronized with the capacity field.
  */
-function validationCapacity() {
+function validateCapacity() {
   var roomsValueSelected = formRoomsNumber.querySelector('option:checked').value;
   showAllElements(capacityItems);
   if (roomsValueSelected === '1') {
@@ -368,24 +366,26 @@ mapPinsBlock.appendChild(pinElements);
 map.classList.add(mapFaded);
 makeFormElDisabled(mapFilteres, 'map__filters');
 makeFormElementsDisabled(formFieldsets);
-setPinAddress(pinMain);
 var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 hideAllElements(mapPins);
 
 pinMain.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    setMapNotFaded(map);
+    setMapNotFaded();
+    makeFormAvailable();
+    showAllElements(mapPins);
+    setPinAddress(pinMain);
+    showCard();
   }
 });
 
-pinMain.addEventListener('click', function () {
-  setMapNotFaded(map);
-});
-
 pinMain.addEventListener('mousedown', function () {
+  setMapNotFaded();
   makeFormAvailable();
+  showAllElements(mapPins);
   setPinAddress(pinMain);
+  showCard();
 });
 
-validationCapacity();
-formRoomsNumber.addEventListener('change', validationCapacity);
+validateCapacity();
+formRoomsNumber.addEventListener('change', validateCapacity);
