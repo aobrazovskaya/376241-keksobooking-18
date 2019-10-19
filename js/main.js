@@ -26,14 +26,7 @@ var formElement = document.querySelector('.ad-form');
 var formFieldsets = formElement.querySelectorAll('fieldset');
 var pinMain = document.querySelector('.map__pin--main');
 var formAddress = formElement.querySelector('#address');
-var formRoomsNumber = formElement.querySelector('#room_number');
 var formCapacity = formElement.querySelector('#capacity');
-
-var capacityItems = formCapacity.querySelectorAll('option');
-var capacityOneGuest = formCapacity.querySelector('option[value = "1"]');
-var capacityTwoGuests = formCapacity.querySelector('option[value = "2"]');
-var capacityThreeGuests = formCapacity.querySelector('option[value = "3"]');
-var capacityNoGuests = formCapacity.querySelector('option[value = "0"]');
 
 var ads = createAds();
 var pinElements = createDomElements(ads);
