@@ -429,3 +429,16 @@ function validatePrice() {
     formPrice.min = 10000;
   }
 }
+
+var formTimeIn = formElement.querySelector('#timein');
+var formTimeOut = formElement.querySelector('#timeout');
+formTimeIn.addEventListener('change', validateTimeInput);
+formTimeOut.addEventListener('change', validateTimeInput);
+
+function validateTimeInput(evt) {
+  if (evt.target === formTimeIn) {
+    formTimeOut.value = formTimeIn.value;
+  } else {
+    formTimeIn.value = formTimeOut.value;
+  }
+}
