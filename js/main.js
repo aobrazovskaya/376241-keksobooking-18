@@ -407,3 +407,25 @@ for (var i = 0; i < mapPins.length; i++) {
     }
   });
 }
+
+var formType = formElement.querySelector('#type');
+var formPrice = formElement.querySelector('#price');
+formType.addEventListener('change', validatePrice);
+
+/**
+ * Change placeholder and min value of price depending of type value.
+ */
+function validatePrice() {
+  if (formType.value === 'bungalo') {
+    formPrice.placeholder = 0;
+  } else if (formType.value === 'flat') {
+    formPrice.placeholder = 1000;
+    formPrice.min = 1000;
+  } else if (formType.value === 'house') {
+    formPrice.placeholder = 5000;
+    formPrice.min = 5000;
+  } else if (formType.value === 'palace') {
+    formPrice.placeholder = 10000;
+    formPrice.min = 10000;
+  }
+}
