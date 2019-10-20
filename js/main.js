@@ -31,32 +31,31 @@ var formCapacity = formElement.querySelector('#capacity');
 
 var ads = createAds();
 var pinElements = createDomElements(ads);
-var cardElement = createCardElement(ads[0]);
 var mapFaded = 'map--faded';
 
 /**
  * @typedef {{author: {
-                avatar: String
-              },
-              offer: {
-                title: Array,
-                address: String,
-                price: Number,
-                type: Array,
-                rooms: Number,
-                guests: Number,
-                checkin: String,
-                checkout: String,
-                features: Array,
-                description: String,
-                PHOTOS: Array
-              },
+  avatar: String
+},
+offer: {
+  title: Array,
+  address: String,
+  price: Number,
+  type: Array,
+  rooms: Number,
+  guests: Number,
+  checkin: String,
+  checkout: String,
+  features: Array,
+  description: String,
+  PHOTOS: Array
+},
 
-              location: {
-                x: Number,
-                y: Number
-              }
-            }} ad
+location: {
+  x: Number,
+  y: Number
+}
+}} ad
 */
 
 /**
@@ -285,7 +284,7 @@ function makeFormElementsAvailable(elements) {
  * @param {HTMLElement} pin template clone of pin
  */
 function setPinAddress(pin) {
-  var address = 'left: ' + (pin.offsetLeft + PIN_WIDTH / 2) + 'px; top: ' + (pin.offsetTop + PIN_HEIGHT) + 'px;';
+  var address = (pin.offsetLeft + PIN_WIDTH / 2) + ', ' + (pin.offsetTop + PIN_HEIGHT);
   formAddress.value = address;
 }
 
@@ -327,11 +326,21 @@ function hideAllElements(elements) {
   }
 }
 
+function createCardElements(adElements) {
+  var cardElements = [];
+  for (var i = 0; i < adElements.length; i++) {
+    cardElements.push(createCardElement(adElements[i]));
+  }
+  return cardElements;
+}
+
+var newCardElements = createCardElements(ads);
+
 /**
  * Show Card of ad.
  */
 function showCardElement() {
-  mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
+  mapFilteresContainer.insertAdjacentElement('beforebegin', newCardElements[0]);
 }
 
 /**
@@ -378,15 +387,15 @@ pinMain.addEventListener('mousedown', function () {
 document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
 
 
-var cardCloseElement = cardElement.querySelector('.popup__close');
+var cardCloseElement = newCardElements[0].querySelector('.popup__close');
 
 function closeCard() {
-  changeElementDisplay(cardElement, 'none');
+  changeElementDisplay(newCardElements[0], 'none');
 }
 
 function showCard() {
   showCardElement();
-  changeElementDisplay(cardElement, 'block');
+  changeElementDisplay(newCardElements[0], 'block');
 }
 
 cardCloseElement.addEventListener('click', closeCard);
