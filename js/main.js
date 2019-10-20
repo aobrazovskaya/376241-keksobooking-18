@@ -15,6 +15,7 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 var MAX_ROOM_COUNT = 10;
 var MAX_GUESTS_COUNT = 20;
 var ENTER_KEYCODE = 13;
+var ESC_KEYCODE = 27;
 
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('button');
@@ -35,28 +36,28 @@ var mapFaded = 'map--faded';
 
 /**
  * @typedef {{author: {
-  avatar: String
-},
-offer: {
-  title: Array,
-  address: String,
-  price: Number,
-  type: Array,
-  rooms: Number,
-  guests: Number,
-  checkin: String,
-  checkout: String,
-                  features: Array,
-                  description: String,
-                  PHOTOS: Array
-                },
+                avatar: String
+              },
+              offer: {
+                title: Array,
+                address: String,
+                price: Number,
+                type: Array,
+                rooms: Number,
+                guests: Number,
+                checkin: String,
+                checkout: String,
+                features: Array,
+                description: String,
+                PHOTOS: Array
+              },
 
-                location: {
-                  x: Number,
-                  y: Number
-                }
-              }} ad
-              */
+              location: {
+                x: Number,
+                y: Number
+              }
+            }} ad
+*/
 
 /**
  * Create array of js objects of ads.
@@ -329,7 +330,7 @@ function hideAllElements(elements) {
 /**
  * Show Card of ad.
  */
-function showCard() {
+function showCardElement() {
   mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
 }
 
@@ -364,7 +365,7 @@ pinMain.addEventListener('keydown', function (evt) {
     makeFormAvailable();
     showAllElements(mapPins);
     setPinAddress(pinMain);
-    showCard();
+    showCardElement();
   }
 });
 
@@ -373,7 +374,36 @@ pinMain.addEventListener('mousedown', function () {
   makeFormAvailable();
   showAllElements(mapPins);
   setPinAddress(pinMain);
-  showCard();
+  showCardElement();
 });
 
 document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
+
+
+var cardCloseElement = cardElement.querySelector('.popup__close');
+
+function closeCard() {
+  changeElementDisplay(cardElement, 'none');
+}
+
+function showCard() {
+  changeElementDisplay(cardElement, 'block');
+}
+
+cardCloseElement.addEventListener('click', closeCard);
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeCard();
+  }
+});
+
+for (var i = 0; i < mapPins.length; i++) {
+  mapPins[i].addEventListener('click', showCard);
+
+  mapPins[i].addEventListener('click', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      showCard();
+    }
+  });
+}
