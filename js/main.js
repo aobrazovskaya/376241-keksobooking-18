@@ -418,6 +418,7 @@ for (var i = 0; i < mapPins.length; i++) {
 
 var formType = formElement.querySelector('#type');
 var formPrice = formElement.querySelector('#price');
+validatePrice();
 formType.addEventListener('change', validatePrice);
 
 /**
