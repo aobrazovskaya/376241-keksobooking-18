@@ -418,13 +418,13 @@ for (var i = 0; i < mapPins.length; i++) {
 
 var formType = formElement.querySelector('#type');
 var formPrice = formElement.querySelector('#price');
-validatePrice();
-formType.addEventListener('change', validatePrice);
+setPriceRequirements();
+formType.addEventListener('change', setPriceRequirements);
 
 /**
  * Change placeholder and min value of price depending of type value.
  */
-function validatePrice() {
+function setPriceRequirements() {
   if (formType.value === 'bungalo') {
     formPrice.placeholder = 0;
   } else if (formType.value === 'flat') {
@@ -441,10 +441,10 @@ function validatePrice() {
 
 var formTimeIn = formElement.querySelector('#timein');
 var formTimeOut = formElement.querySelector('#timeout');
-formTimeIn.addEventListener('change', validateTimeInput);
-formTimeOut.addEventListener('change', validateTimeInput);
+formTimeIn.addEventListener('change', synchronizeTime);
+formTimeOut.addEventListener('change', synchronizeTime);
 
-function validateTimeInput(evt) {
+function synchronizeTime(evt) {
   if (evt.target === formTimeIn) {
     formTimeOut.value = formTimeIn.value;
   } else {
