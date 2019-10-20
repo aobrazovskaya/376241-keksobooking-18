@@ -326,21 +326,22 @@ function hideAllElements(elements) {
   }
 }
 
-function createCardElements(adElements) {
-  var cardElements = [];
-  for (var i = 0; i < adElements.length; i++) {
-    cardElements.push(createCardElement(adElements[i]));
+function showCardElement(evt) {
+  var targetImg = evt.target.querySelector('img') || evt.target;
+  var currentPin = targetImg.getAttribute('src');
+  for (i = 0; i < ads.length; i++) {
+    if (currentPin === ads[i].author.avatar) {
+      var mapCard = document.querySelector('.map__card.popup');
+      if (mapCard !== null) {
+        mapCard.replaceWith(createCardElement(ads[i]));
+      } else {
+        mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(ads[i]));
+      }
+      var cardCloseElement = document.querySelector('.popup__close');
+      cardCloseElement.addEventListener('click', closeCard);
+      break;
+    }
   }
-  return cardElements;
-}
-
-var newCardElements = createCardElements(ads);
-
-/**
- * Show Card of ad.
- */
-function showCardElement() {
-  mapFilteresContainer.insertAdjacentElement('beforebegin', newCardElements[0]);
 }
 
 /**
@@ -387,18 +388,11 @@ pinMain.addEventListener('mousedown', function () {
 document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
 
 
-var cardCloseElement = newCardElements[0].querySelector('.popup__close');
-
 function closeCard() {
-  changeElementDisplay(newCardElements[0], 'none');
+  var mapCard = document.querySelector('.map__card.popup');
+  changeElementDisplay(mapCard, 'none');
 }
 
-function showCard() {
-  showCardElement();
-  changeElementDisplay(newCardElements[0], 'block');
-}
-
-cardCloseElement.addEventListener('click', closeCard);
 
 document.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -407,11 +401,11 @@ document.addEventListener('keydown', function (evt) {
 });
 
 for (var i = 0; i < mapPins.length; i++) {
-  mapPins[i].addEventListener('click', showCard);
+  mapPins[i].addEventListener('click', showCardElement);
 
-  mapPins[i].addEventListener('click', function (evt) {
+  mapPins[i].addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-      showCard();
+      showCardElement(evt);
     }
   });
 }
