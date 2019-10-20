@@ -365,7 +365,6 @@ pinMain.addEventListener('keydown', function (evt) {
     makeFormAvailable();
     showAllElements(mapPins);
     setPinAddress(pinMain);
-    showCardElement();
   }
 });
 
@@ -374,7 +373,6 @@ pinMain.addEventListener('mousedown', function () {
   makeFormAvailable();
   showAllElements(mapPins);
   setPinAddress(pinMain);
-  showCardElement();
 });
 
 document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
@@ -387,6 +385,7 @@ function closeCard() {
 }
 
 function showCard() {
+  showCardElement();
   changeElementDisplay(cardElement, 'block');
 }
 
