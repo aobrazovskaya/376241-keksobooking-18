@@ -14,20 +14,38 @@ var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var MAX_ROOM_COUNT = 10;
 var MAX_GUESTS_COUNT = 20;
+var ENTER_KEYCODE = 13;
+
+var map = document.querySelector('.map');
+var pinTemplate = document.querySelector('#pin').content.querySelector('button');
+var mapPinsBlock = document.querySelector('.map__pins');
+var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+var mapFilteresContainer = map.querySelector('.map__filters-container');
+var mapFilteres = map.querySelector('.map__filters');
+var formElement = document.querySelector('.ad-form');
+var formFieldsets = formElement.querySelectorAll('fieldset');
+var pinMain = document.querySelector('.map__pin--main');
+var formAddress = formElement.querySelector('#address');
+var formCapacity = formElement.querySelector('#capacity');
+
+var ads = createAds();
+var pinElements = createDomElements(ads);
+var cardElement = createCardElement(ads[0]);
+var mapFaded = 'map--faded';
 
 /**
  * @typedef {{author: {
   avatar: String
-              },
-              offer: {
-                  title: Array,
-                  address: String,
-                  price: Number,
-                  type: Array,
-                  rooms: Number,
-                  guests: Number,
-                  checkin: String,
-                  checkout: String,
+},
+offer: {
+  title: Array,
+  address: String,
+  price: Number,
+  type: Array,
+  rooms: Number,
+  guests: Number,
+  checkin: String,
+  checkout: String,
                   features: Array,
                   description: String,
                   PHOTOS: Array
@@ -44,8 +62,8 @@ var MAX_GUESTS_COUNT = 20;
  * Create array of js objects of ads.
  * @return {ad[]}
  */
-var createAds = function () {
-  var ads = [];
+function createAds() {
+  var newAds = [];
 
   for (var i = 0; i < ADS_COUNT; i++) {
     var avatar = 'img/avatars/user0' + (i + 1) + '.png';
@@ -80,10 +98,10 @@ var createAds = function () {
         y: location.y,
       }
     };
-    ads.push(ad);
+    newAds.push(ad);
   }
-  return ads;
-};
+  return newAds;
+}
 
 /**
  * @param {number} min
@@ -220,16 +238,142 @@ function selectFeatures(features, listElement) {
   return featuresListNew;
 }
 
-var mapStatus = document.querySelector('.map');
-mapStatus.classList.remove('map--faded');
+/**
+ * Turn status of the map in active.
+ * @param {HTMLElement} element map
+ */
+function setMapNotFaded() {
+  map.classList.remove('map--faded');
+}
 
-var ads = createAds();
-var pinTemplate = document.querySelector('#pin').content.querySelector('button');
-var mapPins = document.querySelector('.map__pins');
-var pinElements = createDomElements(ads);
-mapPins.appendChild(pinElements);
+/**
+ * @param {HTMLElement} element
+ * @param {String} classOfElement
+ */
+function makeFormElDisabled(element, classOfElement) {
+  element.classList.add(classOfElement + '--disabled');
+}
 
-var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-var cardElement = createCardElement(ads[0]);
-var mapFilteres = mapStatus.querySelector('.map__filters-container');
-mapFilteres.insertAdjacentElement('beforebegin', cardElement);
+/**
+ * @param {HTMLElement} element
+ * @param {String} classOfElement
+ */
+function makeFormElAvailable(element, classOfElement) {
+  element.classList.remove(classOfElement + '--disabled');
+}
+
+/**
+ * @param {array} elements
+ */
+function makeFormElementsDisabled(elements) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].disabled = true;
+  }
+}
+
+/**
+ * @param {array} elements
+ */
+function makeFormElementsAvailable(elements) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].disabled = false;
+  }
+}
+
+/**
+ * @param {HTMLElement} pin template clone of pin
+ */
+function setPinAddress(pin) {
+  var address = 'left: ' + (pin.offsetLeft + PIN_WIDTH / 2) + 'px; top: ' + (pin.offsetTop + PIN_HEIGHT) + 'px;';
+  formAddress.value = address;
+}
+
+/**
+ * Remove attributes and modifiers that are disabled in the form.
+ */
+function makeFormAvailable() {
+  makeFormElAvailable(mapFilteres, 'map__filters');
+  makeFormElementsAvailable(formFieldsets);
+  makeFormElAvailable(formElement, 'ad-form');
+}
+
+/**
+ * Change value of display property of HTML Element.
+ * @param {HTMLElement} element
+ * @param {String} displayValue value of display property
+ */
+function changeElementDisplay(element, displayValue) {
+  element.style.display = displayValue;
+}
+
+/**
+ * Show all elements of capacity list
+ * @param {array} elements
+ */
+function showAllElements(elements) {
+  for (var i = 0; i < elements.length; i++) {
+    changeElementDisplay(elements[i], 'block');
+  }
+}
+
+/**
+ * Make all pins invisible, excepting main pin.
+ * @param {array} elements
+ */
+function hideAllElements(elements) {
+  for (var i = 0; i < elements.length; i++) {
+    changeElementDisplay(elements[i], 'none');
+  }
+}
+
+/**
+ * Show Card of ad.
+ */
+function showCard() {
+  mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
+}
+
+/**
+ * The Number of rooms field is synchronized with the capacity field.
+ */
+function validateCapacity() {
+  var roomsValue = document.querySelector('#room_number').value;
+  var guestsValue = document.querySelector('#capacity').value;
+  var isCorrectForOneRoom = roomsValue === '1' && guestsValue === '1';
+  var isCorrectForTwoRooms = roomsValue === '2' && (guestsValue === '1' || guestsValue === '2');
+  var isCorrectForThreeRooms = roomsValue === '3' && (guestsValue === '1' || guestsValue === '2' || guestsValue === '3');
+  var isCorrectForManyRooms = roomsValue === '100' && guestsValue === '0';
+
+  if (!isCorrectForOneRoom && !isCorrectForTwoRooms && !isCorrectForThreeRooms && !isCorrectForManyRooms) {
+    formCapacity.setCustomValidity('Неправильно выбрано кол-во гостей');
+  } else {
+    formCapacity.setCustomValidity('');
+  }
+}
+
+mapPinsBlock.appendChild(pinElements);
+map.classList.add(mapFaded);
+makeFormElDisabled(mapFilteres, 'map__filters');
+makeFormElementsDisabled(formFieldsets);
+var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+hideAllElements(mapPins);
+
+pinMain.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    setMapNotFaded();
+    makeFormAvailable();
+    showAllElements(mapPins);
+    setPinAddress(pinMain);
+    showCard();
+  }
+});
+
+pinMain.addEventListener('mousedown', function () {
+  setMapNotFaded();
+  makeFormAvailable();
+  showAllElements(mapPins);
+  setPinAddress(pinMain);
+  showCard();
+});
+
+document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
