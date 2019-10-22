@@ -15,6 +15,7 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 var MAX_ROOM_COUNT = 10;
 var MAX_GUESTS_COUNT = 20;
 var ENTER_KEYCODE = 13;
+var ESC_KEYCODE = 27;
 
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('button');
@@ -30,7 +31,6 @@ var formCapacity = formElement.querySelector('#capacity');
 
 var ads = createAds();
 var pinElements = createDomElements(ads);
-var cardElement = createCardElement(ads[0]);
 var mapFaded = 'map--faded';
 
 /**
@@ -46,17 +46,17 @@ offer: {
   guests: Number,
   checkin: String,
   checkout: String,
-                  features: Array,
-                  description: String,
-                  PHOTOS: Array
-                },
+  features: Array,
+  description: String,
+  PHOTOS: Array
+},
 
-                location: {
-                  x: Number,
-                  y: Number
-                }
-              }} ad
-              */
+location: {
+  x: Number,
+  y: Number
+}
+}} ad
+*/
 
 /**
  * Create array of js objects of ads.
@@ -284,7 +284,7 @@ function makeFormElementsAvailable(elements) {
  * @param {HTMLElement} pin template clone of pin
  */
 function setPinAddress(pin) {
-  var address = 'left: ' + (pin.offsetLeft + PIN_WIDTH / 2) + 'px; top: ' + (pin.offsetTop + PIN_HEIGHT) + 'px;';
+  var address = (pin.offsetLeft + PIN_WIDTH / 2) + ', ' + (pin.offsetTop + PIN_HEIGHT);
   formAddress.value = address;
 }
 
@@ -326,11 +326,22 @@ function hideAllElements(elements) {
   }
 }
 
-/**
- * Show Card of ad.
- */
-function showCard() {
-  mapFilteresContainer.insertAdjacentElement('beforebegin', cardElement);
+function showCardElement(evt) {
+  var targetImg = evt.target.querySelector('img') || evt.target;
+  var currentPin = targetImg.getAttribute('src');
+  for (i = 0; i < ads.length; i++) {
+    if (currentPin === ads[i].author.avatar) {
+      var mapCard = document.querySelector('.map__card.popup');
+      if (mapCard !== null) {
+        mapCard.replaceWith(createCardElement(ads[i]));
+      } else {
+        mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(ads[i]));
+      }
+      var cardCloseElement = document.querySelector('.popup__close');
+      cardCloseElement.addEventListener('click', closeCard);
+      break;
+    }
+  }
 }
 
 /**
@@ -364,7 +375,6 @@ pinMain.addEventListener('keydown', function (evt) {
     makeFormAvailable();
     showAllElements(mapPins);
     setPinAddress(pinMain);
-    showCard();
   }
 });
 
@@ -373,7 +383,65 @@ pinMain.addEventListener('mousedown', function () {
   makeFormAvailable();
   showAllElements(mapPins);
   setPinAddress(pinMain);
-  showCard();
 });
 
 document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
+
+
+function closeCard() {
+  var mapCard = document.querySelector('.map__card.popup');
+  changeElementDisplay(mapCard, 'none');
+}
+
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeCard();
+  }
+});
+
+for (var i = 0; i < mapPins.length; i++) {
+  mapPins[i].addEventListener('click', showCardElement);
+
+  mapPins[i].addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      showCardElement(evt);
+    }
+  });
+}
+
+var formType = formElement.querySelector('#type');
+var formPrice = formElement.querySelector('#price');
+setPriceRequirements();
+formType.addEventListener('change', setPriceRequirements);
+
+/**
+ * Change placeholder and min value of price depending of type value.
+ */
+function setPriceRequirements() {
+  if (formType.value === 'bungalo') {
+    formPrice.placeholder = 0;
+  } else if (formType.value === 'flat') {
+    formPrice.placeholder = 1000;
+    formPrice.min = 1000;
+  } else if (formType.value === 'house') {
+    formPrice.placeholder = 5000;
+    formPrice.min = 5000;
+  } else if (formType.value === 'palace') {
+    formPrice.placeholder = 10000;
+    formPrice.min = 10000;
+  }
+}
+
+var formTimeIn = formElement.querySelector('#timein');
+var formTimeOut = formElement.querySelector('#timeout');
+formTimeIn.addEventListener('change', synchronizeTime);
+formTimeOut.addEventListener('change', synchronizeTime);
+
+function synchronizeTime(evt) {
+  if (evt.target === formTimeIn) {
+    formTimeOut.value = formTimeIn.value;
+  } else {
+    formTimeIn.value = formTimeOut.value;
+  }
+}
