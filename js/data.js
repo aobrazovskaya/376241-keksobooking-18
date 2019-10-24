@@ -19,26 +19,26 @@
   /**
    * @typedef {{author: {
     avatar: String
-  },
-    offer: {
-      title: Array,
-      address: String,
-      price: Number,
-      type: Array,
-      rooms: Number,
-      guests: Number,
-      checkin: String,
-      checkout: String,
-      features: Array,
-      description: String,
-      PHOTOS: Array
     },
+      offer: {
+        title: Array,
+        address: String,
+        price: Number,
+        type: Array,
+        rooms: Number,
+        guests: Number,
+        checkin: String,
+        checkout: String,
+        features: Array,
+        description: String,
+        PHOTOS: Array
+      },
 
-    location: {
-      x: Number,
-      y: Number
-  }
-  }} ad
+      location: {
+        x: Number,
+        y: Number
+      }
+    }} ad
   */
 
   /**

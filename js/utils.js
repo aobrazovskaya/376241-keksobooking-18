@@ -58,4 +58,5 @@
       window.changeElementDisplay(elements[i], 'none');
     }
   };
+
 })();

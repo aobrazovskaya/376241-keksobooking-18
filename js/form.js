@@ -5,6 +5,10 @@
   var formFieldsets = formElement.querySelectorAll('fieldset');
   var formAddress = formElement.querySelector('#address');
   var formCapacity = formElement.querySelector('#capacity');
+  var formType = formElement.querySelector('#type');
+  var formPrice = formElement.querySelector('#price');
+  var formTimeIn = formElement.querySelector('#timein');
+  var formTimeOut = formElement.querySelector('#timeout');
 
   /**
    * @param {HTMLElement} element
@@ -41,18 +45,6 @@
   }
 
   /**
-   * Remove attributes and modifiers that are disabled in the form.
-   */
-  window.makeFormAvailable = function () {
-    makeFormElAvailable(window.mapFilteres, 'map__filters');
-    makeFormElementsAvailable(formFieldsets);
-    makeFormElAvailable(formElement, 'ad-form');
-  };
-
-  makeFormElDisabled(window.mapFilteres, 'map__filters');
-  makeFormElementsDisabled(formFieldsets);
-
-  /**
    * The Number of rooms field is synchronized with the capacity field.
    */
   function validateCapacity() {
@@ -69,13 +61,6 @@
       formCapacity.setCustomValidity('');
     }
   }
-
-  document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
-
-  var formType = formElement.querySelector('#type');
-  var formPrice = formElement.querySelector('#price');
-  setPriceRequirements();
-  formType.addEventListener('change', setPriceRequirements);
 
   /**
    * Change placeholder and min value of price depending of type value.
@@ -103,11 +88,6 @@
     formAddress.value = address;
   };
 
-  var formTimeIn = formElement.querySelector('#timein');
-  var formTimeOut = formElement.querySelector('#timeout');
-  formTimeIn.addEventListener('change', synchronizeTime);
-  formTimeOut.addEventListener('change', synchronizeTime);
-
   function synchronizeTime(evt) {
     if (evt.target === formTimeIn) {
       formTimeOut.value = formTimeIn.value;
@@ -115,4 +95,23 @@
       formTimeIn.value = formTimeOut.value;
     }
   }
+
+  window.formUtils = {
+    /**
+     * Remove attributes and modifiers that are disabled in the form.
+     */
+    makeFormAvailable: function () {
+      makeFormElAvailable(window.mapFilteres, 'map__filters');
+      makeFormElementsAvailable(formFieldsets);
+      makeFormElAvailable(formElement, 'ad-form');
+    }
+  };
+
+  makeFormElDisabled(window.mapFilteres, 'map__filters');
+  makeFormElementsDisabled(formFieldsets);
+  setPriceRequirements();
+  document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
+  formType.addEventListener('change', setPriceRequirements);
+  formTimeIn.addEventListener('change', synchronizeTime);
+  formTimeOut.addEventListener('change', synchronizeTime);
 })();

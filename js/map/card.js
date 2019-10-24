@@ -67,24 +67,6 @@
     }
   }
 
-  window.showCardElement = function (evt) {
-    var targetImg = evt.target.querySelector('img') || evt.target;
-    var currentPin = targetImg.getAttribute('src');
-    for (var i = 0; i < window.ads.length; i++) {
-      if (currentPin === window.ads[i].author.avatar) {
-        var mapCard = document.querySelector('.map__card.popup');
-        if (mapCard !== null) {
-          mapCard.replaceWith(createCardElement(window.ads[i]));
-        } else {
-          window.mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(window.ads[i]));
-        }
-        var cardCloseElement = document.querySelector('.popup__close');
-        cardCloseElement.addEventListener('click', closeCard);
-        break;
-      }
-    }
-  };
-
   /**
    * Create a new ul list of available features.
    * @param {array} features of current ad
@@ -108,9 +90,28 @@
     window.changeElementDisplay(mapCard, 'none');
   }
 
+  window.showCardElement = function (evt) {
+    var targetImg = evt.target.querySelector('img') || evt.target;
+    var currentPin = targetImg.getAttribute('src');
+    for (var i = 0; i < window.ads.length; i++) {
+      if (currentPin === window.ads[i].author.avatar) {
+        var mapCard = document.querySelector('.map__card.popup');
+        if (mapCard !== null) {
+          mapCard.replaceWith(createCardElement(window.ads[i]));
+        } else {
+          window.mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(window.ads[i]));
+        }
+        var cardCloseElement = document.querySelector('.popup__close');
+        cardCloseElement.addEventListener('click', closeCard);
+        break;
+      }
+    }
+  };
+
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.ESC_KEYCODE) {
       closeCard();
     }
   });
+
 })();
