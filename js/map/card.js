@@ -24,7 +24,7 @@
     var cardTime = newCard.querySelector('.popup__text--time');
     cardTime.textContent = 'Заезд после ' + currentCard.offer.checkin + ', выезд до ' + currentCard.offer.checkout;
     var cardFeatures = newCard.querySelector('.popup__features');
-    cardFeatures.replaceWith(window.selectFeatures(currentCard.offer.features, cardFeatures));
+    cardFeatures.replaceWith(selectFeatures(currentCard.offer.features, cardFeatures));
     var cardDescription = newCard.querySelector('.popup__description');
     cardDescription.textContent = currentCard.offer.description;
     var cardPhotos = newCard.querySelector('.popup__photos');
@@ -84,6 +84,24 @@
       }
     }
   };
+
+  /**
+   * Create a new ul list of available features.
+   * @param {array} features of current ad
+   * @param {HTMLElement} listElement html element of features list
+   * @return {HTMLElement} new list
+   */
+  function selectFeatures(features, listElement) {
+    var currentFeaturesList = listElement.cloneNode(true);
+    var featuresListNew = listElement.cloneNode(false);
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < features.length; i++) {
+      var currentElement = currentFeaturesList.querySelector('.popup__feature--' + features[i]);
+      fragment.appendChild(currentElement);
+    }
+    featuresListNew.appendChild(fragment);
+    return featuresListNew;
+  }
 
   function closeCard() {
     var mapCard = document.querySelector('.map__card.popup');

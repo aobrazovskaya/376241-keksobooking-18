@@ -1,9 +1,8 @@
 'use strict';
 
-var PIN_WIDTH = 50;
-var PIN_HEIGHT = 70;
-
 (function () {
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
   var pinTemplate = document.querySelector('#pin').content.querySelector('button');
   var mapPinsBlock = document.querySelector('.map__pins');
   var pinMain = document.querySelector('.map__pin--main');
@@ -57,13 +56,16 @@ var PIN_HEIGHT = 70;
     window.setPinAddress(pinMain);
   });
 
-  for (var i = 0; i < mapPins.length; i++) {
-    mapPins[i].addEventListener('click', window.showCardElement);
+  function showCardsOfSelectedPin() {
+    for (var i = 0; i < mapPins.length; i++) {
+      mapPins[i].addEventListener('click', window.showCardElement);
 
-    mapPins[i].addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.ENTER_KEYCODE) {
-        window.showCardElement(evt);
-      }
-    });
+      mapPins[i].addEventListener('keydown', function (evt) {
+        if (evt.keyCode === window.ENTER_KEYCODE) {
+          window.showCardElement(evt);
+        }
+      });
+    }
   }
+  showCardsOfSelectedPin();
 })();
