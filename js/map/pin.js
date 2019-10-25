@@ -38,7 +38,7 @@
 
   function showCardsOfSelectedPin() {
     for (var i = 0; i < mapPins.length; i++) {
-      mapPins[i].addEventListener('click', window.showCardElement);
+      mapPins[i].addEventListener('click', window.card.showCardElement);
 
       mapPins[i].addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.ENTER_KEYCODE) {
@@ -50,17 +50,17 @@
 
   pinMain.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.utils.ENTER_KEYCODE) {
-      window.setMapNotFaded();
+      window.map.setMapNotFaded();
       window.form.makeFormAvailable();
-      window.showAllElements(mapPins);
+      window.utils.showAllElements(mapPins);
       window.form.setPinAddress(pinMain);
     }
   });
 
   pinMain.addEventListener('mousedown', function () {
-    window.setMapNotFaded();
+    window.map.setMapNotFaded();
     window.form.makeFormAvailable();
-    window.showAllElements(mapPins);
+    window.utils.showAllElements(mapPins);
     window.form.setPinAddress(pinMain);
   });
 

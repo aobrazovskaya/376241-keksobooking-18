@@ -87,10 +87,10 @@
 
   function closeCard() {
     var mapCard = document.querySelector('.map__card.popup');
-    window.changeElementDisplay(mapCard, 'none');
+    window.utils.changeElementDisplay(mapCard, 'none');
   }
 
-  window.showCardElement = function (evt) {
+  function showCardElement(evt) {
     var targetImg = evt.target.querySelector('img') || evt.target;
     var currentPin = targetImg.getAttribute('src');
     for (var i = 0; i < window.ads.length; i++) {
@@ -99,19 +99,23 @@
         if (mapCard !== null) {
           mapCard.replaceWith(createCardElement(window.ads[i]));
         } else {
-          window.mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(window.ads[i]));
+          window.map.mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(window.ads[i]));
         }
         var cardCloseElement = document.querySelector('.popup__close');
         cardCloseElement.addEventListener('click', closeCard);
         break;
       }
     }
-  };
+  }
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.ESC_KEYCODE) {
+    if (evt.keyCode === window.utils.ESC_KEYCODE) {
       closeCard();
     }
   });
+
+  window.card = {
+    showCardElement: showCardElement
+  };
 
 })();

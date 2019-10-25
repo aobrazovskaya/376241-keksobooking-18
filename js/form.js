@@ -92,7 +92,7 @@
    * Remove attributes and modifiers that are disabled in the form.
    */
   function makeFormAvailable() {
-    makeFormElAvailable(window.mapFilteres, 'map__filters');
+    makeFormElAvailable(window.map.mapFilteres, 'map__filters');
     makeFormElementsAvailable(formFieldsets);
     makeFormElAvailable(formElement, 'ad-form');
   }
@@ -110,7 +110,7 @@
     setPinAddress: setPinAddress
   };
 
-  makeFormElDisabled(window.mapFilteres, 'map__filters');
+  makeFormElDisabled(window.map.mapFilteres, 'map__filters');
   makeFormElementsDisabled(formFieldsets);
   setPriceRequirements();
   document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
