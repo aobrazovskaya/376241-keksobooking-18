@@ -50,10 +50,10 @@
 
     for (var i = 0; i < ADS_COUNT; i++) {
       var avatar = 'img/avatars/user0' + (i + 1) + '.png';
-      var title = TITLES[window.getRandomNumberInTheRange(0, TITLES.length)];
+      var title = TITLES[window.utils.getRandomNumberInTheRange(0, TITLES.length)];
       var location = {
-        x: window.getRandomNumberInTheRange(0, mapWidth),
-        y: window.getRandomNumberInTheRange(MAP_BEGIN_HEIGHT, MAP_END_HEIGHT)
+        x: window.utils.getRandomNumberInTheRange(0, mapWidth),
+        y: window.utils.getRandomNumberInTheRange(MAP_BEGIN_HEIGHT, MAP_END_HEIGHT)
       };
       var address = location.x + ', ' + location.y;
 
@@ -65,15 +65,15 @@
         offer: {
           title: title,
           address: address,
-          price: window.getRandomNumberInTheRange(50, 1000),
-          type: FLAT_TYPES[window.getRandomNumberInTheRange(0, FLAT_TYPES.length)],
-          rooms: window.getRandomNumberInTheRange(1, MAX_ROOM_COUNT),
-          guests: window.getRandomNumberInTheRange(1, MAX_GUESTS_COUNT),
-          checkin: CHECKINS[window.getRandomNumberInTheRange(0, CHECKINS.length)],
-          checkout: CHECKINS[window.getRandomNumberInTheRange(0, CHECKINS.length)],
-          features: window.shortenArrayRandomly(FEATURES),
+          price: window.utils.getRandomNumberInTheRange(50, 1000),
+          type: FLAT_TYPES[window.utils.getRandomNumberInTheRange(0, FLAT_TYPES.length)],
+          rooms: window.utils.getRandomNumberInTheRange(1, MAX_ROOM_COUNT),
+          guests: window.utils.getRandomNumberInTheRange(1, MAX_GUESTS_COUNT),
+          checkin: CHECKINS[window.utils.getRandomNumberInTheRange(0, CHECKINS.length)],
+          checkout: CHECKINS[window.utils.getRandomNumberInTheRange(0, CHECKINS.length)],
+          features: window.utils.shortenArrayRandomly(FEATURES),
           description: title + ' по адресу: ' + address,
-          PHOTOS: window.shortenArrayRandomly(PHOTOS),
+          PHOTOS: window.utils.shortenArrayRandomly(PHOTOS),
         },
 
         location: {

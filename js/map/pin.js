@@ -51,21 +51,21 @@
   pinMain.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.ENTER_KEYCODE) {
       window.setMapNotFaded();
-      window.formUtils.makeFormAvailable();
+      window.form.makeFormAvailable();
       window.showAllElements(mapPins);
-      window.setPinAddress(pinMain);
+      window.form.setPinAddress(pinMain);
     }
   });
 
   pinMain.addEventListener('mousedown', function () {
     window.setMapNotFaded();
-    window.formUtils.makeFormAvailable();
+    window.form.makeFormAvailable();
     window.showAllElements(mapPins);
-    window.setPinAddress(pinMain);
+    window.form.setPinAddress(pinMain);
   });
 
   mapPinsBlock.appendChild(pinElements);
   mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-  window.hideAllElements(mapPins);
+  window.utils.hideAllElements(mapPins);
   showCardsOfSelectedPin();
 })();

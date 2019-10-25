@@ -9,54 +9,62 @@
    * @param {number} max
    * @return {number}
    */
-  window.getRandomNumberInTheRange = function (min, max) {
+  function getRandomNumberInTheRange(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
-  };
+  }
 
   /**
    * @param {array} array
    * @return {array} with random elements
    */
-  window.shortenArrayRandomly = function (array) {
+  function shortenArrayRandomly(array) {
     var arr = [];
     for (var i = 0; i < array.length; i++) {
-      var isRandomNumber = window.getRandomNumberInTheRange(0, 2);
+      var isRandomNumber = getRandomNumberInTheRange(0, 2);
       if (isRandomNumber) {
         arr.push(array[i]);
       }
     }
     return arr;
-  };
+  }
 
   /**
    * Change value of display property of HTML Element.
    * @param {HTMLElement} element
    * @param {String} displayValue value of display property
    */
-  window.changeElementDisplay = function (element, displayValue) {
+  function changeElementDisplay(element, displayValue) {
     element.style.display = displayValue;
-  };
+  }
 
   /**
    * Show all elements of capacity list
    * @param {array} elements
    */
-  window.showAllElements = function (elements) {
+  function showAllElements(elements) {
     for (var i = 0; i < elements.length; i++) {
-      window.changeElementDisplay(elements[i], 'block');
+      changeElementDisplay(elements[i], 'block');
     }
-  };
+  }
 
   /**
    * Make all pins invisible, excepting main pin.
    * @param {array} elements
    */
-  window.hideAllElements = function (elements) {
+  function hideAllElements(elements) {
     for (var i = 0; i < elements.length; i++) {
-      window.changeElementDisplay(elements[i], 'none');
+      changeElementDisplay(elements[i], 'none');
     }
+  }
+
+  window.utils = {
+    getRandomNumberInTheRange: getRandomNumberInTheRange,
+    shortenArrayRandomly: shortenArrayRandomly,
+    changeElementDisplay: changeElementDisplay,
+    showAllElements: showAllElements,
+    hideAllElements: hideAllElements
   };
 
 })();

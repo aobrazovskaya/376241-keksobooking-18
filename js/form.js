@@ -80,14 +80,6 @@
     }
   }
 
-  /**
-   * @param {HTMLElement} pin template clone of pin
-   */
-  window.setPinAddress = function (pin) {
-    var address = (pin.offsetLeft + window.PIN_WIDTH / 2) + ', ' + (pin.offsetTop + window.PIN_HEIGHT);
-    formAddress.value = address;
-  };
-
   function synchronizeTime(evt) {
     if (evt.target === formTimeIn) {
       formTimeOut.value = formTimeIn.value;
@@ -96,15 +88,26 @@
     }
   }
 
+  /**
+   * Remove attributes and modifiers that are disabled in the form.
+   */
+  function makeFormAvailable() {
+    makeFormElAvailable(window.mapFilteres, 'map__filters');
+    makeFormElementsAvailable(formFieldsets);
+    makeFormElAvailable(formElement, 'ad-form');
+  }
+
+  /**
+    * @param {HTMLElement} pin template clone of pin
+    */
+  function setPinAddress(pin) {
+    var address = (pin.offsetLeft + window.PIN_WIDTH / 2) + ', ' + (pin.offsetTop + window.PIN_HEIGHT);
+    formAddress.value = address;
+  }
+
   window.form = {
-    /**
-     * Remove attributes and modifiers that are disabled in the form.
-     */
-    makeFormAvailable: function () {
-      makeFormElAvailable(window.mapFilteres, 'map__filters');
-      makeFormElementsAvailable(formFieldsets);
-      makeFormElAvailable(formElement, 'ad-form');
-    }
+    makeFormAvailable: makeFormAvailable,
+    setPinAddress: setPinAddress
   };
 
   makeFormElDisabled(window.mapFilteres, 'map__filters');
