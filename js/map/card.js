@@ -93,13 +93,13 @@
   function showCardElement(evt) {
     var targetImg = evt.target.querySelector('img') || evt.target;
     var currentPin = targetImg.getAttribute('src');
-    for (var i = 0; i < window.ads.length; i++) {
-      if (currentPin === window.ads[i].author.avatar) {
+    for (var i = 0; i < window.data.ads.length; i++) {
+      if (currentPin === window.data.ads[i].author.avatar) {
         var mapCard = document.querySelector('.map__card.popup');
         if (mapCard !== null) {
-          mapCard.replaceWith(createCardElement(window.ads[i]));
+          mapCard.replaceWith(createCardElement(window.data.ads[i]));
         } else {
-          window.map.mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(window.ads[i]));
+          window.map.mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(window.data.ads[i]));
         }
         var cardCloseElement = document.querySelector('.popup__close');
         cardCloseElement.addEventListener('click', closeCard);

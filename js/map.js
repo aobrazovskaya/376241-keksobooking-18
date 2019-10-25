@@ -6,9 +6,9 @@
   var mapFaded = 'map--faded';
   var mapFilteresContainer = map.querySelector('.map__filters-container');
   var mapFilteres = map.querySelector('.map__filters');
-  var mapWidth = mapElement.offsetWidth - window.PIN_WIDTH;
-  var MAP_BEGIN_HEIGHT = 130 - window.PIN_HEIGHT;
-  var MAP_END_HEIGHT = 630 - window.PIN_HEIGHT;
+  var mapWidth = mapElement.offsetWidth - window.data.PIN_WIDTH;
+  var MAP_BEGIN_HEIGHT = 130 - window.data.PIN_HEIGHT;
+  var MAP_END_HEIGHT = 630 - window.data.PIN_HEIGHT;
 
   /**
    * Turn status of the map in active.

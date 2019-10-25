@@ -6,7 +6,7 @@
   var pinTemplate = document.querySelector('#pin').content.querySelector('button');
   var mapPinsBlock = document.querySelector('.map__pins');
   var pinMain = document.querySelector('.map__pin--main');
-  var pinElements = createDomElements(window.ads);
+  var pinElements = createDomElements(window.data.ads);
   var mapPins;
 
   /**

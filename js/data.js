@@ -14,7 +14,13 @@
   var mapWidth = document.querySelector('.map').offsetWidth - PIN_WIDTH;
   var MAP_BEGIN_HEIGHT = 130 - PIN_HEIGHT;
   var MAP_END_HEIGHT = 630 - PIN_HEIGHT;
-  window.ads = createAds();
+  var ads = createAds();
+
+  window.data = {
+    PIN_HEIGHT: PIN_HEIGHT,
+    PIN_WIDTH: PIN_WIDTH,
+    ads: ads
+  };
 
   /**
    * @typedef {{author: {
