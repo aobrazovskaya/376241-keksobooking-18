@@ -96,7 +96,7 @@
     }
   }
 
-  window.formUtils = {
+  window.form = {
     /**
      * Remove attributes and modifiers that are disabled in the form.
      */
