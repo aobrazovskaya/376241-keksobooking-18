@@ -42,14 +42,14 @@
 
       mapPins[i].addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.ENTER_KEYCODE) {
-          window.showCardElement(evt);
+          window.card.showCardElement(evt);
         }
       });
     }
   }
 
   pinMain.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.ENTER_KEYCODE) {
+    if (evt.keyCode === window.utils.ENTER_KEYCODE) {
       window.setMapNotFaded();
       window.form.makeFormAvailable();
       window.showAllElements(mapPins);
