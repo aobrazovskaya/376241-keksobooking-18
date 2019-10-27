@@ -9,16 +9,12 @@
   var MAX_ROOM_COUNT = 10;
   var MAX_GUESTS_COUNT = 20;
   var ADS_COUNT = 8;
-  var PIN_HEIGHT = 70;
-  var PIN_WIDTH = 50;
-  var mapWidth = document.querySelector('.map').offsetWidth - PIN_WIDTH;
-  var MAP_BEGIN_HEIGHT = 130 - PIN_HEIGHT;
-  var MAP_END_HEIGHT = 630 - PIN_HEIGHT;
+  var mapWidth = document.querySelector('.map').offsetWidth;
+  var MAP_BEGIN_HEIGHT = 130;
+  var MAP_END_HEIGHT = 630;
   var ads = createAds();
 
   window.data = {
-    PIN_HEIGHT: PIN_HEIGHT,
-    PIN_WIDTH: PIN_WIDTH,
     ads: ads
   };
 
