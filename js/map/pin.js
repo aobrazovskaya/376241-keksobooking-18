@@ -58,8 +58,8 @@
   }
 
   function checkIntervalforCoords(shift) {
-    var mapWidth_End = window.map.map.offsetWidth - MAIN_PIN_WIDTH / 2;
-    var mapWidth_Begin = 0 - MAIN_PIN_WIDTH / 2;
+    var mapWidthEnd = window.map.map.offsetWidth - MAIN_PIN_WIDTH / 2;
+    var mapWidthBegin = 0 - MAIN_PIN_WIDTH / 2;
     var MAP_BEGIN_MAIN_PIN_HEIGHT = window.data.MAP_BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
     var MAP_END_MAIN_PIN_HEIGHT = window.data.MAP_END_HEIGHT - MAIN_PIN_HEIGHT;
 
@@ -70,10 +70,10 @@
     } else if (currentCoordY > MAP_END_MAIN_PIN_HEIGHT) {
       currentCoordY = MAP_END_MAIN_PIN_HEIGHT;
     }
-    if (currentCoordX < mapWidth_Begin) {
-      currentCoordX = mapWidth_Begin;
-    } else if (currentCoordX > mapWidth_End) {
-      currentCoordX = mapWidth_End;
+    if (currentCoordX < mapWidthBegin) {
+      currentCoordX = mapWidthBegin;
+    } else if (currentCoordX > mapWidthEnd) {
+      currentCoordX = mapWidthEnd;
     }
 
     var coords = {
