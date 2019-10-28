@@ -59,8 +59,8 @@
 
   function checkIntervalforCoords(shift) {
     var mapWidth = document.querySelector('.map').offsetWidth - MAIN_PIN_WIDTH;
-    var MAP_BEGIN_MAIN_PIN_HEIGHT = 130 - MAIN_PIN_HEIGHT;
-    var MAP_END_MAIN_PIN_HEIGHT = 630 - MAIN_PIN_HEIGHT;
+    var MAP_BEGIN_MAIN_PIN_HEIGHT = window.data.MAP_BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
+    var MAP_END_MAIN_PIN_HEIGHT = window.data.MAP_END_HEIGHT - MAIN_PIN_HEIGHT;
 
     var currentCoordY = pinMain.offsetTop - shift.y;
     var currentCoordX = pinMain.offsetLeft - shift.x;

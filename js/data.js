@@ -15,6 +15,8 @@
   var ads = createAds();
 
   window.data = {
+    MAP_BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
+    MAP_END_HEIGHT: MAP_END_HEIGHT,
     ads: ads
   };
 
