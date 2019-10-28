@@ -101,7 +101,7 @@
     * @param {HTMLElement} pin template clone of pin
     */
   function setPinAddress(pin) {
-    var address = (pin.offsetLeft + window.data.PIN_WIDTH / 2) + ', ' + (pin.offsetTop + window.data.PIN_HEIGHT);
+    var address = (pin.offsetLeft + window.pin.MAIN_PIN_WIDTH / 2) + ', ' + (pin.offsetTop + window.pin.MAIN_PIN_HEIGHT);
     formAddress.value = address;
   }
 
