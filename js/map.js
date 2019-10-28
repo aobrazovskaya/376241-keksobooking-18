@@ -19,6 +19,7 @@
   }
 
   window.map = {
+    map: map,
     mapFilteresContainer: mapFilteresContainer,
     mapFilteres: mapFilteres,
     mapWidth: mapWidth,
