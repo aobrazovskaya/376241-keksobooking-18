@@ -27,7 +27,9 @@
     mapWidth: mapWidth,
     mapBeginHeight: mapBeginHeight,
     mapEndHeight: mapEndHeight,
-    setMapNotFaded: setMapNotFaded
+    setMapNotFaded: setMapNotFaded,
+    MAP_BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
+    MAP_END_HEIGHT: MAP_END_HEIGHT
   };
 
   map.classList.add(mapFaded);
