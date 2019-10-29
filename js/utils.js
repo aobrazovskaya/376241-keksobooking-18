@@ -39,34 +39,12 @@
     element.style.display = displayValue;
   }
 
-  /**
-   * Show all elements of capacity list
-   * @param {array} elements
-   */
-  function showAllElements(elements) {
-    for (var i = 0; i < elements.length; i++) {
-      changeElementDisplay(elements[i], 'block');
-    }
-  }
-
-  /**
-   * Make all pins invisible, excepting main pin.
-   * @param {array} elements
-   */
-  function hideAllElements(elements) {
-    for (var i = 0; i < elements.length; i++) {
-      changeElementDisplay(elements[i], 'none');
-    }
-  }
-
   window.utils = {
     ENTER_KEYCODE: ENTER_KEYCODE,
     ESC_KEYCODE: ESC_KEYCODE,
     getRandomNumberInTheRange: getRandomNumberInTheRange,
     shortenArrayRandomly: shortenArrayRandomly,
-    changeElementDisplay: changeElementDisplay,
-    showAllElements: showAllElements,
-    hideAllElements: hideAllElements
+    changeElementDisplay: changeElementDisplay
   };
 
 })();

@@ -28,7 +28,7 @@
     var cardDescription = newCard.querySelector('.popup__description');
     cardDescription.textContent = currentCard.offer.description;
     var cardPhotos = newCard.querySelector('.popup__photos');
-    cardPhotos.replaceWith(getPhotosOfAd(currentCard.offer.PHOTOS, cardPhotos));
+    cardPhotos.replaceWith(getPhotosOfAd(currentCard.offer.photos, cardPhotos));
     var cardAvatar = newCard.querySelector('.popup__avatar');
     cardAvatar.src = currentCard.author.avatar;
     return newCard;
@@ -91,15 +91,16 @@
   }
 
   function showCardElement(evt) {
+    var ads = window.data.ads;
     var targetImg = evt.target.querySelector('img') || evt.target;
     var currentPin = targetImg.getAttribute('src');
-    for (var i = 0; i < window.data.ads.length; i++) {
-      if (currentPin === window.data.ads[i].author.avatar) {
+    for (var i = 0; i < ads.length; i++) {
+      if (currentPin === ads[i].author.avatar) {
         var mapCard = document.querySelector('.map__card.popup');
         if (mapCard !== null) {
-          mapCard.replaceWith(createCardElement(window.data.ads[i]));
+          mapCard.replaceWith(createCardElement(ads[i]));
         } else {
-          window.map.mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(window.data.ads[i]));
+          window.map.mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(ads[i]));
         }
         var cardCloseElement = document.querySelector('.popup__close');
         cardCloseElement.addEventListener('click', closeCard);
