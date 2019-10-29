@@ -1,15 +1,14 @@
 'use strict';
 
 (function () {
-  window.upload = function (data, onSuccess) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
 
-    xhr.addEventListener('load', function () {
-      onSuccess(xhr.response);
-    });
-
-    xhr.open('POST', URL);
-    xhr.send(data);
+  var onError = function (message) {
+    console.error(message);
   };
-})();
+
+  var onSuccess = function (data) {
+    console.log(data);
+  };
+
+  window.upload('https://js.dump.academy/keksobooking/data', onSuccess, onError);
+}());
