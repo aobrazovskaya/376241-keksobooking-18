@@ -20,15 +20,35 @@
     var cardType = newCard.querySelector('.popup__type');
     cardType.textContent = determineType(currentCard.offer.type);
     var cardCapacity = newCard.querySelector('.popup__text--capacity');
-    cardCapacity.textContent = currentCard.offer.rooms + ' комнаты для ' + currentCard.offer.guests + ' гостей';
+    if (!!currentCard.offer.rooms || !!currentCard.offer.guests) {
+      cardCapacity.textContent = currentCard.offer.rooms + ' комнаты для ' + currentCard.offer.guests + ' гостей';
+    } else {
+      cardCapacity.textContent = '';
+    }
     var cardTime = newCard.querySelector('.popup__text--time');
-    cardTime.textContent = 'Заезд после ' + currentCard.offer.checkin + ', выезд до ' + currentCard.offer.checkout;
+    if (currentCard.offer.checkin === '0:00' || currentCard.offer.checkout === '0:00') {
+      cardTime.textContent = '';
+    } else {
+      cardTime.textContent = 'Заезд после ' + currentCard.offer.checkin + ', выезд до ' + currentCard.offer.checkout;
+    }
     var cardFeatures = newCard.querySelector('.popup__features');
-    cardFeatures.replaceWith(selectFeatures(currentCard.offer.features, cardFeatures));
+    if (Array.isArray(currentCard.offer.features) && currentCard.offer.features.length > 0) {
+      cardFeatures.replaceWith(selectFeatures(currentCard.offer.features, cardFeatures));
+    } else {
+      window.utils.changeElementDisplay(cardFeatures, 'none');
+    }
     var cardDescription = newCard.querySelector('.popup__description');
-    cardDescription.textContent = currentCard.offer.description;
+    if (currentCard.offer.description) {
+      cardDescription.textContent = currentCard.offer.description;
+    } else {
+      cardDescription.textContent = '';
+    }
     var cardPhotos = newCard.querySelector('.popup__photos');
-    cardPhotos.replaceWith(getPhotosOfAd(currentCard.offer.photos, cardPhotos));
+    if (Array.isArray(currentCard.offer.photos) && currentCard.offer.photos.length > 0) {
+      cardPhotos.replaceWith(getPhotosOfAd(currentCard.offer.photos, cardPhotos));
+    } else {
+      window.utils.changeElementDisplay(cardPhotos, 'none');
+    }
     var cardAvatar = newCard.querySelector('.popup__avatar');
     cardAvatar.src = currentCard.author.avatar;
     return newCard;
