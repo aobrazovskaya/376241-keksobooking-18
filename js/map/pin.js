@@ -7,28 +7,29 @@
   var MAIN_PIN_HEIGHT = 84;
   var pinTemplate = document.querySelector('#pin').content.querySelector('button');
   var mapPinsBlock = document.querySelector('.map__pins');
-  var pinMain = document.querySelector('.map__pin--main');
-  var pinElements = createDomElements(window.data.ads);
-  var mapPins;
+  var pinMain = document.querySelector('.map .map__pin--main');
 
   window.pin = {
     PIN_HEIGHT: PIN_HEIGHT,
     PIN_WIDTH: PIN_WIDTH,
     MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
-    MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT
+    MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
+    createDomElements: createDomElements,
+    showCardsOfSelectedPin: showCardsOfSelectedPin
   };
 
   /**
    * Add DOM elements to HTML doc.
    * @param {array} arr array of js elements
-   * @return {object} fragment of DOM elements
    */
   function createDomElements(arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
-      fragment.appendChild(createPinElement(arr[i]));
+      if (arr[i].offer) {
+        fragment.appendChild(createPinElement(arr[i]));
+      }
     }
-    return fragment;
+    mapPinsBlock.appendChild(fragment);
   }
 
   /**
@@ -45,7 +46,7 @@
     return newAdCard;
   }
 
-  function showCardsOfSelectedPin() {
+  function showCardsOfSelectedPin(mapPins) {
     for (var i = 0; i < mapPins.length; i++) {
       mapPins[i].addEventListener('click', window.card.showCardElement);
 
@@ -60,8 +61,8 @@
   function checkIntervalforCoords(shift) {
     var mapWidthEnd = window.map.map.offsetWidth - MAIN_PIN_WIDTH / 2;
     var mapWidthBegin = 0 - MAIN_PIN_WIDTH / 2;
-    var MAP_BEGIN_MAIN_PIN_HEIGHT = window.data.MAP_BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
-    var MAP_END_MAIN_PIN_HEIGHT = window.data.MAP_END_HEIGHT - MAIN_PIN_HEIGHT;
+    var MAP_BEGIN_MAIN_PIN_HEIGHT = window.map.MAP_BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
+    var MAP_END_MAIN_PIN_HEIGHT = window.map.MAP_END_HEIGHT - MAIN_PIN_HEIGHT;
 
     var currentCoordY = pinMain.offsetTop - shift.y;
     var currentCoordX = pinMain.offsetLeft - shift.x;
@@ -83,19 +84,27 @@
     return coords;
   }
 
-  pinMain.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.utils.ENTER_KEYCODE) {
+  /**
+   * Change status of map and form on active.
+   */
+  function makePageAvailiable() {
+    if (window.map.map.classList.contains('map--faded')) {
+      window.data.getAds();
       window.map.setMapNotFaded();
       window.form.makeFormAvailable();
-      window.utils.showAllElements(mapPins);
       window.form.setPinAddress(pinMain);
+    }
+  }
+
+  pinMain.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.utils.ENTER_KEYCODE) {
+      makePageAvailiable();
     }
   });
 
+  pinMain.addEventListener('mousedown', makePageAvailiable);
+
   pinMain.addEventListener('mousedown', function (evt) {
-    window.map.setMapNotFaded();
-    window.form.makeFormAvailable();
-    window.utils.showAllElements(mapPins);
     evt.preventDefault();
 
     var startCoords = {
@@ -133,8 +142,4 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  mapPinsBlock.appendChild(pinElements);
-  mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-  window.utils.hideAllElements(mapPins);
-  showCardsOfSelectedPin();
 })();

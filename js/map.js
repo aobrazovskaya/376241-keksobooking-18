@@ -6,9 +6,11 @@
   var mapFaded = 'map--faded';
   var mapFilteresContainer = map.querySelector('.map__filters-container');
   var mapFilteres = map.querySelector('.map__filters');
-  var mapWidth = mapElement.offsetWidth - window.data.PIN_WIDTH;
-  var MAP_BEGIN_HEIGHT = window.data.MAP_BEGIN_HEIGHT - window.data.PIN_HEIGHT;
-  var MAP_END_HEIGHT = window.data.MAP_END_HEIGHT - window.data.PIN_HEIGHT;
+  var MAP_BEGIN_HEIGHT = 130;
+  var MAP_END_HEIGHT = 630;
+  var mapWidth = mapElement.offsetWidth - window.pin.PIN_WIDTH;
+  var mapBeginHeight = MAP_BEGIN_HEIGHT - window.pin.PIN_HEIGHT;
+  var mapEndHeight = MAP_END_HEIGHT - window.pin.PIN_HEIGHT;
 
   /**
    * Turn status of the map in active.
@@ -23,9 +25,11 @@
     mapFilteresContainer: mapFilteresContainer,
     mapFilteres: mapFilteres,
     mapWidth: mapWidth,
+    mapBeginHeight: mapBeginHeight,
+    mapEndHeight: mapEndHeight,
+    setMapNotFaded: setMapNotFaded,
     MAP_BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
-    MAP_END_HEIGHT: MAP_END_HEIGHT,
-    setMapNotFaded: setMapNotFaded
+    MAP_END_HEIGHT: MAP_END_HEIGHT
   };
 
   map.classList.add(mapFaded);
