@@ -129,14 +129,17 @@
     }
   }
 
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.utils.ESC_KEYCODE) {
-      closeCard();
-    }
-  });
+  function cardModule() {
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.utils.ESC_KEYCODE) {
+        closeCard();
+      }
+    });
+  }
 
-  window.card = {
-    showCardElement: showCardElement
+  window.keksobooking.map.card = {
+    showCardElement: showCardElement,
+    cardModule: cardModule
   };
 
 })();

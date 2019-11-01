@@ -29,8 +29,11 @@
     mapEndHeight: mapEndHeight,
     setMapNotFaded: setMapNotFaded,
     MAP_BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
-    MAP_END_HEIGHT: MAP_END_HEIGHT
+    MAP_END_HEIGHT: MAP_END_HEIGHT,
+    mapModule: mapModule
   };
 
-  map.classList.add(mapFaded);
+  function mapModule() {
+    map.classList.add(mapFaded);
+  }
 })();

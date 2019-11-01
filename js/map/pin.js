@@ -9,13 +9,14 @@
   var mapPinsBlock = document.querySelector('.map__pins');
   var pinMain = document.querySelector('.map .map__pin--main');
 
-  window.pin = {
+  window.keksobooking.map.pin = {
     PIN_HEIGHT: PIN_HEIGHT,
     PIN_WIDTH: PIN_WIDTH,
     MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
     MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
     createDomElements: createDomElements,
-    showCardsOfSelectedPin: showCardsOfSelectedPin
+    showCardsOfSelectedPin: showCardsOfSelectedPin,
+    pinModule: pinModule
   };
 
   /**
@@ -96,50 +97,52 @@
     }
   }
 
-  pinMain.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.utils.ENTER_KEYCODE) {
-      makePageAvailiable();
-    }
-  });
+  function pinModule() {
+    pinMain.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.utils.ENTER_KEYCODE) {
+        makePageAvailiable();
+      }
+    });
 
-  pinMain.addEventListener('mousedown', makePageAvailiable);
+    pinMain.addEventListener('mousedown', makePageAvailiable);
 
-  pinMain.addEventListener('mousedown', function (evt) {
-    evt.preventDefault();
+    pinMain.addEventListener('mousedown', function (evt) {
+      evt.preventDefault();
 
-    var startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
-
-    var onMouseMove = function (moveEvt) {
-      moveEvt.preventDefault();
-
-      var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
+      var startCoords = {
+        x: evt.clientX,
+        y: evt.clientY
       };
 
-      startCoords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
+      var onMouseMove = function (moveEvt) {
+        moveEvt.preventDefault();
+
+        var shift = {
+          x: startCoords.x - moveEvt.clientX,
+          y: startCoords.y - moveEvt.clientY
+        };
+
+        startCoords = {
+          x: moveEvt.clientX,
+          y: moveEvt.clientY
+        };
+
+        var coords = checkIntervalforCoords(shift);
+        pinMain.style.top = (coords.coordY) + 'px';
+        pinMain.style.left = (coords.coordX) + 'px';
       };
 
-      var coords = checkIntervalforCoords(shift);
-      pinMain.style.top = (coords.coordY) + 'px';
-      pinMain.style.left = (coords.coordX) + 'px';
-    };
+      var onMouseUp = function (upEvt) {
+        upEvt.preventDefault();
 
-    var onMouseUp = function (upEvt) {
-      upEvt.preventDefault();
+        document.querySelector('.map').removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        window.form.setPinAddress(pinMain);
+      };
 
-      document.querySelector('.map').removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-      window.form.setPinAddress(pinMain);
-    };
-
-    document.querySelector('.map').addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-  });
+      document.querySelector('.map').addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
+  }
 
 })();

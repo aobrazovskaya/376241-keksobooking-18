@@ -8,7 +8,7 @@
   };
 
   var onSuccess = function (data) {
-    window.data = {
+    window.keksobooking.data = {
       ads: data
     };
     window.pin.createDomElements(data);
@@ -16,7 +16,7 @@
     window.pin.showCardsOfSelectedPin(mapPins);
   };
 
-  window.data = {
+  window.keksobooking.data = {
     getAds: function () {
       window.upload('https://js.dump.academy/keksobooking/data', onSuccess, onError);
     }

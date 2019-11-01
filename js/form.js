@@ -1,6 +1,23 @@
 'use strict';
 
 (function () {
+
+  window.keksobooking.form = {
+    makeFormAvailable: makeFormAvailable,
+    setPinAddress: setPinAddress,
+    formModule: formModule
+  };
+
+  function formModule() {
+    makeFormElDisabled(window.map.mapFilteres, 'map__filters');
+    makeFormElementsDisabled(formFieldsets);
+    setPriceRequirements();
+    document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
+    formType.addEventListener('change', setPriceRequirements);
+    formTimeIn.addEventListener('change', synchronizeTime);
+    formTimeOut.addEventListener('change', synchronizeTime);
+  }
+
   var formElement = document.querySelector('.ad-form');
   var formFieldsets = formElement.querySelectorAll('fieldset');
   var formAddress = formElement.querySelector('#address');
@@ -105,16 +122,4 @@
     formAddress.value = address;
   }
 
-  window.form = {
-    makeFormAvailable: makeFormAvailable,
-    setPinAddress: setPinAddress
-  };
-
-  makeFormElDisabled(window.map.mapFilteres, 'map__filters');
-  makeFormElementsDisabled(formFieldsets);
-  setPriceRequirements();
-  document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
-  formType.addEventListener('change', setPriceRequirements);
-  formTimeIn.addEventListener('change', synchronizeTime);
-  formTimeOut.addEventListener('change', synchronizeTime);
 })();
