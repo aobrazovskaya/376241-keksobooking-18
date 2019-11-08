@@ -8,9 +8,9 @@
   var mapFilteres = map.querySelector('.map__filters');
   var MAP_BEGIN_HEIGHT = 130;
   var MAP_END_HEIGHT = 630;
-  var mapWidth = mapElement.offsetWidth - window.pin.PIN_WIDTH;
-  var mapBeginHeight = MAP_BEGIN_HEIGHT - window.pin.PIN_HEIGHT;
-  var mapEndHeight = MAP_END_HEIGHT - window.pin.PIN_HEIGHT;
+  var mapWidth = mapElement.offsetWidth - window.keksobooking.pin.PIN_WIDTH;
+  var mapBeginHeight = MAP_BEGIN_HEIGHT - window.keksobooking.pin.PIN_HEIGHT;
+  var mapEndHeight = MAP_END_HEIGHT - window.keksobooking.pin.PIN_HEIGHT;
 
   /**
    * Turn status of the map in active.
@@ -20,7 +20,7 @@
     map.classList.remove('map--faded');
   }
 
-  window.map = {
+  window.keksobooking.map = {
     map: map,
     mapFilteresContainer: mapFilteresContainer,
     mapFilteres: mapFilteres,

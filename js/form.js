@@ -9,7 +9,7 @@
   };
 
   function formModule() {
-    makeFormElDisabled(window.map.mapFilteres, 'map__filters');
+    makeFormElDisabled(window.keksobooking.map.mapFilteres, 'map__filters');
     makeFormElementsDisabled(formFieldsets);
     setPriceRequirements();
     document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
@@ -109,7 +109,7 @@
    * Remove attributes and modifiers that are disabled in the form.
    */
   function makeFormAvailable() {
-    makeFormElAvailable(window.map.mapFilteres, 'map__filters');
+    makeFormElAvailable(window.keksobooking.map.mapFilteres, 'map__filters');
     makeFormElementsAvailable(formFieldsets);
     makeFormElAvailable(formElement, 'ad-form');
   }
@@ -118,7 +118,7 @@
     * @param {HTMLElement} pin template clone of pin
     */
   function setPinAddress(pin) {
-    var address = (pin.offsetLeft + window.pin.MAIN_PIN_WIDTH / 2) + ', ' + (pin.offsetTop + window.pin.MAIN_PIN_HEIGHT);
+    var address = (pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', ' + (pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT);
     formAddress.value = address;
   }
 

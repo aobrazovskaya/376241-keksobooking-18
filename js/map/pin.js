@@ -9,7 +9,7 @@
   var mapPinsBlock = document.querySelector('.map__pins');
   var pinMain = document.querySelector('.map .map__pin--main');
 
-  window.keksobooking.map.pin = {
+  window.keksobooking.pin = {
     PIN_HEIGHT: PIN_HEIGHT,
     PIN_WIDTH: PIN_WIDTH,
     MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
@@ -49,21 +49,21 @@
 
   function showCardsOfSelectedPin(mapPins) {
     for (var i = 0; i < mapPins.length; i++) {
-      mapPins[i].addEventListener('click', window.card.showCardElement);
+      mapPins[i].addEventListener('click', window.keksobooking.card.showCardElement);
 
       mapPins[i].addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.ENTER_KEYCODE) {
-          window.card.showCardElement(evt);
+        if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
+          window.keksobooking.card.showCardElement(evt);
         }
       });
     }
   }
 
   function checkIntervalforCoords(shift) {
-    var mapWidthEnd = window.map.map.offsetWidth - MAIN_PIN_WIDTH / 2;
+    var mapWidthEnd = window.keksobooking.map.map.offsetWidth - MAIN_PIN_WIDTH / 2;
     var mapWidthBegin = 0 - MAIN_PIN_WIDTH / 2;
-    var MAP_BEGIN_MAIN_PIN_HEIGHT = window.map.MAP_BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
-    var MAP_END_MAIN_PIN_HEIGHT = window.map.MAP_END_HEIGHT - MAIN_PIN_HEIGHT;
+    var MAP_BEGIN_MAIN_PIN_HEIGHT = window.keksobooking.map.MAP_BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
+    var MAP_END_MAIN_PIN_HEIGHT = window.keksobooking.map.MAP_END_HEIGHT - MAIN_PIN_HEIGHT;
 
     var currentCoordY = pinMain.offsetTop - shift.y;
     var currentCoordX = pinMain.offsetLeft - shift.x;
@@ -89,17 +89,17 @@
    * Change status of map and form on active.
    */
   function makePageAvailiable() {
-    if (window.map.map.classList.contains('map--faded')) {
-      window.data.getAds();
-      window.map.setMapNotFaded();
-      window.form.makeFormAvailable();
-      window.form.setPinAddress(pinMain);
+    if (window.keksobooking.map.map.classList.contains('map--faded')) {
+      window.keksobooking.data.getAds();
+      window.keksobooking.map.setMapNotFaded();
+      window.keksobooking.form.makeFormAvailable();
+      window.keksobooking.form.setPinAddress(pinMain);
     }
   }
 
   function pinModule() {
     pinMain.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.utils.ENTER_KEYCODE) {
+      if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
         makePageAvailiable();
       }
     });
@@ -137,7 +137,7 @@
 
         document.querySelector('.map').removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
-        window.form.setPinAddress(pinMain);
+        window.keksobooking.form.setPinAddress(pinMain);
       };
 
       document.querySelector('.map').addEventListener('mousemove', onMouseMove);

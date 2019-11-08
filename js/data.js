@@ -11,14 +11,14 @@
     window.keksobooking.data = {
       ads: data
     };
-    window.pin.createDomElements(data);
+    window.keksobooking.pin.createDomElements(data);
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    window.pin.showCardsOfSelectedPin(mapPins);
+    window.keksobooking.pin.showCardsOfSelectedPin(mapPins);
   };
 
   window.keksobooking.data = {
     getAds: function () {
-      window.upload('https://js.dump.academy/keksobooking/data', onSuccess, onError);
+      window.keksobooking.upload('https://js.dump.academy/keksobooking/data', onSuccess, onError);
     }
   };
 }());
