@@ -107,7 +107,9 @@
 
   function closeCard() {
     var mapCard = document.querySelector('.map__card.popup');
-    window.keksobooking.utils.changeElementDisplay(mapCard, 'none');
+    if (mapCard) {
+      window.keksobooking.utils.changeElementDisplay(mapCard, 'none');
+    }
   }
 
   function showCardElement(evt) {

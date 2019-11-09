@@ -16,6 +16,7 @@
     MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
     createDomElements: createDomElements,
     showCardsOfSelectedPin: showCardsOfSelectedPin,
+    deletePins: deletePins,
     pinModule: pinModule
   };
 
@@ -94,6 +95,12 @@
       window.keksobooking.map.setMapNotFaded();
       window.keksobooking.form.makeFormAvailable();
       window.keksobooking.form.setPinAddress(pinMain);
+    }
+  }
+
+  function deletePins(pins) {
+    for (var i = 0; i < pins.length; i++) {
+      pins[i].remove();
     }
   }
 

@@ -12,7 +12,8 @@
     makeFormElDisabled(window.keksobooking.map.mapFilteres, 'map__filters');
     makeFormElementsDisabled(formFieldsets);
     setPriceRequirements();
-    document.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
+    formElement.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
+    formElement.addEventListener('submit', submitForm);
     formType.addEventListener('change', setPriceRequirements);
     formTimeIn.addEventListener('change', synchronizeTime);
     formTimeOut.addEventListener('change', synchronizeTime);
@@ -26,6 +27,52 @@
   var formPrice = formElement.querySelector('#price');
   var formTimeIn = formElement.querySelector('#timein');
   var formTimeOut = formElement.querySelector('#timeout');
+  var successTemplate = document.querySelector('#success');
+  var successElement = successTemplate.cloneNode(true).content.querySelector('.success');
+
+
+  function submitForm(evt) {
+    evt.preventDefault();
+
+    var formData = new FormData(formElement);
+    var requestInfo = {
+      method: 'POST',
+      url: 'https://js.dump.academy/keksobooking',
+      data: formData
+    };
+    window.keksobooking.upload(requestInfo, onSuccess, onError);
+  }
+
+  function hideSuccessPopup() {
+    window.keksobooking.utils.changeElementDisplay(successElement, 'none');
+  }
+
+  var onError = function () {
+    // var errorElement = document.querySelector('#error');
+    // document.querySelector('main').appendChild(errorElement.content);
+  };
+
+  function onSuccess() {
+    var pins = window.keksobooking.map.map.querySelectorAll('.map__pin:not(.map__pin--main)');
+    window.keksobooking.map.mapModule();
+    makeFormElDisabled(window.keksobooking.map.mapFilteres, 'map__filters');
+    makeFormElementsDisabled(formFieldsets);
+    window.keksobooking.pin.deletePins(pins);
+
+    if (!document.querySelector('.success')) {
+      document.querySelector('main').appendChild(successElement);
+    } else {
+      window.keksobooking.utils.changeElementDisplay(successElement, 'block');
+    }
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
+        hideSuccessPopup();
+      }
+    });
+
+    document.addEventListener('click', hideSuccessPopup);
+  }
 
   /**
    * @param {HTMLElement} element
