@@ -58,10 +58,16 @@
     window.keksobooking.upload(requestInfo, onSuccess, onError);
   }
 
+  /**
+   * Make success popup display none.
+   */
   function hideSuccessPopup() {
     window.keksobooking.utils.changeElementDisplay(successElement, 'none');
   }
 
+  /**
+   * Make error popup display none.
+   */
   function hideErrorPopup() {
     window.keksobooking.utils.changeElementDisplay(errorElement, 'none');
   }
@@ -79,7 +85,6 @@
     window.keksobooking.pin.setPinMainCoords();
     setPinAddress(window.keksobooking.pin.pinMain);
     formElement.reset();
-
     window.keksobooking.utils.changeElementDisplay(successElement, 'block');
   }
 

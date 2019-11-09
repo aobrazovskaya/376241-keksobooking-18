@@ -108,6 +108,12 @@
     }
   }
 
+  /**
+   * Set coordinates x and y for main pin.
+   * If x or y isn't set, x and y will be with default value (centr of the map).
+   * @param {number} x
+   * @param {number} y
+   */
   function setPinMainCoords(x, y) {
     x = x || MAIN_PIN_START_COORDX;
     y = y || MAIN_PIN_START_COORDY;
