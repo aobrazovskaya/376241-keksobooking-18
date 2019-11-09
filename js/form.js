@@ -17,6 +17,19 @@
     formType.addEventListener('change', setPriceRequirements);
     formTimeIn.addEventListener('change', synchronizeTime);
     formTimeOut.addEventListener('change', synchronizeTime);
+    mainBlock.appendChild(successElement);
+    mainBlock.appendChild(errorElement);
+    hideSuccessPopup();
+    hideErrorPopup();
+    successElement.addEventListener('click', hideSuccessPopup);
+    errorElement.querySelector('button').addEventListener('click', hideErrorPopup);
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
+        hideSuccessPopup();
+        hideErrorPopup();
+      }
+    });
   }
 
   var formElement = document.querySelector('.ad-form');
@@ -27,9 +40,11 @@
   var formPrice = formElement.querySelector('#price');
   var formTimeIn = formElement.querySelector('#timein');
   var formTimeOut = formElement.querySelector('#timeout');
+  var mainBlock = document.querySelector('main');
   var successTemplate = document.querySelector('#success');
   var successElement = successTemplate.cloneNode(true).content.querySelector('.success');
-
+  var errorTemplate = document.querySelector('#error');
+  var errorElement = errorTemplate.cloneNode(true).content.querySelector('.error');
 
   function submitForm(evt) {
     evt.preventDefault();
@@ -47,9 +62,12 @@
     window.keksobooking.utils.changeElementDisplay(successElement, 'none');
   }
 
+  function hideErrorPopup() {
+    window.keksobooking.utils.changeElementDisplay(errorElement, 'none');
+  }
+
   var onError = function () {
-    // var errorElement = document.querySelector('#error');
-    // document.querySelector('main').appendChild(errorElement.content);
+    window.keksobooking.utils.changeElementDisplay(errorElement, 'block');
   };
 
   function onSuccess() {
@@ -58,20 +76,11 @@
     makeFormElDisabled(window.keksobooking.map.mapFilteres, 'map__filters');
     makeFormElementsDisabled(formFieldsets);
     window.keksobooking.pin.deletePins(pins);
+    window.keksobooking.pin.setPinMainCoords();
+    setPinAddress(window.keksobooking.pin.pinMain);
+    formElement.reset();
 
-    if (!document.querySelector('.success')) {
-      document.querySelector('main').appendChild(successElement);
-    } else {
-      window.keksobooking.utils.changeElementDisplay(successElement, 'block');
-    }
-
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
-        hideSuccessPopup();
-      }
-    });
-
-    document.addEventListener('click', hideSuccessPopup);
+    window.keksobooking.utils.changeElementDisplay(successElement, 'block');
   }
 
   /**

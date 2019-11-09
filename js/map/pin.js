@@ -8,6 +8,8 @@
   var pinTemplate = document.querySelector('#pin').content.querySelector('button');
   var mapPinsBlock = document.querySelector('.map__pins');
   var pinMain = document.querySelector('.map .map__pin--main');
+  var MAIN_PIN_START_COORDX = pinMain.offsetLeft;
+  var MAIN_PIN_START_COORDY = pinMain.offsetTop;
 
   window.keksobooking.pin = {
     PIN_HEIGHT: PIN_HEIGHT,
@@ -17,6 +19,8 @@
     createDomElements: createDomElements,
     showCardsOfSelectedPin: showCardsOfSelectedPin,
     deletePins: deletePins,
+    setPinMainCoords: setPinMainCoords,
+    pinMain: pinMain,
     pinModule: pinModule
   };
 
@@ -104,6 +108,13 @@
     }
   }
 
+  function setPinMainCoords(x, y) {
+    x = x || MAIN_PIN_START_COORDX;
+    y = y || MAIN_PIN_START_COORDY;
+    pinMain.style.top = y + 'px';
+    pinMain.style.left = x + 'px';
+  }
+
   function pinModule() {
     pinMain.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
@@ -135,8 +146,7 @@
         };
 
         var coords = checkIntervalforCoords(shift);
-        pinMain.style.top = (coords.coordY) + 'px';
-        pinMain.style.left = (coords.coordX) + 'px';
+        setPinMainCoords(coords.coordX, coords.coordY);
       };
 
       var onMouseUp = function (upEvt) {
