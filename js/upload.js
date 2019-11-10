@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.keksobooking.upload = function (requestParams, onSuccess, onError) {
+  window.keksobooking.makehttprequest = function (requestParams, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';

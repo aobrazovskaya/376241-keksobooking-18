@@ -21,7 +21,7 @@
     deletePins: deletePins,
     setPinMainCoords: setPinMainCoords,
     pinMain: pinMain,
-    pinModule: pinModule
+    runPinModule: runPinModule
   };
 
   /**
@@ -121,7 +121,7 @@
     pinMain.style.left = x + 'px';
   }
 
-  function pinModule() {
+  function runPinModule() {
     pinMain.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
         makePageAvailiable();

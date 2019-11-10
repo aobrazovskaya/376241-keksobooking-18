@@ -131,7 +131,7 @@
     }
   }
 
-  function cardModule() {
+  function runCardModule() {
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
         closeCard();
@@ -141,7 +141,7 @@
 
   window.keksobooking.card = {
     showCardElement: showCardElement,
-    cardModule: cardModule
+    runCardModule: runCardModule
   };
 
 })();

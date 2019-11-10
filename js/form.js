@@ -5,24 +5,16 @@
   window.keksobooking.form = {
     makeFormAvailable: makeFormAvailable,
     setPinAddress: setPinAddress,
-    formModule: formModule
+    runFormModule: runFormModule
   };
 
-  function formModule() {
-    makeFormElDisabled(window.keksobooking.map.mapFilteres, 'map__filters');
-    makeFormElementsDisabled(formFieldsets);
-    setPriceRequirements();
-    formElement.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
-    formElement.addEventListener('submit', submitForm);
-    formType.addEventListener('change', setPriceRequirements);
-    formTimeIn.addEventListener('change', synchronizeTime);
-    formTimeOut.addEventListener('change', synchronizeTime);
-    mainBlock.appendChild(successElement);
-    mainBlock.appendChild(errorElement);
-    hideSuccessPopup();
-    hideErrorPopup();
-    successElement.addEventListener('click', hideSuccessPopup);
-    errorElement.querySelector('button').addEventListener('click', hideErrorPopup);
+  function runFormModule() {
+    setFormInitialPropertiesAndEvents();
+    makeSuccessPopup();
+    makeErrorPopup();
+    document.querySelector('.ad-form__reset').addEventListener('click', function () {
+      makeAllPageInactive();
+    });
 
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
@@ -55,7 +47,30 @@
       url: 'https://js.dump.academy/keksobooking',
       data: formData
     };
-    window.keksobooking.upload(requestInfo, onSuccess, onError);
+    window.keksobooking.makehttprequest(requestInfo, onSuccess, onError);
+  }
+
+  function setFormInitialPropertiesAndEvents() {
+    makeFormElDisabled(window.keksobooking.map.mapFilteres, 'map__filters');
+    makeFormElementsDisabled(formFieldsets);
+    setPriceRequirements();
+    formElement.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
+    formElement.addEventListener('submit', submitForm);
+    formType.addEventListener('change', setPriceRequirements);
+    formTimeIn.addEventListener('change', synchronizeTime);
+    formTimeOut.addEventListener('change', synchronizeTime);
+  }
+
+  function makeSuccessPopup() {
+    mainBlock.appendChild(successElement);
+    hideSuccessPopup();
+    successElement.addEventListener('click', hideSuccessPopup);
+  }
+
+  function makeErrorPopup() {
+    mainBlock.appendChild(errorElement);
+    hideErrorPopup();
+    errorElement.querySelector('button').addEventListener('click', hideErrorPopup);
   }
 
   /**
@@ -77,15 +92,24 @@
   };
 
   function onSuccess() {
+    makeAllPageInactive();
+    window.keksobooking.utils.changeElementDisplay(successElement, 'block');
+    formElement.reset();
+  }
+
+  function makeAllPageInactive() {
     var pins = window.keksobooking.map.map.querySelectorAll('.map__pin:not(.map__pin--main)');
-    window.keksobooking.map.mapModule();
+    window.keksobooking.map.setMapFaded();
     makeFormElDisabled(window.keksobooking.map.mapFilteres, 'map__filters');
+    makeFormElDisabled(formElement, 'ad-form');
     makeFormElementsDisabled(formFieldsets);
     window.keksobooking.pin.deletePins(pins);
     window.keksobooking.pin.setPinMainCoords();
     setPinAddress(window.keksobooking.pin.pinMain);
-    formElement.reset();
-    window.keksobooking.utils.changeElementDisplay(successElement, 'block');
+    var cardElement = document.querySelector('.map__card.popup');
+    if (cardElement) {
+      cardElement.remove();
+    }
   }
 
   /**

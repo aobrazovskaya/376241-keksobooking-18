@@ -20,6 +20,14 @@
     map.classList.remove('map--faded');
   }
 
+  /**
+   * Turn status of the map in active.
+   * @param {HTMLElement} element map
+   */
+  function setMapFaded() {
+    map.classList.add('map--faded');
+  }
+
   window.keksobooking.map = {
     map: map,
     mapFilteresContainer: mapFilteresContainer,
@@ -28,12 +36,13 @@
     mapBeginHeight: mapBeginHeight,
     mapEndHeight: mapEndHeight,
     setMapNotFaded: setMapNotFaded,
+    setMapFaded: setMapFaded,
     MAP_BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
     MAP_END_HEIGHT: MAP_END_HEIGHT,
-    mapModule: mapModule
+    runMapModule: runMapModule
   };
 
-  function mapModule() {
+  function runMapModule() {
     map.classList.add(mapFaded);
   }
 })();
