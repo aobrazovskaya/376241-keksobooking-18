@@ -8,19 +8,19 @@
   var pinTemplate = document.querySelector('#pin').content.querySelector('button');
   var mapPinsBlock = document.querySelector('.map__pins');
   var pinMain = document.querySelector('.map .map__pin--main');
-  var MAIN_PIN_START_COORDX = pinMain.offsetLeft;
-  var MAIN_PIN_START_COORDY = pinMain.offsetTop;
+  var MAIN_PIN_START_COORD_X = pinMain.offsetLeft;
+  var MAIN_PIN_START_COORD_Y = pinMain.offsetTop;
 
   window.keksobooking.pin = {
-    PIN_HEIGHT: PIN_HEIGHT,
-    PIN_WIDTH: PIN_WIDTH,
+    HEIGHT: PIN_HEIGHT,
+    WIDTH: PIN_WIDTH,
     MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
     MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
     createDomElements: createDomElements,
     showCardsOfSelectedPin: showCardsOfSelectedPin,
     deletePins: deletePins,
-    setPinMainCoords: setPinMainCoords,
-    pinMain: pinMain,
+    setMainCoords: setPinMainCoords,
+    Main: pinMain,
     runPinModule: runPinModule
   };
 
@@ -54,21 +54,21 @@
 
   function showCardsOfSelectedPin(mapPins) {
     for (var i = 0; i < mapPins.length; i++) {
-      mapPins[i].addEventListener('click', window.keksobooking.card.showCardElement);
+      mapPins[i].addEventListener('click', window.keksobooking.card.showElement);
 
       mapPins[i].addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
-          window.keksobooking.card.showCardElement(evt);
+          window.keksobooking.card.showElement(evt);
         }
       });
     }
   }
 
   function checkIntervalforCoords(shift) {
-    var mapWidthEnd = window.keksobooking.map.map.offsetWidth - MAIN_PIN_WIDTH / 2;
+    var mapWidthEnd = window.keksobooking.map.mapBlock.offsetWidth - MAIN_PIN_WIDTH / 2;
     var mapWidthBegin = 0 - MAIN_PIN_WIDTH / 2;
-    var MAP_BEGIN_MAIN_PIN_HEIGHT = window.keksobooking.map.MAP_BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
-    var MAP_END_MAIN_PIN_HEIGHT = window.keksobooking.map.MAP_END_HEIGHT - MAIN_PIN_HEIGHT;
+    var MAP_BEGIN_MAIN_PIN_HEIGHT = window.keksobooking.map.BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
+    var MAP_END_MAIN_PIN_HEIGHT = window.keksobooking.map.END_HEIGHT - MAIN_PIN_HEIGHT;
 
     var currentCoordY = pinMain.offsetTop - shift.y;
     var currentCoordX = pinMain.offsetLeft - shift.x;
@@ -94,10 +94,10 @@
    * Change status of map and form on active.
    */
   function makePageAvailiable() {
-    if (window.keksobooking.map.map.classList.contains('map--faded')) {
+    if (window.keksobooking.map.mapBlock.classList.contains('map--faded')) {
       window.keksobooking.data.getAds();
       window.keksobooking.map.setMapNotFaded();
-      window.keksobooking.form.makeFormAvailable();
+      window.keksobooking.form.makeAvailable();
       window.keksobooking.form.setPinAddress(pinMain);
     }
   }
@@ -115,12 +115,15 @@
    * @param {number} y
    */
   function setPinMainCoords(x, y) {
-    x = x || MAIN_PIN_START_COORDX;
-    y = y || MAIN_PIN_START_COORDY;
+    x = x || MAIN_PIN_START_COORD_X;
+    y = y || MAIN_PIN_START_COORD_Y;
     pinMain.style.top = y + 'px';
     pinMain.style.left = x + 'px';
   }
 
+  /**
+   * Initialize event listeners for pin moving.
+   */
   function runPinModule() {
     pinMain.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {

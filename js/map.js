@@ -8,9 +8,9 @@
   var mapFilteres = map.querySelector('.map__filters');
   var MAP_BEGIN_HEIGHT = 130;
   var MAP_END_HEIGHT = 630;
-  var mapWidth = mapElement.offsetWidth - window.keksobooking.pin.PIN_WIDTH;
-  var mapBeginHeight = MAP_BEGIN_HEIGHT - window.keksobooking.pin.PIN_HEIGHT;
-  var mapEndHeight = MAP_END_HEIGHT - window.keksobooking.pin.PIN_HEIGHT;
+  var mapWidth = mapElement.offsetWidth - window.keksobooking.pin.WIDTH;
+  var mapBeginHeight = MAP_BEGIN_HEIGHT - window.keksobooking.pin.HEIGHT;
+  var mapEndHeight = MAP_END_HEIGHT - window.keksobooking.pin.HEIGHT;
 
   /**
    * Turn status of the map in active.
@@ -29,16 +29,16 @@
   }
 
   window.keksobooking.map = {
-    map: map,
-    mapFilteresContainer: mapFilteresContainer,
-    mapFilteres: mapFilteres,
-    mapWidth: mapWidth,
-    mapBeginHeight: mapBeginHeight,
-    mapEndHeight: mapEndHeight,
+    mapBlock: map,
+    FilteresContainer: mapFilteresContainer,
+    Filteres: mapFilteres,
+    Width: mapWidth,
+    BeginHeight: mapBeginHeight,
+    EndHeight: mapEndHeight,
     setMapNotFaded: setMapNotFaded,
     setMapFaded: setMapFaded,
-    MAP_BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
-    MAP_END_HEIGHT: MAP_END_HEIGHT,
+    BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
+    END_HEIGHT: MAP_END_HEIGHT,
     runMapModule: runMapModule
   };
 

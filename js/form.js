@@ -3,7 +3,7 @@
 (function () {
 
   window.keksobooking.form = {
-    makeFormAvailable: makeFormAvailable,
+    makeAvailable: makeFormAvailable,
     setPinAddress: setPinAddress,
     runFormModule: runFormModule
   };
@@ -51,7 +51,7 @@
   }
 
   function setFormInitialPropertiesAndEvents() {
-    makeFormElDisabled(window.keksobooking.map.mapFilteres, 'map__filters');
+    makeFormElDisabled(window.keksobooking.map.Filteres, 'map__filters');
     makeFormElementsDisabled(formFieldsets);
     setPriceRequirements();
     formElement.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
@@ -73,16 +73,11 @@
     errorElement.querySelector('button').addEventListener('click', hideErrorPopup);
   }
 
-  /**
-   * Make success popup display none.
-   */
+
   function hideSuccessPopup() {
     window.keksobooking.utils.changeElementDisplay(successElement, 'none');
   }
 
-  /**
-   * Make error popup display none.
-   */
   function hideErrorPopup() {
     window.keksobooking.utils.changeElementDisplay(errorElement, 'none');
   }
@@ -98,14 +93,14 @@
   }
 
   function makeAllPageInactive() {
-    var pins = window.keksobooking.map.map.querySelectorAll('.map__pin:not(.map__pin--main)');
+    var pins = window.keksobooking.map.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.map.setMapFaded();
-    makeFormElDisabled(window.keksobooking.map.mapFilteres, 'map__filters');
+    makeFormElDisabled(window.keksobooking.map.Filteres, 'map__filters');
     makeFormElDisabled(formElement, 'ad-form');
     makeFormElementsDisabled(formFieldsets);
     window.keksobooking.pin.deletePins(pins);
-    window.keksobooking.pin.setPinMainCoords();
-    setPinAddress(window.keksobooking.pin.pinMain);
+    window.keksobooking.pin.setMainCoords();
+    setPinAddress(window.keksobooking.pin.Main);
     var cardElement = document.querySelector('.map__card.popup');
     if (cardElement) {
       cardElement.remove();
@@ -194,7 +189,7 @@
    * Remove attributes and modifiers that are disabled in the form.
    */
   function makeFormAvailable() {
-    makeFormElAvailable(window.keksobooking.map.mapFilteres, 'map__filters');
+    makeFormElAvailable(window.keksobooking.map.Filteres, 'map__filters');
     makeFormElementsAvailable(formFieldsets);
     makeFormElAvailable(formElement, 'ad-form');
   }
