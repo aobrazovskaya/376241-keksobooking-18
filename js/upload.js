@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.upload = function (url, onSuccess, onError) {
+  window.keksobooking.makehttprequest = function (requestParams, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -24,7 +24,7 @@
 
     xhr.timeout = 10000; // 10s
 
-    xhr.open('GET', url);
-    xhr.send();
+    xhr.open(requestParams.method, requestParams.url);
+    xhr.send(requestParams.data);
   };
 })();

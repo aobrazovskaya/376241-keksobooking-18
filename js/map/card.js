@@ -35,7 +35,7 @@
     if (Array.isArray(currentCard.offer.features) && currentCard.offer.features.length > 0) {
       cardFeatures.replaceWith(selectFeatures(currentCard.offer.features, cardFeatures));
     } else {
-      window.utils.changeElementDisplay(cardFeatures, 'none');
+      window.keksobooking.utils.changeElementDisplay(cardFeatures, 'none');
     }
     var cardDescription = newCard.querySelector('.popup__description');
     if (currentCard.offer.description) {
@@ -47,7 +47,7 @@
     if (Array.isArray(currentCard.offer.photos) && currentCard.offer.photos.length > 0) {
       cardPhotos.replaceWith(getPhotosOfAd(currentCard.offer.photos, cardPhotos));
     } else {
-      window.utils.changeElementDisplay(cardPhotos, 'none');
+      window.keksobooking.utils.changeElementDisplay(cardPhotos, 'none');
     }
     var cardAvatar = newCard.querySelector('.popup__avatar');
     cardAvatar.src = currentCard.author.avatar;
@@ -107,11 +107,13 @@
 
   function closeCard() {
     var mapCard = document.querySelector('.map__card.popup');
-    window.utils.changeElementDisplay(mapCard, 'none');
+    if (mapCard) {
+      window.keksobooking.utils.changeElementDisplay(mapCard, 'none');
+    }
   }
 
   function showCardElement(evt) {
-    var ads = window.data.ads;
+    var ads = window.keksobooking.data.ads;
     var targetImg = evt.target.querySelector('img') || evt.target;
     var currentPin = targetImg.getAttribute('src');
     for (var i = 0; i < ads.length; i++) {
@@ -120,7 +122,7 @@
         if (mapCard !== null) {
           mapCard.replaceWith(createCardElement(ads[i]));
         } else {
-          window.map.mapFilteresContainer.insertAdjacentElement('beforebegin', createCardElement(ads[i]));
+          window.keksobooking.map.FilteresContainer.insertAdjacentElement('beforebegin', createCardElement(ads[i]));
         }
         var cardCloseElement = document.querySelector('.popup__close');
         cardCloseElement.addEventListener('click', closeCard);
@@ -129,14 +131,20 @@
     }
   }
 
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.utils.ESC_KEYCODE) {
-      closeCard();
-    }
-  });
+  /**
+   * Initialize event listeners for card closing.
+   */
+  function runCardModule() {
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
+        closeCard();
+      }
+    });
+  }
 
-  window.card = {
-    showCardElement: showCardElement
+  window.keksobooking.card = {
+    showElement: showCardElement,
+    runCardModule: runCardModule
   };
 
 })();
