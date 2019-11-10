@@ -131,6 +131,9 @@
     }
   }
 
+  /**
+   * Initialize event listeners for card closing.
+   */
   function runCardModule() {
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
