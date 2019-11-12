@@ -56,11 +56,13 @@
     for (var i = 0; i < mapPins.length; i++) {
       mapPins[i].addEventListener('click', window.keksobooking.card.showElement);
 
-      mapPins[i].addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
-          window.keksobooking.card.showElement(evt);
-        }
-      });
+      mapPins[i].addEventListener('keydown', showCardByEnter);
+    }
+  }
+
+  function showCardByEnter(evt) {
+    if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
+      window.keksobooking.card.showElement(evt);
     }
   }
 
@@ -99,12 +101,17 @@
       window.keksobooking.map.setMapNotFaded();
       window.keksobooking.form.makeAvailable();
       window.keksobooking.form.setPinAddress(pinMain);
+      window.keksobooking.map.setFilteresDisabled(false);
     }
   }
 
   function deletePins(pins) {
     for (var i = 0; i < pins.length; i++) {
       pins[i].remove();
+
+      pins[i].removeEventListener('click', window.keksobooking.card.showElement);
+
+      pins[i].removeEventListener('keydown', showCardByEnter);
     }
   }
 

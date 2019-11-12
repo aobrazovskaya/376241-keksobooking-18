@@ -109,6 +109,7 @@
     var mapCard = document.querySelector('.map__card.popup');
     if (mapCard) {
       window.keksobooking.utils.changeElementDisplay(mapCard, 'none');
+      mapCard.querySelector('.popup__close').removeEventListener('click', closeCard);
     }
   }
 
