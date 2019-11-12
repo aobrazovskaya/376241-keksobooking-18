@@ -134,7 +134,7 @@
   /**
    * Initialize event listeners for card closing.
    */
-  function runCardModule() {
+  function runModule() {
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
         closeCard();
@@ -144,7 +144,7 @@
 
   window.keksobooking.card = {
     showElement: showCardElement,
-    runCardModule: runCardModule
+    runModule: runModule
   };
 
 })();

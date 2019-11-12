@@ -5,10 +5,10 @@
   window.keksobooking.form = {
     makeAvailable: makeFormAvailable,
     setPinAddress: setPinAddress,
-    runFormModule: runFormModule
+    runModule: runModule
   };
 
-  function runFormModule() {
+  function runModule() {
     setFormInitialPropertiesAndEvents();
     makeSuccessPopup();
     makeErrorPopup();

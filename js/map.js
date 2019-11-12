@@ -39,10 +39,10 @@
     setMapFaded: setMapFaded,
     BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
     END_HEIGHT: MAP_END_HEIGHT,
-    runMapModule: runMapModule
+    runModule: runModule
   };
 
-  function runMapModule() {
+  function runModule() {
     map.classList.add(mapFaded);
   }
 })();
