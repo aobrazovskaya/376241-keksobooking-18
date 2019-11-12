@@ -13,8 +13,11 @@
   var mapWidth = mapElement.offsetWidth - window.keksobooking.pin.WIDTH;
   var mapBeginHeight = MAP_BEGIN_HEIGHT - window.keksobooking.pin.HEIGHT;
   var mapEndHeight = MAP_END_HEIGHT - window.keksobooking.pin.HEIGHT;
-
   var filteres = Array.from(filtersAll).concat(Array.from(featuresAll));
+  var typeFilter = filteres[0];
+  var priceFilter = filteres[1];
+  var roomFilteres = filteres[2];
+  var guestFilteres = filteres[3];
 
   /**
    * Turn status of the map in active.
@@ -37,6 +40,21 @@
       element.disabled = changeTo;
     });
     mapFilteres.reset();
+  }
+
+  filteres.forEach(function (element) {
+    element.addEventListener('change', filterAds);
+  });
+
+  function filterAds() {
+    var filteredAds = window.keksobooking.data.ads.filter(function (ad) {
+      var isType = typeFilter.value === 'any' ? true : ad.offer.type === typeFilter.value;
+      // var isPrice = priceFilter.value === 'any' ? true : 
+      return isType;
+    }).slice(0, 5);
+    var pins = window.keksobooking.map.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
+    window.keksobooking.pin.deletePins(pins);
+    window.keksobooking.pin.createDomElements(filteredAds);
   }
 
   window.keksobooking.map = {

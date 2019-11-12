@@ -107,11 +107,9 @@
 
   function deletePins(pins) {
     for (var i = 0; i < pins.length; i++) {
-      pins[i].remove();
-
       pins[i].removeEventListener('click', window.keksobooking.card.showElement);
-
       pins[i].removeEventListener('keydown', showCardByEnter);
+      pins[i].remove();
     }
   }
 
