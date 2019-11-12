@@ -145,6 +145,7 @@
 
   window.keksobooking.card = {
     showElement: showCardElement,
+    closeCard: closeCard,
     runModule: runModule
   };
 
