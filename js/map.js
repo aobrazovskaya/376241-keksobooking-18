@@ -50,7 +50,7 @@
     window.keksobooking.card.closeCard();
     var pins = window.keksobooking.map.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.pin.deletePins(pins);
-    var filteredAds = window.keksobooking.data.ads.filter(function (ad) {
+    var filteredAds = window.keksobooking.utils.debounce(window.keksobooking.data.ads.filter(function (ad) {
       var isType = typeFilter.value === 'any' || ad.offer.type === typeFilter.value;
       var isPrice = switchPrice(priceFilter.value, parseInt(ad.offer.price, 10));
       var isRoomNumber = roomFilteres.value === 'any' || ad.offer.rooms === parseInt(roomFilteres.value, 10);
@@ -58,7 +58,7 @@
       var isFeatures = isFeaturesExist(ad.offer.features, checkedFeatures(featuresAll));
 
       return isType && isPrice && isRoomNumber && isGuestsNumber && isFeatures;
-    });
+    }));
     var fiveFilterAds = window.keksobooking.utils.cropArrayToFiveElements(filteredAds);
     window.keksobooking.pin.createDomElements(fiveFilterAds);
     pins = window.keksobooking.map.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
