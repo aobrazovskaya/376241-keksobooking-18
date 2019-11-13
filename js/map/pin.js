@@ -21,7 +21,7 @@
     deletePins: deletePins,
     setMainCoords: setPinMainCoords,
     Main: pinMain,
-    runPinModule: runPinModule
+    runModule: runModule
   };
 
   /**
@@ -56,11 +56,13 @@
     for (var i = 0; i < mapPins.length; i++) {
       mapPins[i].addEventListener('click', window.keksobooking.card.showElement);
 
-      mapPins[i].addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
-          window.keksobooking.card.showElement(evt);
-        }
-      });
+      mapPins[i].addEventListener('keydown', showCardByEnter);
+    }
+  }
+
+  function showCardByEnter(evt) {
+    if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
+      window.keksobooking.card.showElement(evt);
     }
   }
 
@@ -99,11 +101,14 @@
       window.keksobooking.map.setMapNotFaded();
       window.keksobooking.form.makeAvailable();
       window.keksobooking.form.setPinAddress(pinMain);
+      window.keksobooking.map.setFilteresDisabled(false);
     }
   }
 
   function deletePins(pins) {
     for (var i = 0; i < pins.length; i++) {
+      pins[i].removeEventListener('click', window.keksobooking.card.showElement);
+      pins[i].removeEventListener('keydown', showCardByEnter);
       pins[i].remove();
     }
   }
@@ -124,7 +129,7 @@
   /**
    * Initialize event listeners for pin moving.
    */
-  function runPinModule() {
+  function runModule() {
     pinMain.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.keksobooking.utils.ENTER_KEYCODE) {
         makePageAvailiable();

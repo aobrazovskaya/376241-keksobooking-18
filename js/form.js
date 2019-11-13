@@ -5,10 +5,10 @@
   window.keksobooking.form = {
     makeAvailable: makeFormAvailable,
     setPinAddress: setPinAddress,
-    runFormModule: runFormModule
+    runModule: runModule
   };
 
-  function runFormModule() {
+  function runModule() {
     setFormInitialPropertiesAndEvents();
     makeSuccessPopup();
     makeErrorPopup();
@@ -54,6 +54,7 @@
     makeFormElDisabled(window.keksobooking.map.Filteres, 'map__filters');
     makeFormElementsDisabled(formFieldsets);
     setPriceRequirements();
+    window.keksobooking.map.setFilteresDisabled(true);
     formElement.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
     formElement.addEventListener('submit', submitForm);
     formType.addEventListener('change', setPriceRequirements);
@@ -70,7 +71,7 @@
   function makeErrorPopup() {
     mainBlock.appendChild(errorElement);
     hideErrorPopup();
-    errorElement.querySelector('button').addEventListener('click', hideErrorPopup);
+    errorElement.addEventListener('click', hideErrorPopup);
   }
 
 
@@ -95,6 +96,7 @@
   function makeAllPageInactive() {
     var pins = window.keksobooking.map.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.map.setMapFaded();
+    window.keksobooking.map.setFilteresDisabled(true);
     makeFormElDisabled(window.keksobooking.map.Filteres, 'map__filters');
     makeFormElDisabled(formElement, 'ad-form');
     makeFormElementsDisabled(formFieldsets);

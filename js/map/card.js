@@ -109,15 +109,18 @@
     var mapCard = document.querySelector('.map__card.popup');
     if (mapCard) {
       window.keksobooking.utils.changeElementDisplay(mapCard, 'none');
+      mapCard.querySelector('.popup__close').removeEventListener('click', closeCard);
     }
   }
 
   function showCardElement(evt) {
     var ads = window.keksobooking.data.ads;
+
     var targetImg = evt.target.querySelector('img') || evt.target;
-    var currentPin = targetImg.getAttribute('src');
+    var currentPin = targetImg.getAttribute('alt');
     for (var i = 0; i < ads.length; i++) {
-      if (currentPin === ads[i].author.avatar) {
+      if (currentPin === ads[i].offer.title) {
+
         var mapCard = document.querySelector('.map__card.popup');
         if (mapCard !== null) {
           mapCard.replaceWith(createCardElement(ads[i]));
@@ -134,7 +137,7 @@
   /**
    * Initialize event listeners for card closing.
    */
-  function runCardModule() {
+  function runModule() {
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
         closeCard();
@@ -144,7 +147,8 @@
 
   window.keksobooking.card = {
     showElement: showCardElement,
-    runCardModule: runCardModule
+    closeCard: closeCard,
+    runModule: runModule
   };
 
 })();
