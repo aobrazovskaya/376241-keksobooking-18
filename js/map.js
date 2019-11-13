@@ -48,18 +48,19 @@
 
   function filterAds() {
     window.keksobooking.card.closeCard();
+    var pins = window.keksobooking.map.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
+    window.keksobooking.pin.deletePins(pins);
     var filteredAds = window.keksobooking.data.ads.filter(function (ad) {
       var isType = typeFilter.value === 'any' || ad.offer.type === typeFilter.value;
-      var isPrice = switchPrice(priceFilter.value, ad.offer.price);
+      var isPrice = switchPrice(priceFilter.value, parseInt(ad.offer.price, 10));
       var isRoomNumber = roomFilteres.value === 'any' || ad.offer.rooms === parseInt(roomFilteres.value, 10);
       var isGuestsNumber = guestsFilteres.value === 'any' || ad.offer.guests === parseInt(guestsFilteres.value, 10);
       var isFeatures = isFeaturesExist(ad.offer.features, checkedFeatures(featuresAll));
 
       return isType && isPrice && isRoomNumber && isGuestsNumber && isFeatures;
-    }).slice(0, 5);
-    var pins = window.keksobooking.map.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
-    window.keksobooking.pin.deletePins(pins);
-    window.keksobooking.pin.createDomElements(filteredAds);
+    });
+    var fiveFilterAds = window.keksobooking.utils.cropArrayToFiveElements(filteredAds);
+    window.keksobooking.pin.createDomElements(fiveFilterAds);
     pins = window.keksobooking.map.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.pin.showCardsOfSelectedPin(pins);
   }
@@ -88,9 +89,9 @@
       case 'middle':
         return x >= 10000 && x <= 50000;
       case 'low':
-        return x >= 10000;
+        return x < 10000;
       case 'high':
-        return x <= 50000;
+        return x > 50000;
       default: return false;
     }
   }

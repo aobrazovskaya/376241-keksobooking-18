@@ -14,7 +14,7 @@
 
   var onSuccess = function (data) {
     window.keksobooking.data.ads = data;
-    window.keksobooking.pin.createDomElements(data);
+    window.keksobooking.pin.createDomElements(data.slice(0, 5));
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.pin.showCardsOfSelectedPin(mapPins);
   };
