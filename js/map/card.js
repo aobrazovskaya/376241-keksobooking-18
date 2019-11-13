@@ -115,10 +115,12 @@
 
   function showCardElement(evt) {
     var ads = window.keksobooking.data.ads;
+
     var targetImg = evt.target.querySelector('img') || evt.target;
-    var currentPin = targetImg.getAttribute('src');
+    var currentPin = targetImg.getAttribute('alt');
     for (var i = 0; i < ads.length; i++) {
-      if (currentPin === ads[i].author.avatar) {
+      if (currentPin === ads[i].offer.title) {
+
         var mapCard = document.querySelector('.map__card.popup');
         if (mapCard !== null) {
           mapCard.replaceWith(createCardElement(ads[i]));

@@ -3,7 +3,7 @@
 (function () {
   var ENTER_KEYCODE = 13;
   var ESC_KEYCODE = 27;
-  var ARRAY_COUNT = 5;
+  var ADS_COUNT = 5;
 
   /**
    * Change value of display property of HTML Element.
@@ -15,7 +15,7 @@
   }
 
   function cropArrayToFiveElements(arr) {
-    return arr.slice(0, ARRAY_COUNT);
+    return arr.slice(0, ADS_COUNT);
   }
 
   window.keksobooking = {};
