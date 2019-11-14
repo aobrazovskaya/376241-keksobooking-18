@@ -7,17 +7,17 @@
     url: 'https://js.dump.academy/keksobooking/data',
   };
 
-  var onError = function () {
+  function onError() {
     var errorElement = document.querySelector('#error');
     document.querySelector('main').appendChild(errorElement.content);
-  };
+  }
 
-  var onSuccess = function (data) {
+  function onSuccess(data) {
     window.keksobooking.data.ads = data;
     window.keksobooking.pin.createDomElements(data.slice(0, 5));
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.pin.showCardsOfSelectedPin(mapPins);
-  };
+  }
 
   /**
    * A complete list of similar ads is loaded after the page is in an active state.

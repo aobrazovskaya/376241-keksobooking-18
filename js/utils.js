@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var ENTER_KEYCODE = 13;
   var ESC_KEYCODE = 27;
   var ADS_COUNT = 5;

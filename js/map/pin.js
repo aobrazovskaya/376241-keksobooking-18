@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var MAIN_PIN_WIDTH = 62;
@@ -10,19 +11,6 @@
   var pinMain = document.querySelector('.map .map__pin--main');
   var MAIN_PIN_START_COORD_X = pinMain.offsetLeft;
   var MAIN_PIN_START_COORD_Y = pinMain.offsetTop;
-
-  window.keksobooking.pin = {
-    HEIGHT: PIN_HEIGHT,
-    WIDTH: PIN_WIDTH,
-    MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
-    MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
-    createDomElements: createDomElements,
-    showCardsOfSelectedPin: showCardsOfSelectedPin,
-    deletePins: deletePins,
-    setMainCoords: setPinMainCoords,
-    Main: pinMain,
-    runModule: runModule
-  };
 
   /**
    * Add DOM elements to HTML doc.
@@ -175,5 +163,18 @@
       document.addEventListener('mouseup', onMouseUp);
     });
   }
+
+  window.keksobooking.pin = {
+    HEIGHT: PIN_HEIGHT,
+    WIDTH: PIN_WIDTH,
+    MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
+    MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
+    createDomElements: createDomElements,
+    showCardsOfSelectedPin: showCardsOfSelectedPin,
+    deletePins: deletePins,
+    setMainCoords: setPinMainCoords,
+    Main: pinMain,
+    runModule: runModule
+  };
 
 })();

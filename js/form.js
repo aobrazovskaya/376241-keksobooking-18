@@ -2,28 +2,6 @@
 
 (function () {
 
-  window.keksobooking.form = {
-    makeAvailable: makeFormAvailable,
-    setPinAddress: setPinAddress,
-    runModule: runModule
-  };
-
-  function runModule() {
-    setFormInitialPropertiesAndEvents();
-    makeSuccessPopup();
-    makeErrorPopup();
-    document.querySelector('.ad-form__reset').addEventListener('click', function () {
-      makeAllPageInactive();
-    });
-
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
-        hideSuccessPopup();
-        hideErrorPopup();
-      }
-    });
-  }
-
   var formElement = document.querySelector('.ad-form');
   var formFieldsets = formElement.querySelectorAll('fieldset');
   var formAddress = formElement.querySelector('#address');
@@ -74,7 +52,6 @@
     errorElement.addEventListener('click', hideErrorPopup);
   }
 
-
   function hideSuccessPopup() {
     window.keksobooking.utils.changeElementDisplay(successElement, 'none');
   }
@@ -83,9 +60,9 @@
     window.keksobooking.utils.changeElementDisplay(errorElement, 'none');
   }
 
-  var onError = function () {
+  function onError() {
     window.keksobooking.utils.changeElementDisplay(errorElement, 'block');
-  };
+  }
 
   function onSuccess() {
     makeAllPageInactive();
@@ -203,5 +180,27 @@
     var address = (pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', ' + (pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT);
     formAddress.value = address;
   }
+
+  function runModule() {
+    setFormInitialPropertiesAndEvents();
+    makeSuccessPopup();
+    makeErrorPopup();
+    document.querySelector('.ad-form__reset').addEventListener('click', function () {
+      makeAllPageInactive();
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
+        hideSuccessPopup();
+        hideErrorPopup();
+      }
+    });
+  }
+
+  window.keksobooking.form = {
+    makeAvailable: makeFormAvailable,
+    setPinAddress: setPinAddress,
+    runModule: runModule
+  };
 
 })();
