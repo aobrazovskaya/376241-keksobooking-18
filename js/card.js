@@ -126,7 +126,7 @@
         if (mapCard !== null) {
           mapCard.replaceWith(createCardElement(ads[i]));
         } else {
-          window.keksobooking.map.FilteresContainer.insertAdjacentElement('beforebegin', createCardElement(ads[i]));
+          window.keksobooking.map.filteresContainer.insertAdjacentElement('beforebegin', createCardElement(ads[i]));
         }
         var cardCloseElement = document.querySelector('.popup__close');
         cardCloseElement.addEventListener('click', closeCard);

@@ -6,11 +6,11 @@
   var PIN_HEIGHT = 70;
   var MAIN_PIN_WIDTH = 62;
   var MAIN_PIN_HEIGHT = 84;
+  var MAIN_PIN_START_COORD_X = pinMain.offsetLeft;
+  var MAIN_PIN_START_COORD_Y = pinMain.offsetTop;
   var pinTemplate = document.querySelector('#pin').content.querySelector('button');
   var mapPinsBlock = document.querySelector('.map__pins');
   var pinMain = document.querySelector('.map .map__pin--main');
-  var MAIN_PIN_START_COORD_X = pinMain.offsetLeft;
-  var MAIN_PIN_START_COORD_Y = pinMain.offsetTop;
 
   /**
    * Add DOM elements to HTML doc.
@@ -55,7 +55,7 @@
   }
 
   function checkCoordsInterval(shift) {
-    var mapWidthEnd = window.keksobooking.map.mapBlock.offsetWidth - MAIN_PIN_WIDTH / 2;
+    var mapWidthEnd = window.keksobooking.map.mapElement.offsetWidth - MAIN_PIN_WIDTH / 2;
     var mapWidthBegin = 0 - MAIN_PIN_WIDTH / 2;
     var MAP_BEGIN_MAIN_PIN_HEIGHT = window.keksobooking.map.BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
     var MAP_END_MAIN_PIN_HEIGHT = window.keksobooking.map.END_HEIGHT - MAIN_PIN_HEIGHT;
@@ -84,7 +84,7 @@
    * Change status of map and form on active.
    */
   function makePageAvailiable() {
-    if (window.keksobooking.map.mapBlock.classList.contains('map--faded')) {
+    if (window.keksobooking.map.mapElement.classList.contains('map--faded')) {
       window.keksobooking.data.getAds();
       window.keksobooking.map.setMapNotFaded();
       window.keksobooking.form.makeAvailable();
@@ -173,7 +173,7 @@
     showCardsOfSelectedPin: showCardsOfSelectedPin,
     deletePins: deletePins,
     setMainCoords: setPinMainCoords,
-    Main: pinMain,
+    main: pinMain,
     runModule: runModule
   };
 

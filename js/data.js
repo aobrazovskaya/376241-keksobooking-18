@@ -23,7 +23,7 @@
    * A complete list of similar ads is loaded after the page is in an active state.
    */
   function getAds() {
-    window.keksobooking.makehttprequest(requestInfo, onSuccess, onError);
+    window.keksobooking.makeHttpRequest(requestInfo, onSuccess, onError);
   }
 
   window.keksobooking.data = {
