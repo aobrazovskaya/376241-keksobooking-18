@@ -29,7 +29,7 @@
   }
 
   function setFormInitialPropertiesAndEvents() {
-    makeFormElDisabled(window.keksobooking.map.Filteres, 'map__filters');
+    makeFormElDisabled(window.keksobooking.map.filteres, 'map__filters');
     makeFormElementsDisabled(formFieldsets);
     setPriceRequirements();
     window.keksobooking.map.setFilteresDisabled(true);

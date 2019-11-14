@@ -6,11 +6,11 @@
   var PIN_HEIGHT = 70;
   var MAIN_PIN_WIDTH = 62;
   var MAIN_PIN_HEIGHT = 84;
+  var pinMain = document.querySelector('.map .map__pin--main');
   var MAIN_PIN_START_COORD_X = pinMain.offsetLeft;
   var MAIN_PIN_START_COORD_Y = pinMain.offsetTop;
   var pinTemplate = document.querySelector('#pin').content.querySelector('button');
   var mapPinsBlock = document.querySelector('.map__pins');
-  var pinMain = document.querySelector('.map .map__pin--main');
 
   /**
    * Add DOM elements to HTML doc.
