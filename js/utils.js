@@ -19,6 +19,13 @@
     return arr.slice(0, ADS_COUNT);
   }
 
+  /**
+   * The debounce function allows you to make sure that
+   * when switching the filter, the list of items matching
+   * the filters is updated no more than once every half a second.
+   * @param {function} cb
+   * @return {function}
+   */
   function debounce(cb) {
     var lastTimeout = null;
 
