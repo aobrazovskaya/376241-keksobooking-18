@@ -81,6 +81,7 @@
     window.keksobooking.pin.setMainCoords();
     setPinAddress(window.keksobooking.pin.Main);
     var cardElement = document.querySelector('.map__card.popup');
+    formElement.reset();
     if (cardElement) {
       cardElement.remove();
     }

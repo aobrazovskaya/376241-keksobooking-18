@@ -54,7 +54,7 @@
     }
   }
 
-  function checkIntervalforCoords(shift) {
+  function checkCoordsInterval(shift) {
     var mapWidthEnd = window.keksobooking.map.mapBlock.offsetWidth - MAIN_PIN_WIDTH / 2;
     var mapWidthBegin = 0 - MAIN_PIN_WIDTH / 2;
     var MAP_BEGIN_MAIN_PIN_HEIGHT = window.keksobooking.map.BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
@@ -147,7 +147,7 @@
           y: moveEvt.clientY
         };
 
-        var coords = checkIntervalforCoords(shift);
+        var coords = checkCoordsInterval(shift);
         setPinMainCoords(coords.coordX, coords.coordY);
       };
 
