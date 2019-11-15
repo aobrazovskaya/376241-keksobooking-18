@@ -76,15 +76,15 @@
   function makeAllPageInactive() {
     var pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.map.setMapFaded();
-    window.keksobooking.map.setFilteresDisabled(true);
     makeFormElDisabled(window.keksobooking.map.filteres, 'map__filters');
     makeFormElDisabled(formElement, 'ad-form');
     window.keksobooking.map.setFilteresDisabledStatus(true);
     window.keksobooking.pin.deletePins(pins);
     window.keksobooking.pin.setMainCoords();
-    setPinAddress(window.keksobooking.pin.main);
     var cardElement = document.querySelector('.map__card.popup');
+    setInitPinAddress();
     formElement.reset();
+    window.keksobooking.map.filteres.reset();
     if (cardElement) {
       cardElement.remove();
     }

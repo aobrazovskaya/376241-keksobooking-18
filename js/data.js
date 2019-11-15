@@ -10,6 +10,7 @@
   function onError() {
     var errorElement = document.querySelector('#error');
     document.querySelector('main').appendChild(errorElement.content);
+    document.querySelector('.error p').addEventListener('click', getAds);
   }
 
   function onSuccess(data) {
