@@ -15,6 +15,8 @@
   var successElement = successTemplate.cloneNode(true).content.querySelector('.success');
   var errorTemplate = document.querySelector('#error');
   var errorElement = errorTemplate.cloneNode(true).content.querySelector('.error');
+  var roomsValue = document.querySelector('#room_number').value;
+  var guestsValue = document.querySelector('#capacity').value;
 
   function submitForm(evt) {
     evt.preventDefault();
@@ -30,9 +32,8 @@
 
   function setFormInitialPropertiesAndEvents() {
     makeFormElDisabled(window.keksobooking.map.filteres, 'map__filters');
-    makeFormElementsDisabled(formFieldsets);
+    window.keksobooking.map.setFilteresDisabledStatus(true);
     setPriceRequirements();
-    window.keksobooking.map.setFilteresDisabled(true);
     formElement.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
     formElement.addEventListener('submit', submitForm);
     formType.addEventListener('change', setPriceRequirements);
@@ -76,7 +77,7 @@
     window.keksobooking.map.setFilteresDisabled(true);
     makeFormElDisabled(window.keksobooking.map.filteres, 'map__filters');
     makeFormElDisabled(formElement, 'ad-form');
-    makeFormElementsDisabled(formFieldsets);
+    window.keksobooking.map.setFilteresDisabledStatus(true);
     window.keksobooking.pin.deletePins(pins);
     window.keksobooking.pin.setMainCoords();
     setPinAddress(window.keksobooking.pin.main);
@@ -104,29 +105,9 @@
   }
 
   /**
-   * @param {array} elements
-   */
-  function makeFormElementsDisabled(elements) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].disabled = true;
-    }
-  }
-
-  /**
-   * @param {array} elements
-   */
-  function makeFormElementsAvailable(elements) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].disabled = false;
-    }
-  }
-
-  /**
    * The Number of rooms field is synchronized with the capacity field.
    */
   function validateCapacity() {
-    var roomsValue = document.querySelector('#room_number').value;
-    var guestsValue = document.querySelector('#capacity').value;
     var isCorrectForOneRoom = roomsValue === '1' && guestsValue === '1';
     var isCorrectForTwoRooms = roomsValue === '2' && (guestsValue === '1' || guestsValue === '2');
     var isCorrectForThreeRooms = roomsValue === '3' && (guestsValue === '1' || guestsValue === '2' || guestsValue === '3');
@@ -170,7 +151,6 @@
    */
   function makeFormAvailable() {
     makeFormElAvailable(window.keksobooking.map.filteres, 'map__filters');
-    makeFormElementsAvailable(formFieldsets);
     makeFormElAvailable(formElement, 'ad-form');
   }
 
@@ -201,6 +181,7 @@
   window.keksobooking.form = {
     makeAvailable: makeFormAvailable,
     setPinAddress: setPinAddress,
+    fieldsets: formFieldsets,
     runModule: runModule
   };
 

@@ -27,13 +27,6 @@
     mapElement.classList.add('map--faded');
   }
 
-  function setFilteresDisabled(changeTo) {
-    filteres.forEach(function (element) {
-      element.disabled = changeTo;
-    });
-    mapFilteres.reset();
-  }
-
   function filterAds() {
     var pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.card.closeCard();
@@ -86,6 +79,15 @@
     }
   }
 
+  /**
+   * @param {boolean} changeTo
+   */
+  function setFilteresDisabledStatus(changeTo) {
+    filteres.forEach(function (element) {
+      element.disabled = changeTo;
+    });
+  }
+
   function runModule() {
     mapElement.classList.add(mapFaded);
 
@@ -95,17 +97,17 @@
   }
 
   window.keksobooking.map = {
+    BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
+    END_HEIGHT: MAP_END_HEIGHT,
     mapElement: mapElement,
     filteresContainer: mapFilteresContainer,
+    setFilteresDisabledStatus: setFilteresDisabledStatus,
     filteres: mapFilteres,
     width: mapWidth,
     beginHeight: mapBeginHeight,
     endHeight: mapEndHeight,
     setMapNotFaded: setMapNotFaded,
     setMapFaded: setMapFaded,
-    setFilteresDisabled: setFilteresDisabled,
-    BEGIN_HEIGHT: MAP_BEGIN_HEIGHT,
-    END_HEIGHT: MAP_END_HEIGHT,
     runModule: runModule
   };
 

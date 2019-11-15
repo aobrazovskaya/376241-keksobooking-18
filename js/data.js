@@ -17,6 +17,9 @@
     window.keksobooking.pin.createDomElements(data.slice(0, 5));
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.pin.showCardsOfSelectedPin(mapPins);
+    if (data) {
+      window.keksobooking.map.setFilteresDisabledStatus(false);
+    }
   }
 
   /**

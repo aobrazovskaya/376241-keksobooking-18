@@ -89,7 +89,6 @@
       window.keksobooking.map.setMapNotFaded();
       window.keksobooking.form.makeAvailable();
       window.keksobooking.form.setPinAddress(pinMain);
-      window.keksobooking.map.setFilteresDisabled(false);
     }
   }
 
