@@ -158,11 +158,22 @@
     * @param {HTMLElement} pin template clone of pin
     */
   function setPinAddress(pin) {
-    var address = (pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', ' + (pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT);
+    var address = (pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', '
+    + (pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT);
+    formAddress.value = address;
+  }
+
+  /**
+    * @param {HTMLElement} pin template clone of pin
+    */
+  function setInitPinAddress() {
+    var address = (window.keksobooking.pin.main.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', '
+    + (window.keksobooking.pin.main.offsetTop + window.keksobooking.pin.MAIN_PIN_WIDTH / 2);
     formAddress.value = address;
   }
 
   function runModule() {
+    setInitPinAddress();
     setFormInitialPropertiesAndEvents();
     makeSuccessPopup();
     makeErrorPopup();
