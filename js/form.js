@@ -55,10 +55,12 @@
 
   function hideSuccessPopup() {
     window.keksobooking.utils.changeElementDisplay(successElement, 'none');
+    successElement.removeEventListener('click', hideSuccessPopup);
   }
 
   function hideErrorPopup() {
     window.keksobooking.utils.changeElementDisplay(errorElement, 'none');
+    errorElement.removeEventListener('click', hideErrorPopup);
   }
 
   function onError() {
