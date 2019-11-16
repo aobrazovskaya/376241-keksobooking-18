@@ -4,13 +4,11 @@
 
   var requestInfo = {
     method: 'GET',
-    url: 'https://js.dump.academy/keksobooking/data',
+    url: 'https://js.dump.academy/keksobooking/data1',
   };
 
   function onError() {
-    var errorElement = document.querySelector('#error');
-    document.querySelector('main').appendChild(errorElement.content);
-    document.querySelector('.error p').addEventListener('click', getAds);
+    window.keksobooking.form.onError();
   }
 
   function onSuccess(data) {

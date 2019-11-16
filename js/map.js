@@ -86,6 +86,9 @@
     filteres.forEach(function (element) {
       element.disabled = changeTo;
     });
+    window.keksobooking.form.fieldsets.forEach(function (element) {
+      element.disabled = changeTo;
+    });
   }
 
   function runModule() {

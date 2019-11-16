@@ -15,8 +15,6 @@
   var successElement = successTemplate.cloneNode(true).content.querySelector('.success');
   var errorTemplate = document.querySelector('#error');
   var errorElement = errorTemplate.cloneNode(true).content.querySelector('.error');
-  var roomsValue = document.querySelector('#room_number').value;
-  var guestsValue = document.querySelector('#capacity').value;
 
   function submitForm(evt) {
     evt.preventDefault();
@@ -44,13 +42,11 @@
   function makeSuccessPopup() {
     mainBlock.appendChild(successElement);
     hideSuccessPopup();
-    successElement.addEventListener('click', hideSuccessPopup);
   }
 
   function makeErrorPopup() {
     mainBlock.appendChild(errorElement);
     hideErrorPopup();
-    errorElement.addEventListener('click', hideErrorPopup);
   }
 
   function hideSuccessPopup() {
@@ -65,11 +61,13 @@
 
   function onError() {
     window.keksobooking.utils.changeElementDisplay(errorElement, 'block');
+    errorElement.addEventListener('click', hideErrorPopup);
   }
 
   function onSuccess() {
     makeAllPageInactive();
     window.keksobooking.utils.changeElementDisplay(successElement, 'block');
+    successElement.addEventListener('click', hideSuccessPopup);
     formElement.reset();
   }
 
@@ -81,10 +79,10 @@
     window.keksobooking.map.setFilteresDisabledStatus(true);
     window.keksobooking.pin.deletePins(pins);
     window.keksobooking.pin.setMainCoords();
-    var cardElement = document.querySelector('.map__card.popup');
     setInitPinAddress();
     formElement.reset();
     window.keksobooking.map.filteres.reset();
+    var cardElement = document.querySelector('.map__card.popup');
     if (cardElement) {
       cardElement.remove();
     }
@@ -110,6 +108,8 @@
    * The Number of rooms field is synchronized with the capacity field.
    */
   function validateCapacity() {
+    var roomsValue = document.querySelector('#room_number').value;
+    var guestsValue = document.querySelector('#capacity').value;
     var isCorrectForOneRoom = roomsValue === '1' && guestsValue === '1';
     var isCorrectForTwoRooms = roomsValue === '2' && (guestsValue === '1' || guestsValue === '2');
     var isCorrectForThreeRooms = roomsValue === '3' && (guestsValue === '1' || guestsValue === '2' || guestsValue === '3');
@@ -179,6 +179,7 @@
     setFormInitialPropertiesAndEvents();
     makeSuccessPopup();
     makeErrorPopup();
+
     document.querySelector('.ad-form__reset').addEventListener('click', function () {
       makeAllPageInactive();
     });
@@ -195,6 +196,7 @@
     makeAvailable: makeFormAvailable,
     setPinAddress: setPinAddress,
     fieldsets: formFieldsets,
+    onError: onError,
     runModule: runModule
   };
 
