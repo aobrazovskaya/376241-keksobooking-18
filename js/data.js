@@ -4,7 +4,7 @@
 
   var requestInfo = {
     method: 'GET',
-    url: 'https://js.dump.academy/keksobooking/data1',
+    url: 'https://js.dump.academy/keksobooking/data',
   };
 
   function onError() {
