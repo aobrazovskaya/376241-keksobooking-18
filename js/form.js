@@ -2,28 +2,6 @@
 
 (function () {
 
-  window.keksobooking.form = {
-    makeAvailable: makeFormAvailable,
-    setPinAddress: setPinAddress,
-    runModule: runModule
-  };
-
-  function runModule() {
-    setFormInitialPropertiesAndEvents();
-    makeSuccessPopup();
-    makeErrorPopup();
-    document.querySelector('.ad-form__reset').addEventListener('click', function () {
-      makeAllPageInactive();
-    });
-
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
-        hideSuccessPopup();
-        hideErrorPopup();
-      }
-    });
-  }
-
   var formElement = document.querySelector('.ad-form');
   var formFieldsets = formElement.querySelectorAll('fieldset');
   var formAddress = formElement.querySelector('#address');
@@ -47,14 +25,13 @@
       url: 'https://js.dump.academy/keksobooking',
       data: formData
     };
-    window.keksobooking.makehttprequest(requestInfo, onSuccess, onError);
+    window.keksobooking.makeHttpRequest(requestInfo, onSuccess, onError);
   }
 
   function setFormInitialPropertiesAndEvents() {
-    makeFormElDisabled(window.keksobooking.map.Filteres, 'map__filters');
-    makeFormElementsDisabled(formFieldsets);
+    makeFormElDisabled(window.keksobooking.map.filteres, 'map__filters');
+    window.keksobooking.map.setFilteresDisabledStatus(true);
     setPriceRequirements();
-    window.keksobooking.map.setFilteresDisabled(true);
     formElement.querySelector('.ad-form__submit').addEventListener('click', validateCapacity);
     formElement.addEventListener('submit', submitForm);
     formType.addEventListener('change', setPriceRequirements);
@@ -65,44 +42,46 @@
   function makeSuccessPopup() {
     mainBlock.appendChild(successElement);
     hideSuccessPopup();
-    successElement.addEventListener('click', hideSuccessPopup);
   }
 
   function makeErrorPopup() {
     mainBlock.appendChild(errorElement);
     hideErrorPopup();
-    errorElement.addEventListener('click', hideErrorPopup);
   }
-
 
   function hideSuccessPopup() {
     window.keksobooking.utils.changeElementDisplay(successElement, 'none');
+    successElement.removeEventListener('click', hideSuccessPopup);
   }
 
   function hideErrorPopup() {
     window.keksobooking.utils.changeElementDisplay(errorElement, 'none');
+    errorElement.removeEventListener('click', hideErrorPopup);
   }
 
-  var onError = function () {
+  function onError() {
     window.keksobooking.utils.changeElementDisplay(errorElement, 'block');
-  };
+    errorElement.addEventListener('click', hideErrorPopup);
+  }
 
   function onSuccess() {
     makeAllPageInactive();
     window.keksobooking.utils.changeElementDisplay(successElement, 'block');
+    successElement.addEventListener('click', hideSuccessPopup);
     formElement.reset();
   }
 
   function makeAllPageInactive() {
-    var pins = window.keksobooking.map.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
+    var pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.map.setMapFaded();
-    window.keksobooking.map.setFilteresDisabled(true);
-    makeFormElDisabled(window.keksobooking.map.Filteres, 'map__filters');
+    makeFormElDisabled(window.keksobooking.map.filteres, 'map__filters');
     makeFormElDisabled(formElement, 'ad-form');
-    makeFormElementsDisabled(formFieldsets);
+    window.keksobooking.map.setFilteresDisabledStatus(true);
     window.keksobooking.pin.deletePins(pins);
     window.keksobooking.pin.setMainCoords();
-    setPinAddress(window.keksobooking.pin.Main);
+    setInitPinAddress();
+    formElement.reset();
+    window.keksobooking.map.filteres.reset();
     var cardElement = document.querySelector('.map__card.popup');
     if (cardElement) {
       cardElement.remove();
@@ -123,24 +102,6 @@
    */
   function makeFormElAvailable(element, classOfElement) {
     element.classList.remove(classOfElement + '--disabled');
-  }
-
-  /**
-   * @param {array} elements
-   */
-  function makeFormElementsDisabled(elements) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].disabled = true;
-    }
-  }
-
-  /**
-   * @param {array} elements
-   */
-  function makeFormElementsAvailable(elements) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].disabled = false;
-    }
   }
 
   /**
@@ -191,8 +152,7 @@
    * Remove attributes and modifiers that are disabled in the form.
    */
   function makeFormAvailable() {
-    makeFormElAvailable(window.keksobooking.map.Filteres, 'map__filters');
-    makeFormElementsAvailable(formFieldsets);
+    makeFormElAvailable(window.keksobooking.map.filteres, 'map__filters');
     makeFormElAvailable(formElement, 'ad-form');
   }
 
@@ -200,8 +160,44 @@
     * @param {HTMLElement} pin template clone of pin
     */
   function setPinAddress(pin) {
-    var address = (pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', ' + (pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT);
+    var address = (pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', '
+    + (pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT);
     formAddress.value = address;
   }
+
+  /**
+    * @param {HTMLElement} pin template clone of pin
+    */
+  function setInitPinAddress() {
+    var address = (window.keksobooking.pin.main.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', '
+    + (window.keksobooking.pin.main.offsetTop + window.keksobooking.pin.MAIN_PIN_WIDTH / 2);
+    formAddress.value = address;
+  }
+
+  function runModule() {
+    setInitPinAddress();
+    setFormInitialPropertiesAndEvents();
+    makeSuccessPopup();
+    makeErrorPopup();
+
+    document.querySelector('.ad-form__reset').addEventListener('click', function () {
+      makeAllPageInactive();
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.keksobooking.utils.ESC_KEYCODE) {
+        hideSuccessPopup();
+        hideErrorPopup();
+      }
+    });
+  }
+
+  window.keksobooking.form = {
+    makeAvailable: makeFormAvailable,
+    setPinAddress: setPinAddress,
+    fieldsets: formFieldsets,
+    onError: onError,
+    runModule: runModule
+  };
 
 })();

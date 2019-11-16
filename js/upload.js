@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  window.keksobooking.makehttprequest = function (requestParams, onSuccess, onError) {
+
+  window.keksobooking.makeHttpRequest = function (requestParams, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -27,4 +28,5 @@
     xhr.open(requestParams.method, requestParams.url);
     xhr.send(requestParams.data);
   };
+
 })();

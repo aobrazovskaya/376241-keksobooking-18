@@ -1,28 +1,16 @@
 'use strict';
 
 (function () {
+
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var MAIN_PIN_WIDTH = 62;
   var MAIN_PIN_HEIGHT = 84;
-  var pinTemplate = document.querySelector('#pin').content.querySelector('button');
-  var mapPinsBlock = document.querySelector('.map__pins');
   var pinMain = document.querySelector('.map .map__pin--main');
   var MAIN_PIN_START_COORD_X = pinMain.offsetLeft;
   var MAIN_PIN_START_COORD_Y = pinMain.offsetTop;
-
-  window.keksobooking.pin = {
-    HEIGHT: PIN_HEIGHT,
-    WIDTH: PIN_WIDTH,
-    MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
-    MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
-    createDomElements: createDomElements,
-    showCardsOfSelectedPin: showCardsOfSelectedPin,
-    deletePins: deletePins,
-    setMainCoords: setPinMainCoords,
-    Main: pinMain,
-    runModule: runModule
-  };
+  var pinTemplate = document.querySelector('#pin').content.querySelector('button');
+  var mapPinsBlock = document.querySelector('.map__pins');
 
   /**
    * Add DOM elements to HTML doc.
@@ -66,8 +54,8 @@
     }
   }
 
-  function checkIntervalforCoords(shift) {
-    var mapWidthEnd = window.keksobooking.map.mapBlock.offsetWidth - MAIN_PIN_WIDTH / 2;
+  function checkCoordsInterval(shift) {
+    var mapWidthEnd = window.keksobooking.map.mapElement.offsetWidth - MAIN_PIN_WIDTH / 2;
     var mapWidthBegin = 0 - MAIN_PIN_WIDTH / 2;
     var MAP_BEGIN_MAIN_PIN_HEIGHT = window.keksobooking.map.BEGIN_HEIGHT - MAIN_PIN_HEIGHT;
     var MAP_END_MAIN_PIN_HEIGHT = window.keksobooking.map.END_HEIGHT - MAIN_PIN_HEIGHT;
@@ -96,12 +84,11 @@
    * Change status of map and form on active.
    */
   function makePageAvailiable() {
-    if (window.keksobooking.map.mapBlock.classList.contains('map--faded')) {
+    if (window.keksobooking.map.mapElement.classList.contains('map--faded')) {
       window.keksobooking.data.getAds();
       window.keksobooking.map.setMapNotFaded();
       window.keksobooking.form.makeAvailable();
       window.keksobooking.form.setPinAddress(pinMain);
-      window.keksobooking.map.setFilteresDisabled(false);
     }
   }
 
@@ -159,7 +146,7 @@
           y: moveEvt.clientY
         };
 
-        var coords = checkIntervalforCoords(shift);
+        var coords = checkCoordsInterval(shift);
         setPinMainCoords(coords.coordX, coords.coordY);
       };
 
@@ -175,5 +162,18 @@
       document.addEventListener('mouseup', onMouseUp);
     });
   }
+
+  window.keksobooking.pin = {
+    HEIGHT: PIN_HEIGHT,
+    WIDTH: PIN_WIDTH,
+    MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
+    MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
+    createDomElements: createDomElements,
+    showCardsOfSelectedPin: showCardsOfSelectedPin,
+    deletePins: deletePins,
+    setMainCoords: setPinMainCoords,
+    main: pinMain,
+    runModule: runModule
+  };
 
 })();
