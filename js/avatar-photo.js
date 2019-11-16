@@ -5,6 +5,7 @@
 
   var fileChooser = document.querySelector('.ad-form-header__upload input[type=file]');
   var preview = document.querySelector('.ad-form-header__preview img');
+  preview.setAttribute('style', 'object-fit: cover');
 
   fileChooser.addEventListener('change', function () {
     var file = fileChooser.files[0];
