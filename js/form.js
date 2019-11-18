@@ -130,6 +130,7 @@
   function setPriceRequirements() {
     if (formType.value === 'bungalo') {
       formPrice.placeholder = 0;
+      formPrice.min = 0;
     } else if (formType.value === 'flat') {
       formPrice.placeholder = 1000;
       formPrice.min = 1000;
@@ -171,8 +172,9 @@
     * @param {HTMLElement} pin template clone of pin
     */
   function setInitPinAddress() {
+    var MAIN_PIN_HEIGHT = window.keksobooking.pin.MAIN_PIN_WIDTH;
     var address = (window.keksobooking.pin.main.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', '
-    + (window.keksobooking.pin.main.offsetTop + window.keksobooking.pin.MAIN_PIN_WIDTH / 2);
+    + (window.keksobooking.pin.main.offsetTop + MAIN_PIN_HEIGHT / 2);
     formAddress.value = address;
   }
 
