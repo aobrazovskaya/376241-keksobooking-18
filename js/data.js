@@ -24,12 +24,12 @@
   /**
    * A complete list of similar ads is loaded after the page is in an active state.
    */
-  function getAds() {
+  function loadAds() {
     window.keksobooking.makeHttpRequest(requestInfo, onSuccess, onError);
   }
 
   window.keksobooking.data = {
-    getAds: getAds
+    loadAds: loadAds
   };
 
 }());

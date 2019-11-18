@@ -85,7 +85,7 @@
    */
   function makePageAvailiable() {
     if (window.keksobooking.map.mapElement.classList.contains('map--faded')) {
-      window.keksobooking.data.getAds();
+      window.keksobooking.data.loadAds();
       window.keksobooking.map.setMapNotFaded();
       window.keksobooking.form.makeAvailable();
       window.keksobooking.form.setPinAddress(pinMain);
