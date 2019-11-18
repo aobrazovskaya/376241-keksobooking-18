@@ -34,7 +34,8 @@
   function createPinElement(adCard) {
     var newAdCard = pinTemplate.cloneNode(true);
 
-    newAdCard.style = 'left: ' + (adCard.location.x - PIN_WIDTH / 2) + 'px; top: ' + (adCard.location.y - PIN_HEIGHT) + 'px;';
+    newAdCard.style.left = (adCard.location.x - PIN_WIDTH / 2) + 'px';
+    newAdCard.style.top = (adCard.location.y - PIN_HEIGHT) + 'px';
     newAdCard.children[0].src = adCard.author.avatar;
     newAdCard.children[0].alt = adCard.offer.title;
     return newAdCard;
