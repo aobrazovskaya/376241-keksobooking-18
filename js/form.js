@@ -86,6 +86,8 @@
     if (cardElement) {
       cardElement.remove();
     }
+    window.keksobooking.avatarphoto.makeImgDefault();
+    window.keksobooking.formImages.removeImages();
   }
 
   /**

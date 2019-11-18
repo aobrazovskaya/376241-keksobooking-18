@@ -31,9 +31,19 @@
     };
   }
 
+  function removeImages() {
+    var images = preview.querySelectorAll('img');
+    if (images) {
+      images.forEach(function (image) {
+        image.remove();
+      });
+    }
+  }
+
   window.keksobooking.formImages = {
     loadImg: loadImg,
-    uploudingFile: uploudingFile
+    uploudingFile: uploudingFile,
+    removeImages: removeImages
   };
 
 })();

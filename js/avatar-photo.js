@@ -16,9 +16,14 @@
     reader.readAsDataURL(file);
   }
 
+  function makeImgDefault() {
+    preview.src = 'img/muffin-grey.svg';
+  }
+
   window.keksobooking.avatarphoto = {
     loadImg: loadImg,
-    uploudingFile: uploudingFile
+    uploudingFile: uploudingFile,
+    makeImgDefault: makeImgDefault
   };
 
 })();
