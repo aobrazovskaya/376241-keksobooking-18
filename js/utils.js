@@ -4,7 +4,6 @@
 
   var ENTER_KEYCODE = 13;
   var ESC_KEYCODE = 27;
-  var ADS_COUNT = 5;
   var DEBOUNCE_INTERVAL = 500; // ms
 
   /**
@@ -14,10 +13,6 @@
    */
   function changeElementDisplay(element, displayValue) {
     element.style.display = displayValue;
-  }
-
-  function cropArrayToFiveElements(arr) {
-    return arr.slice(0, ADS_COUNT);
   }
 
   /**
@@ -63,7 +58,6 @@
   window.keksobooking.utils = {
     ENTER_KEYCODE: ENTER_KEYCODE,
     ESC_KEYCODE: ESC_KEYCODE,
-    cropArrayToFiveElements: cropArrayToFiveElements,
     changeElementDisplay: changeElementDisplay,
     debounce: debounce,
     uploadFile: uploadFile

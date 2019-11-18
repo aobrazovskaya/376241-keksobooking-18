@@ -18,6 +18,7 @@
   var priceFilter = mapFilteresContainer.querySelector('#housing-price');
   var roomFilteres = mapFilteresContainer.querySelector('#housing-rooms');
   var guestsFilteres = mapFilteresContainer.querySelector('#housing-guests');
+  var ADS_COUNT = 5;
 
   function setMapNotFaded() {
     mapElement.classList.remove('map--faded');
@@ -42,7 +43,7 @@
       return isType && isPrice && isRoomNumber && isGuestsNumber && isFeatures;
     });
 
-    var fiveFilterAds = window.keksobooking.utils.cropArrayToFiveElements(filteredAds);
+    var fiveFilterAds = cropArrayToFiveElements(filteredAds);
     window.keksobooking.pin.createDomElements(fiveFilterAds);
     pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.pin.showCardsOfSelectedPin(pins);
@@ -91,6 +92,10 @@
     });
   }
 
+  function cropArrayToFiveElements(arr) {
+    return arr.slice(0, ADS_COUNT);
+  }
+
   function runModule() {
     mapElement.classList.add(mapFaded);
 
@@ -111,6 +116,7 @@
     endHeight: mapEndHeight,
     setMapNotFaded: setMapNotFaded,
     setMapFaded: setMapFaded,
+    cropArrayToFiveElements: cropArrayToFiveElements,
     runModule: runModule
   };
 
