@@ -118,7 +118,7 @@
   function showCardElement(evt) {
     var ads = window.keksobooking.data.ads;
     var targetImg = evt.target.querySelector('img') || evt.target;
-    var currentPin = targetImg.getAttribute('alt');
+    var currentPin = targetImg.alt;
     inactivatePin();
     for (var i = 0; i < ads.length; i++) {
       if (currentPin === ads[i].offer.title) {

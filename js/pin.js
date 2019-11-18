@@ -34,9 +34,10 @@
   function createPinElement(adCard) {
     var newAdCard = pinTemplate.cloneNode(true);
 
-    newAdCard.style = 'left: ' + (adCard.location.x - PIN_WIDTH / 2) + 'px; top: ' + (adCard.location.y - PIN_HEIGHT) + 'px;';
-    newAdCard.children[0].src = adCard.author.avatar;
-    newAdCard.children[0].alt = adCard.offer.title;
+    newAdCard.style.left = (adCard.location.x - PIN_WIDTH / 2) + 'px';
+    newAdCard.style.top = (adCard.location.y - PIN_HEIGHT) + 'px';
+    newAdCard.querySelector('img').src = adCard.author.avatar;
+    newAdCard.querySelector('img').alt = adCard.offer.title;
     return newAdCard;
   }
 
@@ -85,7 +86,7 @@
    */
   function makePageAvailiable() {
     if (window.keksobooking.map.mapElement.classList.contains('map--faded')) {
-      window.keksobooking.data.getAds();
+      window.keksobooking.data.loadAds();
       window.keksobooking.map.setMapNotFaded();
       window.keksobooking.form.makeAvailable();
       window.keksobooking.form.setPinAddress(pinMain);
