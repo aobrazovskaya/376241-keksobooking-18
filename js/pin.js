@@ -36,8 +36,8 @@
 
     newAdCard.style.left = (adCard.location.x - PIN_WIDTH / 2) + 'px';
     newAdCard.style.top = (adCard.location.y - PIN_HEIGHT) + 'px';
-    newAdCard.children[0].src = adCard.author.avatar;
-    newAdCard.children[0].alt = adCard.offer.title;
+    newAdCard.querySelector('img').src = adCard.author.avatar;
+    newAdCard.querySelector('img').alt = adCard.offer.title;
     return newAdCard;
   }
 

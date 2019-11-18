@@ -14,10 +14,10 @@
   var mapBeginHeight = MAP_BEGIN_HEIGHT - window.keksobooking.pin.HEIGHT;
   var mapEndHeight = MAP_END_HEIGHT - window.keksobooking.pin.HEIGHT;
   var filteres = Array.from(filtersAll).concat(featuresAll);
-  var typeFilter = filteres[0];
-  var priceFilter = filteres[1];
-  var roomFilteres = filteres[2];
-  var guestsFilteres = filteres[3];
+  var typeFilter = mapFilteresContainer.querySelector('#housing-type');
+  var priceFilter = mapFilteresContainer.querySelector('#housing-price');
+  var roomFilteres = mapFilteresContainer.querySelector('#housing-rooms');
+  var guestsFilteres = mapFilteresContainer.querySelector('#housing-guests');
 
   function setMapNotFaded() {
     mapElement.classList.remove('map--faded');
