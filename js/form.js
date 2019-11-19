@@ -68,7 +68,6 @@
     makeAllPageInactive();
     window.keksobooking.utils.changeElementDisplay(successElement, 'block');
     successElement.addEventListener('click', hideSuccessPopup);
-    formElement.reset();
   }
 
   function makeAllPageInactive() {
