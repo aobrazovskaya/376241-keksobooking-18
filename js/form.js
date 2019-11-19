@@ -82,10 +82,7 @@
     setInitPinAddress();
     formElement.reset();
     window.keksobooking.map.filteres.reset();
-    var cardElement = document.querySelector('.map__card.popup');
-    if (cardElement) {
-      cardElement.remove();
-    }
+    window.keksobooking.card.closeCard();
     window.keksobooking.avatarphoto.makeImgDefault();
     window.keksobooking.formImages.removeImages();
   }
