@@ -13,11 +13,11 @@
 
   function onSuccess(data) {
     window.keksobooking.data.ads = data;
-    var fiveFirstAds = window.keksobooking.map.cropArrayToFiveElements(data);
-    window.keksobooking.pin.createDomElements(fiveFirstAds);
-    var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    window.keksobooking.pin.showCardsOfSelectedPin(mapPins);
     if (data) {
+      var fiveFirstAds = window.keksobooking.map.cropArrayToFiveElements(data);
+      window.keksobooking.pin.createDomElements(fiveFirstAds);
+      var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+      window.keksobooking.pin.showCardsOfSelectedPin(mapPins);
       window.keksobooking.map.setFilteresDisabledStatus(false);
     }
   }
