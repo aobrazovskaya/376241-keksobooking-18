@@ -39,32 +39,27 @@
     formTimeOut.addEventListener('change', synchronizeTime);
   }
 
-  function makeSuccessPopup() {
-    mainBlock.appendChild(successElement);
-    hideSuccessPopup();
-  }
-
-  function makeErrorPopup() {
-    mainBlock.appendChild(errorElement);
-    hideErrorPopup();
+  function hidePopup(element, cb) {
+    window.keksobooking.utils.hide(element);
+    element.removeEventListener('click', cb);
   }
 
   function hideSuccessPopup() {
-    window.keksobooking.utils.hide(successElement);
-    successElement.removeEventListener('click', hideSuccessPopup);
+    hidePopup(successElement, hideSuccessPopup);
   }
 
   function hideErrorPopup() {
-    window.keksobooking.utils.hide(errorElement);
-    errorElement.removeEventListener('click', hideErrorPopup);
+    hidePopup(errorElement, hideErrorPopup);
   }
 
   function onError() {
+    mainBlock.appendChild(errorElement);
     window.keksobooking.utils.show(errorElement);
     errorElement.addEventListener('click', hideErrorPopup);
   }
 
   function onSuccess() {
+    mainBlock.appendChild(successElement);
     makeAllPageInactive();
     window.keksobooking.utils.show(successElement);
     successElement.addEventListener('click', hideSuccessPopup);
@@ -177,8 +172,6 @@
   function runModule() {
     setInitPinAddress();
     setFormInitialPropertiesAndEvents();
-    makeSuccessPopup();
-    makeErrorPopup();
 
     document.querySelector('.ad-form__reset').addEventListener('click', function () {
       makeAllPageInactive();

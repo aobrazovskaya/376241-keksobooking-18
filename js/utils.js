@@ -19,6 +19,7 @@
   function hide(element) {
     element.classList.add('hidden');
   }
+
   /**
    * The debounce function allows you to make sure that
    * when switching the filter, the list of items matching

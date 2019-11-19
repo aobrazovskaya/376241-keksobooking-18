@@ -21,7 +21,7 @@
     var cardType = newCard.querySelector('.popup__type');
     cardType.textContent = determineType(currentCard.offer.type);
     var cardCapacity = newCard.querySelector('.popup__text--capacity');
-    setCappacity(currentCard, cardCapacity);
+    setCapacity(currentCard, cardCapacity);
     var cardTime = newCard.querySelector('.popup__text--time');
     setTime(currentCard, cardTime);
     var cardFeatures = newCard.querySelector('.popup__features');
@@ -35,7 +35,7 @@
     return newCard;
   }
 
-  function setCappacity(currentCard, cardCapacity) {
+  function setCapacity(currentCard, cardCapacity) {
     if (!!currentCard.offer.rooms || !!currentCard.offer.guests) {
       cardCapacity.textContent = currentCard.offer.rooms + ' комнаты для ' + currentCard.offer.guests + ' гостей';
     } else {
