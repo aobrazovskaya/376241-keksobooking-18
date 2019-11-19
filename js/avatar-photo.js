@@ -6,7 +6,7 @@
   var preview = document.querySelector('.ad-form-header__preview img');
   preview.style.objectFit = 'cover';
 
-  var uploudingFile = window.keksobooking.utils.uploadFile(fileChooser, loadImg);
+  var uploudingFile = window.keksobooking.uploadFile(fileChooser, loadImg);
 
   function loadImg(file) {
     var reader = new FileReader();

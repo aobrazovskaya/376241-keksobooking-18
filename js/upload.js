@@ -1,32 +1,21 @@
 'use strict';
-
 (function () {
 
-  window.keksobooking.makeHttpRequest = function (requestParams, onSuccess, onError) {
-    var xhr = new XMLHttpRequest();
+  window.keksobooking.uploadFile = function (fileChooser, loadImg) {
+    var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-    xhr.responseType = 'json';
+    fileChooser.addEventListener('change', function () {
+      var file = fileChooser.files[0];
+      var fileName = file.name.toLowerCase();
 
-    xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onSuccess(xhr.response);
-      } else {
-        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      var matches = FILE_TYPES.some(function (it) {
+        return fileName.endsWith(it);
+      });
+
+      if (matches) {
+        loadImg(file);
       }
     });
-
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
-    });
-
-    xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-    });
-
-    xhr.timeout = 10000; // 10s
-
-    xhr.open(requestParams.method, requestParams.url);
-    xhr.send(requestParams.data);
   };
 
 })();

@@ -15,15 +15,21 @@
   /**
    * Add DOM elements to HTML doc.
    * @param {array} arr array of js elements
+   * @return {array} created pin HTML elements
    */
   function createDomElements(arr) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i].offer) {
-        fragment.appendChild(createPinElement(arr[i]));
+    var pinElements = [];
+    arr.forEach(function (element) {
+      if (element.offer) {
+        var pinElement = createPinElement(element);
+        fragment.appendChild(pinElement);
+        pinElements.push(pinElement);
       }
-    }
+    });
     mapPinsBlock.appendChild(fragment);
+
+    return pinElements;
   }
 
   /**
@@ -42,11 +48,10 @@
   }
 
   function showCardsOfSelectedPin(mapPins) {
-    for (var i = 0; i < mapPins.length; i++) {
-      mapPins[i].addEventListener('click', window.keksobooking.card.showElement);
-
-      mapPins[i].addEventListener('keydown', showCardByEnter);
-    }
+    mapPins.forEach(function (pin) {
+      pin.addEventListener('click', window.keksobooking.card.showElement);
+      pin.addEventListener('keydown', showCardByEnter);
+    });
   }
 
   function showCardByEnter(evt) {
@@ -93,12 +98,13 @@
     }
   }
 
-  function deletePins(pins) {
-    for (var i = 0; i < pins.length; i++) {
-      pins[i].removeEventListener('click', window.keksobooking.card.showElement);
-      pins[i].removeEventListener('keydown', showCardByEnter);
-      pins[i].remove();
-    }
+  function deletePins() {
+    var pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      pin.removeEventListener('click', window.keksobooking.card.showElement);
+      pin.removeEventListener('keydown', showCardByEnter);
+      pin.remove();
+    });
   }
 
   /**

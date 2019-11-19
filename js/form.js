@@ -39,55 +39,49 @@
     formTimeOut.addEventListener('change', synchronizeTime);
   }
 
-  function makeSuccessPopup() {
-    mainBlock.appendChild(successElement);
-    hideSuccessPopup();
-  }
-
-  function makeErrorPopup() {
-    mainBlock.appendChild(errorElement);
-    hideErrorPopup();
+  function hidePopup(element, cb) {
+    window.keksobooking.utils.hide(element);
+    element.removeEventListener('click', cb);
   }
 
   function hideSuccessPopup() {
-    window.keksobooking.utils.changeElementDisplay(successElement, 'none');
-    successElement.removeEventListener('click', hideSuccessPopup);
+    hidePopup(successElement, hideSuccessPopup);
   }
 
   function hideErrorPopup() {
-    window.keksobooking.utils.changeElementDisplay(errorElement, 'none');
-    errorElement.removeEventListener('click', hideErrorPopup);
+    hidePopup(errorElement, hideErrorPopup);
   }
 
   function onError() {
-    window.keksobooking.utils.changeElementDisplay(errorElement, 'block');
+    mainBlock.appendChild(errorElement);
+    window.keksobooking.utils.show(errorElement);
     errorElement.addEventListener('click', hideErrorPopup);
   }
 
   function onSuccess() {
+    mainBlock.appendChild(successElement);
     makeAllPageInactive();
-    window.keksobooking.utils.changeElementDisplay(successElement, 'block');
+    window.keksobooking.utils.show(successElement);
     successElement.addEventListener('click', hideSuccessPopup);
-    formElement.reset();
   }
 
   function makeAllPageInactive() {
-    var pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
-    window.keksobooking.map.setMapFaded();
-    makeFormElDisabled(window.keksobooking.map.filteres, 'map__filters');
-    makeFormElDisabled(formElement, 'ad-form');
-    window.keksobooking.map.setFilteresDisabledStatus(true);
-    window.keksobooking.pin.deletePins(pins);
-    window.keksobooking.pin.setMainCoords();
-    setInitPinAddress();
+    window.keksobooking.map.setMapDisabled();
+    setFiltersDisabled();
+    setFormDisabled();
+  }
+
+  function setFormDisabled() {
     formElement.reset();
-    window.keksobooking.map.filteres.reset();
-    var cardElement = document.querySelector('.map__card.popup');
-    if (cardElement) {
-      cardElement.remove();
-    }
+    formElement.classList.add('ad-form--disabled');
     window.keksobooking.avatarphoto.makeImgDefault();
     window.keksobooking.formImages.removeImages();
+  }
+
+  function setFiltersDisabled() {
+    window.keksobooking.map.filteres.reset();
+    window.keksobooking.map.filteres.classList.add('map__filters--disabled');
+    window.keksobooking.map.setFilteresDisabledStatus(true);
   }
 
   /**
@@ -163,9 +157,9 @@
     * @param {HTMLElement} pin template clone of pin
     */
   function setPinAddress(pin) {
-    var address = (pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', '
-    + (pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT);
-    formAddress.value = address;
+    var x = pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2;
+    var y = pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT;
+    formAddress.value = x + ', ' + y;
   }
 
   /**
@@ -173,16 +167,14 @@
     */
   function setInitPinAddress() {
     var MAIN_PIN_HEIGHT = window.keksobooking.pin.MAIN_PIN_WIDTH;
-    var address = (window.keksobooking.pin.main.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', '
-    + (window.keksobooking.pin.main.offsetTop + MAIN_PIN_HEIGHT / 2);
-    formAddress.value = address;
+    var x = window.keksobooking.pin.main.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2;
+    var y = window.keksobooking.pin.main.offsetTop + MAIN_PIN_HEIGHT / 2;
+    formAddress.value = x + ', ' + y;
   }
 
   function runModule() {
     setInitPinAddress();
     setFormInitialPropertiesAndEvents();
-    makeSuccessPopup();
-    makeErrorPopup();
 
     document.querySelector('.ad-form__reset').addEventListener('click', function () {
       makeAllPageInactive();
@@ -198,9 +190,11 @@
 
   window.keksobooking.form = {
     makeAvailable: makeFormAvailable,
+    makeAllPageInactive: makeAllPageInactive,
     setPinAddress: setPinAddress,
     fieldsets: formFieldsets,
     onError: onError,
+    setInitPinAddress: setInitPinAddress,
     runModule: runModule
   };
 

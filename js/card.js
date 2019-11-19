@@ -21,38 +21,58 @@
     var cardType = newCard.querySelector('.popup__type');
     cardType.textContent = determineType(currentCard.offer.type);
     var cardCapacity = newCard.querySelector('.popup__text--capacity');
+    setCapacity(currentCard, cardCapacity);
+    var cardTime = newCard.querySelector('.popup__text--time');
+    setTime(currentCard, cardTime);
+    var cardFeatures = newCard.querySelector('.popup__features');
+    setFeatures(currentCard, cardFeatures);
+    var cardDescription = newCard.querySelector('.popup__description');
+    setDescription(currentCard, cardDescription);
+    var cardPhotos = newCard.querySelector('.popup__photos');
+    setPhotos(currentCard, cardPhotos);
+    var cardAvatar = newCard.querySelector('.popup__avatar');
+    cardAvatar.src = currentCard.author.avatar;
+    return newCard;
+  }
+
+  function setCapacity(currentCard, cardCapacity) {
     if (!!currentCard.offer.rooms || !!currentCard.offer.guests) {
       cardCapacity.textContent = currentCard.offer.rooms + ' комнаты для ' + currentCard.offer.guests + ' гостей';
     } else {
       cardCapacity.textContent = '';
     }
-    var cardTime = newCard.querySelector('.popup__text--time');
-    if (currentCard.offer.checkin === '0:00' || currentCard.offer.checkout === '0:00') {
-      cardTime.textContent = '';
-    } else {
-      cardTime.textContent = 'Заезд после ' + currentCard.offer.checkin + ', выезд до ' + currentCard.offer.checkout;
-    }
-    var cardFeatures = newCard.querySelector('.popup__features');
-    if (Array.isArray(currentCard.offer.features) && currentCard.offer.features.length > 0) {
-      cardFeatures.replaceWith(selectFeatures(currentCard.offer.features, cardFeatures));
-    } else {
-      window.keksobooking.utils.changeElementDisplay(cardFeatures, 'none');
-    }
-    var cardDescription = newCard.querySelector('.popup__description');
+  }
+
+  function setDescription(currentCard, cardDescription) {
     if (currentCard.offer.description) {
       cardDescription.textContent = currentCard.offer.description;
     } else {
       cardDescription.textContent = '';
     }
-    var cardPhotos = newCard.querySelector('.popup__photos');
+  }
+
+  function setTime(currentCard, cardTime) {
+    if (currentCard.offer.checkin === '0:00' || currentCard.offer.checkout === '0:00') {
+      cardTime.textContent = '';
+    } else {
+      cardTime.textContent = 'Заезд после ' + currentCard.offer.checkin + ', выезд до ' + currentCard.offer.checkout;
+    }
+  }
+
+  function setFeatures(currentCard, cardFeatures) {
+    if (Array.isArray(currentCard.offer.features) && currentCard.offer.features.length > 0) {
+      cardFeatures.replaceWith(selectFeatures(currentCard.offer.features, cardFeatures));
+    } else {
+      window.keksobooking.utils.hide(cardFeatures);
+    }
+  }
+
+  function setPhotos(currentCard, cardPhotos) {
     if (Array.isArray(currentCard.offer.photos) && currentCard.offer.photos.length > 0) {
       cardPhotos.replaceWith(getPhotosOfAd(currentCard.offer.photos, cardPhotos));
     } else {
-      window.keksobooking.utils.changeElementDisplay(cardPhotos, 'none');
+      window.keksobooking.utils.hide(cardPhotos.querySelector('img'));
     }
-    var cardAvatar = newCard.querySelector('.popup__avatar');
-    cardAvatar.src = currentCard.author.avatar;
-    return newCard;
   }
 
   /**
@@ -64,11 +84,11 @@
   function getPhotosOfAd(photos, photoListElement) {
     var photoListElementNew = photoListElement.cloneNode(false);
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photos.length; i++) {
+    photos.forEach(function (photo) {
       var photoElement = photoListElement.children[0].cloneNode(false);
-      photoElement.src = photos[i];
+      photoElement.src = photo;
       fragment.appendChild(photoElement);
-    }
+    });
     photoListElementNew.appendChild(fragment);
     return photoListElementNew;
   }
@@ -95,13 +115,12 @@
    * @return {HTMLElement} new list
    */
   function selectFeatures(features, listElement) {
-    var currentFeaturesList = listElement.cloneNode(true);
     var featuresListNew = listElement.cloneNode(false);
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < features.length; i++) {
-      var currentElement = currentFeaturesList.querySelector('.popup__feature--' + features[i]);
+    features.forEach(function (feature) {
+      var currentElement = listElement.querySelector('.popup__feature--' + feature);
       fragment.appendChild(currentElement);
-    }
+    });
     featuresListNew.appendChild(fragment);
     return featuresListNew;
   }
@@ -110,7 +129,7 @@
     var mapCard = document.querySelector('.map__card.popup');
     inactivatePin();
     if (mapCard) {
-      window.keksobooking.utils.changeElementDisplay(mapCard, 'none');
+      window.keksobooking.utils.hide(mapCard);
       mapCard.querySelector('.popup__close').removeEventListener('click', closeCard);
     }
   }
@@ -120,19 +139,18 @@
     var targetImg = evt.target.querySelector('img') || evt.target;
     var currentPin = targetImg.alt;
     inactivatePin();
-    for (var i = 0; i < ads.length; i++) {
-      if (currentPin === ads[i].offer.title) {
+    ads.find(function (ad) {
+      if (currentPin === ad.offer.title) {
         var mapCard = document.querySelector('.map__card.popup');
         if (mapCard !== null) {
-          mapCard.replaceWith(createCardElement(ads[i]));
+          mapCard.replaceWith(createCardElement(ad));
         } else {
-          window.keksobooking.map.filteresContainer.insertAdjacentElement('beforebegin', createCardElement(ads[i]));
+          window.keksobooking.map.filteresContainer.insertAdjacentElement('beforebegin', createCardElement(ad));
         }
         var cardCloseElement = document.querySelector('.popup__close');
         cardCloseElement.addEventListener('click', closeCard);
-        break;
       }
-    }
+    });
 
     targetImg.parentElement.classList.add('map__pin--active');
   }
