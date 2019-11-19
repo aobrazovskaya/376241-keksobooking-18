@@ -71,7 +71,7 @@
     if (Array.isArray(currentCard.offer.photos) && currentCard.offer.photos.length > 0) {
       cardPhotos.replaceWith(getPhotosOfAd(currentCard.offer.photos, cardPhotos));
     } else {
-      window.keksobooking.utils.hide(cardPhotos);
+      window.keksobooking.utils.hide(cardPhotos.querySelector('img'));
     }
   }
 

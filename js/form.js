@@ -66,19 +66,22 @@
   }
 
   function makeAllPageInactive() {
-    var pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
-    window.keksobooking.map.setMapFaded();
-    makeFormElDisabled(window.keksobooking.map.filteres, 'map__filters');
-    makeFormElDisabled(formElement, 'ad-form');
-    window.keksobooking.map.setFilteresDisabledStatus(true);
-    window.keksobooking.pin.deletePins(pins);
-    window.keksobooking.pin.setMainCoords();
-    setInitPinAddress();
+    window.keksobooking.map.setMapDisabled();
+    setFiltersDisabled();
+    setFormDisabled();
+  }
+
+  function setFormDisabled() {
     formElement.reset();
-    window.keksobooking.map.filteres.reset();
-    window.keksobooking.card.closeCard();
+    formElement.classList.add('ad-form--disabled');
     window.keksobooking.avatarphoto.makeImgDefault();
     window.keksobooking.formImages.removeImages();
+  }
+
+  function setFiltersDisabled() {
+    window.keksobooking.map.filteres.reset();
+    window.keksobooking.map.filteres.classList.add('map__filters--disabled');
+    window.keksobooking.map.setFilteresDisabledStatus(true);
   }
 
   /**
@@ -187,9 +190,11 @@
 
   window.keksobooking.form = {
     makeAvailable: makeFormAvailable,
+    makeAllPageInactive: makeAllPageInactive,
     setPinAddress: setPinAddress,
     fieldsets: formFieldsets,
     onError: onError,
+    setInitPinAddress: setInitPinAddress,
     runModule: runModule
   };
 

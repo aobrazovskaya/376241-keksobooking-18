@@ -9,15 +9,15 @@
 
   function onError() {
     window.keksobooking.form.onError();
+    window.keksobooking.form.makeAllPageInactive();
   }
 
   function onSuccess(data) {
     window.keksobooking.data.ads = data;
     if (data) {
       var fiveFirstAds = window.keksobooking.map.cropArrayToFiveElements(data);
-      window.keksobooking.pin.createDomElements(fiveFirstAds);
-      var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-      window.keksobooking.pin.showCardsOfSelectedPin(mapPins);
+      var pinElements = window.keksobooking.pin.createDomElements(fiveFirstAds);
+      window.keksobooking.pin.showCardsOfSelectedPin(pinElements);
       window.keksobooking.map.setFilteresDisabledStatus(false);
     }
   }

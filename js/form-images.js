@@ -7,7 +7,7 @@
   preview.style.display = 'contents';
   var IMAGE_SIZE = 70;
 
-  var uploudingFile = window.keksobooking.utils.uploadFile(fileChooser, loadImg);
+  var uploudingFile = window.keksobooking.uploadFile(fileChooser, loadImg);
 
   function loadImg(file) {
     var reader = new FileReader();

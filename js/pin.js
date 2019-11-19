@@ -15,15 +15,21 @@
   /**
    * Add DOM elements to HTML doc.
    * @param {array} arr array of js elements
+   * @return {array} created pin HTML elements
    */
   function createDomElements(arr) {
     var fragment = document.createDocumentFragment();
+    var pinElements = [];
     arr.forEach(function (element) {
       if (element.offer) {
-        fragment.appendChild(createPinElement(element));
+        var pinElement = createPinElement(element);
+        fragment.appendChild(pinElement);
+        pinElements.push(pinElement);
       }
     });
     mapPinsBlock.appendChild(fragment);
+
+    return pinElements;
   }
 
   /**
@@ -92,7 +98,8 @@
     }
   }
 
-  function deletePins(pins) {
+  function deletePins() {
+    var pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     pins.forEach(function (pin) {
       pin.removeEventListener('click', window.keksobooking.card.showElement);
       pin.removeEventListener('keydown', showCardByEnter);

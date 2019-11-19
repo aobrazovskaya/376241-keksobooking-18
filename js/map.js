@@ -29,9 +29,8 @@
   }
 
   function filterAds() {
-    var pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.card.closeCard();
-    window.keksobooking.pin.deletePins(pins);
+    window.keksobooking.pin.deletePins();
 
     var filteredAds = window.keksobooking.data.ads.filter(function (ad) {
       var isType = typeFilter.value === 'any' || ad.offer.type === typeFilter.value;
@@ -45,7 +44,7 @@
 
     var fiveFilterAds = cropArrayToFiveElements(filteredAds);
     window.keksobooking.pin.createDomElements(fiveFilterAds);
-    pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+    var pins = window.keksobooking.map.mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     window.keksobooking.pin.showCardsOfSelectedPin(pins);
   }
 
@@ -96,6 +95,18 @@
     return arr.slice(0, ADS_COUNT);
   }
 
+  function setMapDisabled() {
+    window.keksobooking.pin.deletePins();
+    window.keksobooking.map.setMapFaded();
+    window.keksobooking.card.closeCard();
+    resetMainPin();
+  }
+
+  function resetMainPin() {
+    window.keksobooking.pin.setMainCoords();
+    window.keksobooking.form.setInitPinAddress();
+  }
+
   function runModule() {
     mapElement.classList.add(mapFaded);
 
@@ -117,6 +128,7 @@
     setMapNotFaded: setMapNotFaded,
     setMapFaded: setMapFaded,
     cropArrayToFiveElements: cropArrayToFiveElements,
+    setMapDisabled: setMapDisabled,
     runModule: runModule
   };
 
