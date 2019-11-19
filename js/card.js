@@ -84,11 +84,11 @@
   function getPhotosOfAd(photos, photoListElement) {
     var photoListElementNew = photoListElement.cloneNode(false);
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photos.length; i++) {
+    photos.forEach(function (photo) {
       var photoElement = photoListElement.children[0].cloneNode(false);
-      photoElement.src = photos[i];
+      photoElement.src = photo;
       fragment.appendChild(photoElement);
-    }
+    });
     photoListElementNew.appendChild(fragment);
     return photoListElementNew;
   }
@@ -117,10 +117,10 @@
   function selectFeatures(features, listElement) {
     var featuresListNew = listElement.cloneNode(false);
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < features.length; i++) {
-      var currentElement = listElement.querySelector('.popup__feature--' + features[i]);
+    features.forEach(function (feature) {
+      var currentElement = listElement.querySelector('.popup__feature--' + feature);
       fragment.appendChild(currentElement);
-    }
+    });
     featuresListNew.appendChild(fragment);
     return featuresListNew;
   }
@@ -139,19 +139,18 @@
     var targetImg = evt.target.querySelector('img') || evt.target;
     var currentPin = targetImg.alt;
     inactivatePin();
-    for (var i = 0; i < ads.length; i++) {
-      if (currentPin === ads[i].offer.title) {
+    ads.find(function (ad) {
+      if (currentPin === ad.offer.title) {
         var mapCard = document.querySelector('.map__card.popup');
         if (mapCard !== null) {
-          mapCard.replaceWith(createCardElement(ads[i]));
+          mapCard.replaceWith(createCardElement(ad));
         } else {
-          window.keksobooking.map.filteresContainer.insertAdjacentElement('beforebegin', createCardElement(ads[i]));
+          window.keksobooking.map.filteresContainer.insertAdjacentElement('beforebegin', createCardElement(ad));
         }
         var cardCloseElement = document.querySelector('.popup__close');
         cardCloseElement.addEventListener('click', closeCard);
-        break;
       }
-    }
+    });
 
     targetImg.parentElement.classList.add('map__pin--active');
   }

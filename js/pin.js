@@ -18,11 +18,11 @@
    */
   function createDomElements(arr) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i].offer) {
-        fragment.appendChild(createPinElement(arr[i]));
+    arr.forEach(function (element) {
+      if (element.offer) {
+        fragment.appendChild(createPinElement(element));
       }
-    }
+    });
     mapPinsBlock.appendChild(fragment);
   }
 
@@ -42,11 +42,10 @@
   }
 
   function showCardsOfSelectedPin(mapPins) {
-    for (var i = 0; i < mapPins.length; i++) {
-      mapPins[i].addEventListener('click', window.keksobooking.card.showElement);
-
-      mapPins[i].addEventListener('keydown', showCardByEnter);
-    }
+    mapPins.forEach(function (pin) {
+      pin.addEventListener('click', window.keksobooking.card.showElement);
+      pin.addEventListener('keydown', showCardByEnter);
+    });
   }
 
   function showCardByEnter(evt) {
@@ -94,11 +93,11 @@
   }
 
   function deletePins(pins) {
-    for (var i = 0; i < pins.length; i++) {
-      pins[i].removeEventListener('click', window.keksobooking.card.showElement);
-      pins[i].removeEventListener('keydown', showCardByEnter);
-      pins[i].remove();
-    }
+    pins.forEach(function (pin) {
+      pin.removeEventListener('click', window.keksobooking.card.showElement);
+      pin.removeEventListener('keydown', showCardByEnter);
+      pin.remove();
+    });
   }
 
   /**
