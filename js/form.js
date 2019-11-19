@@ -160,9 +160,9 @@
     * @param {HTMLElement} pin template clone of pin
     */
   function setPinAddress(pin) {
-    var address = (pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', '
-    + (pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT);
-    formAddress.value = address;
+    var x = pin.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2;
+    var y = pin.offsetTop + window.keksobooking.pin.MAIN_PIN_HEIGHT;
+    formAddress.value = x + ', ' + y;
   }
 
   /**
@@ -170,9 +170,9 @@
     */
   function setInitPinAddress() {
     var MAIN_PIN_HEIGHT = window.keksobooking.pin.MAIN_PIN_WIDTH;
-    var address = (window.keksobooking.pin.main.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2) + ', '
-    + (window.keksobooking.pin.main.offsetTop + MAIN_PIN_HEIGHT / 2);
-    formAddress.value = address;
+    var x = window.keksobooking.pin.main.offsetLeft + window.keksobooking.pin.MAIN_PIN_WIDTH / 2;
+    var y = window.keksobooking.pin.main.offsetTop + MAIN_PIN_HEIGHT / 2;
+    formAddress.value = x + ', ' + y;
   }
 
   function runModule() {
