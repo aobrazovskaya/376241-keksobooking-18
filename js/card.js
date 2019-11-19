@@ -63,7 +63,7 @@
     if (Array.isArray(currentCard.offer.features) && currentCard.offer.features.length > 0) {
       cardFeatures.replaceWith(selectFeatures(currentCard.offer.features, cardFeatures));
     } else {
-      window.keksobooking.utils.changeElementDisplay(cardFeatures, 'none');
+      window.keksobooking.utils.hide(cardFeatures);
     }
   }
 
@@ -71,7 +71,7 @@
     if (Array.isArray(currentCard.offer.photos) && currentCard.offer.photos.length > 0) {
       cardPhotos.replaceWith(getPhotosOfAd(currentCard.offer.photos, cardPhotos));
     } else {
-      window.keksobooking.utils.changeElementDisplay(cardPhotos, 'none');
+      window.keksobooking.utils.hide(cardPhotos);
     }
   }
 
@@ -129,7 +129,7 @@
     var mapCard = document.querySelector('.map__card.popup');
     inactivatePin();
     if (mapCard) {
-      window.keksobooking.utils.changeElementDisplay(mapCard, 'none');
+      window.keksobooking.utils.hide(mapCard);
       mapCard.querySelector('.popup__close').removeEventListener('click', closeCard);
     }
   }

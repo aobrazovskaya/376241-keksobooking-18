@@ -7,14 +7,18 @@
   var DEBOUNCE_INTERVAL = 500; // ms
 
   /**
-   * Change value of display property of HTML Element.
    * @param {HTMLElement} element
-   * @param {String} displayValue value of display property
    */
-  function changeElementDisplay(element, displayValue) {
-    element.style.display = displayValue;
+  function show(element) {
+    element.classList.remove('hidden');
   }
 
+  /**
+   * @param {HTMLElement} element
+   */
+  function hide(element) {
+    element.classList.add('hidden');
+  }
   /**
    * The debounce function allows you to make sure that
    * when switching the filter, the list of items matching
@@ -58,7 +62,8 @@
   window.keksobooking.utils = {
     ENTER_KEYCODE: ENTER_KEYCODE,
     ESC_KEYCODE: ESC_KEYCODE,
-    changeElementDisplay: changeElementDisplay,
+    show: show,
+    hide: hide,
     debounce: debounce,
     uploadFile: uploadFile
   };

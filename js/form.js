@@ -50,23 +50,23 @@
   }
 
   function hideSuccessPopup() {
-    window.keksobooking.utils.changeElementDisplay(successElement, 'none');
+    window.keksobooking.utils.hide(successElement);
     successElement.removeEventListener('click', hideSuccessPopup);
   }
 
   function hideErrorPopup() {
-    window.keksobooking.utils.changeElementDisplay(errorElement, 'none');
+    window.keksobooking.utils.hide(errorElement);
     errorElement.removeEventListener('click', hideErrorPopup);
   }
 
   function onError() {
-    window.keksobooking.utils.changeElementDisplay(errorElement, 'block');
+    window.keksobooking.utils.show(errorElement);
     errorElement.addEventListener('click', hideErrorPopup);
   }
 
   function onSuccess() {
     makeAllPageInactive();
-    window.keksobooking.utils.changeElementDisplay(successElement, 'block');
+    window.keksobooking.utils.show(successElement);
     successElement.addEventListener('click', hideSuccessPopup);
   }
 
